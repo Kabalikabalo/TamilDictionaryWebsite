@@ -32,8 +32,8 @@
             --shadow-heavy: 0 20px 60px var(--glow-color);
             --border-radius: 16px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --success-color: #10b981;
-            --error-color: #ef4444;
+            --success-color: #10b98180;
+            --error-color: #ef444475;
         }
 
         /* Theme variations */
@@ -177,7 +177,7 @@
             background: radial-gradient(circle at 20% 50%, var(--glow-color-light) 0%, transparent 50%),
                         radial-gradient(circle at 80% 20%, var(--glow-color-light) 0%, transparent 50%),
                         radial-gradient(circle at 40% 80%, var(--glow-color-light) 0%, transparent 50%);
-            animation: bgFloat 20s ease-in-out infinite;
+            /* animation: bgFloat 20s ease-in-out infinite; */
         }
 
         @keyframes bgFloat {
@@ -695,6 +695,18 @@
             box-shadow: var(--shadow-light);
         }
 
+        #checkBtn {
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            left: 0;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: 0;
+            border: none;
+        }
+
         .choice-btn.correct {
             background: var(--success-color);
             border-color: var(--success-color);
@@ -721,13 +733,11 @@
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            box-shadow: var(--shadow-light);
             font-size: 1rem;
         }
 
         .test-btn:hover {
             transform: translateY(-2px) scale(1.05);
-            box-shadow: var(--shadow-medium);
         }
 
         .test-btn:disabled {
@@ -808,7 +818,7 @@
         /* Feedback */
         .feedback {
             margin-top: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
             padding: 1rem;
             border-radius: var(--border-radius);
             font-weight: 600;
@@ -817,15 +827,15 @@
         }
 
         .feedback.correct {
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid var(--success-color);
-            color: var(--success-color);
+            background: rgba(16, 185, 129, 0.221);
+            border: 1px solid rgba(16, 185, 129);
+            color: rgba(16, 185, 129);
         }
 
         .feedback.incorrect {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid var(--error-color);
-            color: var(--error-color);
+            background: rgba(239, 68, 68, 0.234);
+            border: 1px solid rgba(239, 68, 68);
+            color: rgba(239, 68, 68);
         }
 
         /* Animations */
