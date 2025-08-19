@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamil Alphabet Test - Practice & Learn</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Tamil:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #ff8c42;
+            --accent-color: #ffa726;
+            --glow-color: rgba(255, 107, 53, 0.3);
+            --glow-color-light: rgba(255, 107, 53, 0.1);
+            --glow-color-medium: rgba(255, 107, 53, 0.2);
+            --particle-color: #ff6b35;
+            --dark-bg: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-muted: #808080;
+            --border-color: #333333;
+            --shadow-light: 0 4px 20px var(--glow-color);
+            --shadow-medium: 0 8px 30px var(--glow-color);
+            --shadow-heavy: 0 20px 60px var(--glow-color);
+            --border-radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+        }
+
+        /* Theme variations */
+        [data-theme="orange"] {
+            --primary-color: #ff6b35;
+            --secondary-color: #ff8c42;
+            --accent-color: #ffa726;
+            --glow-color: rgba(255, 107, 53, 0.3);
+            --glow-color-light: rgba(255, 107, 53, 0.1);
+            --glow-color-medium: rgba(255, 107, 53, 0.2);
+            --particle-color: #ff6b35;
+        }
+
+        [data-theme="blue"] {
+            --primary-color: #3b82f6;
+            --secondary-color: #60a5fa;
+            --accent-color: #93c5fd;
+            --glow-color: rgba(59, 130, 246, 0.3);
+            --glow-color-light: rgba(59, 130, 246, 0.1);
+            --glow-color-medium: rgba(59, 130, 246, 0.2);
+            --particle-color: #3b82f6;
+        }
+
+        [data-theme="purple"] {
+            --primary-color: #8b5cf6;
+            --secondary-color: #a78bfa;
+            --accent-color: #c4b5fd;
+            --glow-color: rgba(139, 92, 246, 0.3);
+            --glow-color-light: rgba(139, 92, 246, 0.1);
+            --glow-color-medium: rgba(139, 92, 246, 0.2);
+            --particle-color: #8b5cf6;
+        }
+
+        [data-theme="green"] {
+            --primary-color: #10b981;
+            --secondary-color: #34d399;
+            --accent-color: #6ee7b7;
+            --glow-color: rgba(16, 185, 129, 0.3);
+            --glow-color-light: rgba(16, 185, 129, 0.1);
+            --glow-color-medium: rgba(16, 185, 129, 0.2);
+            --particle-color: #10b981;
+        }
+
+        [data-theme="red"] {
+            --primary-color: #ef4444;
+            --secondary-color: #f87171;
+            --accent-color: #fca5a5;
+            --glow-color: rgba(239, 68, 68, 0.3);
+            --glow-color-light: rgba(239, 68, 68, 0.1);
+            --glow-color-medium: rgba(239, 68, 68, 0.2);
+            --particle-color: #ef4444;
+        }
+
+        [data-theme="cyan"] {
+            --primary-color: #06b6d4;
+            --secondary-color: #22d3ee;
+            --accent-color: #67e8f9;
+            --glow-color: rgba(6, 182, 212, 0.3);
+            --glow-color-light: rgba(6, 182, 212, 0.1);
+            --glow-color-medium: rgba(6, 182, 212, 0.2);
+            --particle-color: #06b6d4;
+        }
+
+        [data-theme="pink"] {
+            --primary-color: #ec4899;
+            --secondary-color: #f472b6;
+            --accent-color: #f9a8d4;
+            --glow-color: rgba(236, 72, 153, 0.3);
+            --glow-color-light: rgba(236, 72, 153, 0.1);
+            --glow-color-medium: rgba(236, 72, 153, 0.2);
+            --particle-color: #ec4899;
+        }
+
+        [data-theme="amber"] {
+            --primary-color: #f59e0b;
+            --secondary-color: #fbbf24;
+            --accent-color: #fcd34d;
+            --glow-color: rgba(245, 158, 11, 0.3);
+            --glow-color-light: rgba(245, 158, 11, 0.1);
+            --glow-color-medium: rgba(245, 158, 11, 0.2);
+            --particle-color: #f59e0b;
+        }
+
+        [data-theme="emerald"] {
+            --primary-color: #059669;
+            --secondary-color: #10b981;
+            --accent-color: #34d399;
+            --glow-color: rgba(5, 150, 105, 0.3);
+            --glow-color-light: rgba(5, 150, 105, 0.1);
+            --glow-color-medium: rgba(5, 150, 105, 0.2);
+            --particle-color: #059669;
+        }
+
+        [data-theme="indigo"] {
+            --primary-color: #4f46e5;
+            --secondary-color: #6366f1;
+            --accent-color: #818cf8;
+            --glow-color: rgba(79, 70, 229, 0.3);
+            --glow-color-light: rgba(79, 70, 229, 0.1);
+            --glow-color-medium: rgba(79, 70, 229, 0.2);
+            --particle-color: #4f46e5;
+        }
+
+        [data-theme="rose"] {
+            --primary-color: #f43f5e;
+            --secondary-color: #fb7185;
+            --accent-color: #fda4af;
+            --glow-color: rgba(244, 63, 94, 0.3);
+            --glow-color-light: rgba(244, 63, 94, 0.1);
+            --glow-color-medium: rgba(244, 63, 94, 0.2);
+            --particle-color: #f43f5e;
+        }
+
+        [data-theme="violet"] {
+            --primary-color: #7c3aed;
+            --secondary-color: #8b5cf6;
+            --accent-color: #a78bfa;
+            --glow-color: rgba(124, 58, 237, 0.3);
+            --glow-color-light: rgba(124, 58, 237, 0.1);
+            --glow-color-medium: rgba(124, 58, 237, 0.2);
+            --particle-color: #7c3aed;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 50%, var(--glow-color-light) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, var(--glow-color-light) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, var(--glow-color-light) 0%, transparent 50%);
+            animation: bgFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes bgFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(1deg); }
+            66% { transform: translateY(10px) rotate(-1deg); }
+        }
+
+        /* Floating Particles */
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--particle-color);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        body[data-theme="orange"] .particle { background: #ff6b35 !important; }
+        body[data-theme="blue"] .particle { background: #3b82f6 !important; }
+        body[data-theme="purple"] .particle { background: #8b5cf6 !important; }
+        body[data-theme="green"] .particle { background: #10b981 !important; }
+        body[data-theme="red"] .particle { background: #ef4444 !important; }
+        body[data-theme="cyan"] .particle { background: #06b6d4 !important; }
+        body[data-theme="pink"] .particle { background: #ec4899 !important; }
+        body[data-theme="amber"] .particle { background: #f59e0b !important; }
+        body[data-theme="emerald"] .particle { background: #059669 !important; }
+        body[data-theme="indigo"] .particle { background: #4f46e5 !important; }
+        body[data-theme="rose"] .particle { background: #f43f5e !important; }
+        body[data-theme="violet"] .particle { background: #7c3aed !important; }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) translateX(0px); 
+                opacity: 0.3; 
+            }
+            25% { 
+                transform: translateY(-100px) translateX(20px); 
+                opacity: 0.8; 
+            }
+            50% { 
+                transform: translateY(-60px) translateX(-20px); 
+                opacity: 0.6; 
+            }
+            75% { 
+                transform: translateY(-120px) translateX(10px); 
+                opacity: 0.4; 
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 30px var(--glow-color);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            z-index: 1100;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-btn:hover {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+
+        /* Settings Button */
+        .settings-btn {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 1100;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .settings-btn:hover {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 350px;
+            height: 100vh;
+            background: var(--card-bg);
+            border-left: 1px solid var(--border-color);
+            padding: 2rem;
+            transition: var(--transition);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .settings-panel.open {
+            right: 0;
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .settings-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .close-settings {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .theme-section {
+            margin-bottom: 2rem;
+        }
+
+        .theme-label {
+            display: block;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .theme-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+        }
+
+        .theme-option {
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            background: var(--dark-bg);
+            font-size: 0.85rem;
+        }
+
+        .theme-option.active {
+            border-color: var(--primary-color);
+            background: var(--glow-color-light);
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+
+        .theme-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Test Configuration */
+        .test-config {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-medium);
+            animation: fadeInUp 1s ease-out 0.2s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Hard-coded wide glow for test-config per theme (more transparent) */
+        body[data-theme="orange"] .test-config {
+            box-shadow: 0 0 40px 0 rgba(255, 107, 53, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="blue"] .test-config {
+            box-shadow: 0 0 40px 0 rgba(59, 130, 246, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="purple"] .test-config {
+            box-shadow: 0 0 40px 0 rgba(139, 92, 246, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="green"] .test-config {
+            box-shadow: 0 0 40px 0 rgba(16, 185, 129, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="red"] .test-config {
+            box-shadow: 0 0 40px 0 rgba(239, 68, 68, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="cyan"] .test-config {
+            box-shadow: 0 0 40px 0 rgba(6, 182, 212, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="pink"] .test-config {
+            box-shadow: 0 0 40px 0 rgba(236, 72, 153, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="amber"] .test-config {
+            box-shadow: 0 0 40px 0 rgba(245, 158, 11, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="emerald"] .test-config {
+            box-shadow: 0 0 40px 0 rgba(5, 150, 105, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="indigo"] .test-config {
+            box-shadow: 0 0 40px 0 rgba(79, 70, 229, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="rose"] .test-config {
+            box-shadow: 0 0 40px 0 rgba(244, 63, 94, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="violet"] .test-config {
+            box-shadow: 0 0 40px 0 rgba(124, 58, 237, 0.18), 0 8px 30px var(--glow-color);
+        }
+
+        .test-config::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            animation: slideIn 2s ease-out;
+        }
+
+        .config-section {
+            margin-bottom: 2rem;
+        }
+
+        .config-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .config-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .config-option {
+            background: transparent;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            padding: 0.7rem 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .config-option.active {
+            background: linear-gradient(135deg, var(--primary-color), transparent);
+            border-color: var(--primary-color);
+            color: white;
+            box-shadow: var(--primary-color);
+        }
+
+        .config-option:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary-color);
+        }
+
+        /* Hard-coded glow for config-option per theme */
+        body[data-theme="orange"] .config-option.active,
+        body[data-theme="orange"] .config-option:hover {
+            box-shadow: 0 0 20px 0 rgba(255, 107, 53, 0.18);
+            border-color: #ff6b35;
+        }
+        body[data-theme="blue"] .config-option.active,
+        body[data-theme="blue"] .config-option:hover {
+            box-shadow: 0 0 20px 0 rgba(59, 130, 246, 0.18);
+            border-color: #3b82f6;
+        }
+        body[data-theme="purple"] .config-option.active,
+        body[data-theme="purple"] .config-option:hover {
+            box-shadow: 0 0 20px 0 rgba(139, 92, 246, 0.18);
+            border-color: #8b5cf6;
+        }
+        body[data-theme="green"] .config-option.active,
+        body[data-theme="green"] .config-option:hover {
+            box-shadow: 0 0 20px 0 rgba(16, 185, 129, 0.18);
+            border-color: #10b981;
+        }
+        body[data-theme="red"] .config-option.active,
+        body[data-theme="red"] .config-option:hover {
+            box-shadow: 0 0 20px 0 rgba(239, 68, 68, 0.18);
+            border-color: #ef4444;
+        }
+        body[data-theme="cyan"] .config-option.active,
+        body[data-theme="cyan"] .config-option:hover {
+            box-shadow: 0 0 20px 0 rgba(6, 182, 212, 0.18);
+            border-color: #06b6d4;
+        }
+        body[data-theme="pink"] .config-option.active,
+        body[data-theme="pink"] .config-option:hover {
+            box-shadow: 0 0 20px 0 rgba(236, 72, 153, 0.18);
+            border-color: #ec4899;
+        }
+        body[data-theme="amber"] .config-option.active,
+        body[data-theme="amber"] .config-option:hover {
+            box-shadow: 0 0 20px 0 rgba(245, 158, 11, 0.18);
+            border-color: #f59e0b;
+        }
+        body[data-theme="emerald"] .config-option.active,
+        body[data-theme="emerald"] .config-option:hover {
+            box-shadow: 0 0 20px 0 rgba(5, 150, 105, 0.18);
+            border-color: #059669;
+        }
+        body[data-theme="indigo"] .config-option.active,
+        body[data-theme="indigo"] .config-option:hover {
+            box-shadow: 0 0 20px 0 rgba(79, 70, 229, 0.18);
+            border-color: #4f46e5;
+        }
+        body[data-theme="rose"] .config-option.active,
+        body[data-theme="rose"] .config-option:hover {
+            box-shadow: 0 0 20px 0 rgba(244, 63, 94, 0.18);
+            border-color: #f43f5e;
+        }
+        body[data-theme="violet"] .config-option.active,
+        body[data-theme="violet"] .config-option:hover {
+            box-shadow: 0 0 20px 0 rgba(124, 58, 237, 0.18);
+            border-color: #7c3aed;
+        }
+
+        /* Test Area */
+        .test-area {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-medium);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .test-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        /* Hard-coded wide glow for test-area per theme (more transparent) */
+        body[data-theme="orange"] .test-area {
+            box-shadow: 0 0 40px 0 rgba(255, 107, 53, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="blue"] .test-area {
+            box-shadow: 0 0 40px 0 rgba(59, 130, 246, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="purple"] .test-area {
+            box-shadow: 0 0 40px 0 rgba(139, 92, 246, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="green"] .test-area {
+            box-shadow: 0 0 40px 0 rgba(16, 185, 129, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="red"] .test-area {
+            box-shadow: 0 0 40px 0 rgba(239, 68, 68, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="cyan"] .test-area {
+            box-shadow: 0 0 40px 0 rgba(6, 182, 212, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="pink"] .test-area {
+            box-shadow: 0 0 40px 0 rgba(236, 72, 153, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="amber"] .test-area {
+            box-shadow: 0 0 40px 0 rgba(245, 158, 11, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="emerald"] .test-area {
+            box-shadow: 0 0 40px 0 rgba(5, 150, 105, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="indigo"] .test-area {
+            box-shadow: 0 0 40px 0 rgba(79, 70, 229, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="rose"] .test-area {
+            box-shadow: 0 0 40px 0 rgba(244, 63, 94, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="violet"] .test-area {
+            box-shadow: 0 0 40px 0 rgba(124, 58, 237, 0.18), 0 8px 30px var(--glow-color);
+        }
+
+        .question-display {
+            font-size: 4rem;
+            font-family: 'Noto Sans Tamil', sans-serif;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            text-shadow: 0 4px 8px var(--glow-color);
+        }
+
+        .answer-input {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 2rem;
+            padding: 1rem 1.5rem;
+            background: var(--dark-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            outline: none;
+            transition: var(--transition);
+            text-align: center;
+            font-family: 'Inter', 'Noto Sans Tamil', sans-serif;
+        }
+
+        .answer-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--glow-color-light);
+            transform: translateY(-2px);
+        }
+
+        .multiple-choice {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .choice-btn {
+            background: linear-gradient(135deg, var(--glow-color-light), transparent);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.1rem;
+            font-family: 'Inter', 'Noto Sans Tamil', sans-serif;
+        }
+
+        .choice-btn:hover {
+            border-color: var(--primary-color);
+            background: var(--glow-color-medium);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .choice-btn.correct {
+            background: var(--success-color);
+            border-color: var(--success-color);
+        }
+
+        .choice-btn.incorrect {
+            background: var(--error-color);
+            border-color: var(--error-color);
+        }
+
+        .test-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .test-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-light);
+            font-size: 1rem;
+        }
+
+        .test-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .test-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Score Display */
+        .score-display {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-medium);
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        /* Hard-coded wide glow for score-display per theme (more transparent) */
+        body[data-theme="orange"] .score-display {
+            box-shadow: 0 0 40px 0 rgba(255, 107, 53, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="blue"] .score-display {
+            box-shadow: 0 0 40px 0 rgba(59, 130, 246, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="purple"] .score-display {
+            box-shadow: 0 0 40px 0 rgba(139, 92, 246, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="green"] .score-display {
+            box-shadow: 0 0 40px 0 rgba(16, 185, 129, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="red"] .score-display {
+            box-shadow: 0 0 40px 0 rgba(239, 68, 68, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="cyan"] .score-display {
+            box-shadow: 0 0 40px 0 rgba(6, 182, 212, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="pink"] .score-display {
+            box-shadow: 0 0 40px 0 rgba(236, 72, 153, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="amber"] .score-display {
+            box-shadow: 0 0 40px 0 rgba(245, 158, 11, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="emerald"] .score-display {
+            box-shadow: 0 0 40px 0 rgba(5, 150, 105, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="indigo"] .score-display {
+            box-shadow: 0 0 40px 0 rgba(79, 70, 229, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="rose"] .score-display {
+            box-shadow: 0 0 40px 0 rgba(244, 63, 94, 0.18), 0 8px 30px var(--glow-color);
+        }
+        body[data-theme="violet"] .score-display {
+            box-shadow: 0 0 40px 0 rgba(124, 58, 237, 0.18), 0 8px 30px var(--glow-color);
+        }
+
+        .score-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .score-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .score-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Feedback */
+        .feedback {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .feedback.correct {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success-color);
+            color: var(--success-color);
+        }
+
+        .feedback.incorrect {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--error-color);
+            color: var(--error-color);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .test-config, .test-area {
+                padding: 1.5rem;
+            }
+
+            .question-display {
+                font-size: 3rem;
+            }
+
+            .config-options {
+                justify-content: center;
+            }
+
+            .multiple-choice {
+                grid-template-columns: 1fr;
+            }
+
+            .score-display {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+
+        .start-screen {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .start-screen h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .start-screen p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body data-theme="orange">
+    <div class="bg-animation"></div>
+    
+    <!-- Settings Overlay -->
+    <div class="overlay" id="overlay"></div>
+    
+    <!-- Back Button -->
+    <a href="alphabets.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+        <span>Back to Alphabet</span>
+    </a>
+
+    <!-- Settings Button -->
+    <button class="settings-btn" id="settingsBtn">
+        <i class="fas fa-palette"></i>
+    </button>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h3 class="settings-title">Color Theme</h3>
+            <button class="close-settings" id="closeSettings">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="theme-section">
+            <label class="theme-label">Choose Theme</label>
+            <div class="theme-options">
+                <div class="theme-option active" data-theme="orange">
+                    <div class="theme-color" style="background: #ff6b35;"></div>
+                    <span>Orange</span>
+                </div>
+                <div class="theme-option" data-theme="blue">
+                    <div class="theme-color" style="background: #3b82f6;"></div>
+                    <span>Blue</span>
+                </div>
+                <div class="theme-option" data-theme="purple">
+                    <div class="theme-color" style="background: #8b5cf6;"></div>
+                    <span>Purple</span>
+                </div>
+                <div class="theme-option" data-theme="green">
+                    <div class="theme-color" style="background: #10b981;"></div>
+                    <span>Green</span>
+                </div>
+                <div class="theme-option" data-theme="red">
+                    <div class="theme-color" style="background: #ef4444;"></div>
+                    <span>Red</span>
+                </div>
+                <div class="theme-option" data-theme="cyan">
+                    <div class="theme-color" style="background: #06b6d4;"></div>
+                    <span>Cyan</span>
+                </div>
+                <div class="theme-option" data-theme="pink">
+                    <div class="theme-color" style="background: #ec4899;"></div>
+                    <span>Pink</span>
+                </div>
+                <div class="theme-option" data-theme="amber">
+                    <div class="theme-color" style="background: #f59e0b;"></div>
+                    <span>Amber</span>
+                </div>
+                <div class="theme-option" data-theme="emerald">
+                    <div class="theme-color" style="background: #059669;"></div>
+                    <span>Emerald</span>
+                </div>
+                <div class="theme-option" data-theme="indigo">
+                    <div class="theme-color" style="background: #4f46e5;"></div>
+                    <span>Indigo</span>
+                </div>
+                <div class="theme-option" data-theme="rose">
+                    <div class="theme-color" style="background: #f43f5e;"></div>
+                    <span>Rose</span>
+                </div>
+                <div class="theme-option" data-theme="violet">
+                    <div class="theme-color" style="background: #7c3aed;"></div>
+                    <span>Violet</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="logo">எழுத்துப் பயிற்சி</h1>
+            <p class="subtitle">Tamil Alphabet Practice Test</p>
+        </header>
+
+        <!-- Test Configuration -->
+        <section class="test-config">
+            <div class="config-section">
+                <div class="config-label">Letter Categories</div>
+                <div class="config-options">
+                    <button class="config-option" data-category="uyir">உயிர் எழுத்துக்கள்</button>
+                    <button class="config-option" data-category="mey">மெய் எழுத்துக்கள்</button>
+                    <button class="config-option" data-category="ayudha">ஆயுத எழுத்து</button>
+                    <button class="config-option" data-category="uyir-mey">உயிர்மெய் எழுத்துக்கள்</button>
+                    <button class="config-option" data-category="vadamozhi">வடமொழி எழுத்துக்கள்</button>
+                    <button class="config-option active" data-category="all">All Letters</button>
+                </div>
+            </div>
+
+            <div class="config-section">
+                <div class="config-label">Test Direction</div>
+                <div class="config-options">
+                    <button class="config-option active" data-direction="tamil-to-english">Tamil → English</button>
+                    <button class="config-option" data-direction="english-to-tamil">English → Tamil</button>
+                </div>
+            </div>
+
+            <div class="config-section">
+                <div class="config-label">Answer Format</div>
+                <div class="config-options">
+                    <button class="config-option active" data-format="iso">ISO 15919 (ā, ī, ū)</button>
+                    <button class="config-option" data-format="simple">Simple (aa, ii, uu)</button>
+                </div>
+            </div>
+
+            <div class="config-section">
+                <div class="config-label">Question Type</div>
+                <div class="config-options">
+                    <button class="config-option active" data-type="text">Text Input</button>
+                    <button class="config-option" data-type="multiple">Multiple Choice</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Score Display -->
+        <section class="score-display">
+            <div class="score-item">
+                <div class="score-number" id="correctScore">0</div>
+                <div class="score-label">Correct</div>
+            </div>
+            <div class="score-item">
+                <div class="score-number" id="totalScore">0</div>
+                <div class="score-label">Total</div>
+            </div>
+            <div class="score-item">
+                <div class="score-number" id="accuracyScore">0%</div>
+                <div class="score-label">Accuracy</div>
+            </div>
+        </section>
+
+        <!-- Test Area -->
+        <section class="test-area">
+            <div class="start-screen" id="startScreen">
+                <h3>Ready to Practice?</h3>
+                <p>Configure your test settings above and click "Start Test" to begin!</p>
+            </div>
+
+            <div id="questionArea" style="display: none;">
+                <div class="question-display" id="questionDisplay">க</div>
+                
+                <input type="text" class="answer-input" id="answerInput" placeholder="Type your answer..." style="display: none;">
+                
+                <div class="multiple-choice" id="multipleChoice" style="display: none;">
+                    <!-- Multiple choice options will be inserted here -->
+                </div>
+
+                <div class="feedback" id="feedback" style="display: none;"></div>
+            </div>
+
+            <div class="test-controls">
+                <button class="test-btn" id="startBtn">Start Test</button>
+                <button class="test-btn" id="nextBtn" style="display: none;">Next Question</button>
+                <button class="test-btn" id="checkBtn" style="display: none;">Check Answer</button>
+                <button class="test-btn" id="resetBtn" style="display: none;">Reset Test</button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Tamil alphabet data arrays with ISO 15919 and simple romanization
+        const uyirEzhuthu = ['அ', 'ஆ', 'இ', 'ஈ', 'உ', 'ஊ', 'எ', 'ஏ', 'ஐ', 'ஒ', 'ஓ', 'ஔ'];
+        const uyirRomanizationISO = ['a', 'ā', 'i', 'ī', 'u', 'ū', 'e', 'ē', 'ai', 'o', 'ō', 'au'];
+        const uyirRomanizationSimple = ['a', 'aa', 'i', 'ii', 'u', 'uu', 'e', 'ee', 'ai', 'o', 'oo', 'au'];
+
+        const meyEzhuthu = ['க்', 'ங்', 'ச்', 'ஞ்', 'ட்', 'ண்', 'த்', 'ந்', 'ப்', 'ம்', 'ய்', 'ர்', 'ல்', 'வ்', 'ழ்', 'ள்', 'ற்', 'ன்'];
+        const meyRomanizationISO = ['k', 'ṅ', 'c', 'ñ', 'ṭ', 'ṇ', 't', 'n', 'p', 'm', 'y', 'r', 'l', 'v', 'ḻ', 'ḷ', 'ṟ', 'ṉ'];
+        const meyRomanizationSimple = ['k', 'ng', 'c', 'nj', 't', 'n', 'th', 'n', 'p', 'm', 'y', 'r', 'l', 'v', 'zh', 'l', 'rr', 'n'];
+
+        const ayudhaEzhuthu = ['ஃ'];
+        const ayudhaRomanizationISO = ['ḵ'];
+        const ayudhaRomanizationSimple = ['ak'];
+
+        // Generate uyir mey combinations
+        const meyBases = ['க', 'ங', 'ச', 'ஞ', 'ட', 'ண', 'த', 'ந', 'ப', 'ம', 'ய', 'ர', 'ல', 'வ', 'ழ', 'ள', 'ற', 'ன'];
+        const meyBaseRomanISO = ['k', 'ṅ', 'c', 'ñ', 'ṭ', 'ṇ', 't', 'n', 'p', 'm', 'y', 'r', 'l', 'v', 'ḻ', 'ḷ', 'ṟ', 'ṉ'];
+        const meyBaseRomanSimple = ['k', 'ng', 'c', 'nj', 't', 'n', 'th', 'n', 'p', 'm', 'y', 'r', 'l', 'v', 'zh', 'l', 'rr', 'n'];
+
+        const uyirMeyEzhuthu = [];
+        const uyirMeyRomanizationISO = [];
+        const uyirMeyRomanizationSimple = [];
+
+        // Generate all combinations
+        meyBases.forEach((meyBase, meyIndex) => {
+            uyirEzhuthu.forEach((uyir, uyirIndex) => {
+                if (uyirIndex === 0) {
+                    uyirMeyEzhuthu.push(meyBase);
+                    uyirMeyRomanizationISO.push(meyBaseRomanISO[meyIndex] + uyirRomanizationISO[uyirIndex]);
+                    uyirMeyRomanizationSimple.push(meyBaseRomanSimple[meyIndex] + uyirRomanizationSimple[uyirIndex]);
+                } else {
+                    const vowelSigns = ['ா', 'ி', 'ீ', 'ு', 'ூ', 'ெ', 'ே', 'ை', 'ொ', 'ோ', 'ௌ'];
+                    uyirMeyEzhuthu.push(meyBase + vowelSigns[uyirIndex - 1]);
+                    uyirMeyRomanizationISO.push(meyBaseRomanISO[meyIndex] + uyirRomanizationISO[uyirIndex]);
+                    uyirMeyRomanizationSimple.push(meyBaseRomanSimple[meyIndex] + uyirRomanizationSimple[uyirIndex]);
+                }
+            });
+        });
+
+        // Sanskrit letters
+        const vadamozhiBases = ['ஸ', 'ஜ', 'ஷ', 'ஹ', 'க்ஷ'];
+        const vadamozhiBaseRomanISO = ['s', 'j', 'ṣ', 'h', 'kṣ'];
+        const vadamozhiBaseRomanSimple = ['s', 'j', 'sh', 'h', 'ksh'];
+
+        const vadamozhiCombinations = [];
+        const vadamozhiRomanizationISO = [];
+        const vadamozhiRomanizationSimple = [];
+
+        vadamozhiBases.forEach((base, baseIndex) => {
+            uyirEzhuthu.forEach((uyir, uyirIndex) => {
+                if (uyirIndex === 0) {
+                    vadamozhiCombinations.push(base);
+                    vadamozhiRomanizationISO.push(vadamozhiBaseRomanISO[baseIndex] + uyirRomanizationISO[uyirIndex]);
+                    vadamozhiRomanizationSimple.push(vadamozhiBaseRomanSimple[baseIndex] + uyirRomanizationSimple[uyirIndex]);
+                } else {
+                    const vowelSigns = ['ா', 'ி', 'ீ', 'ு', 'ூ', 'ெ', 'ே', 'ை', 'ொ', 'ோ', 'ௌ'];
+                    vadamozhiCombinations.push(base + vowelSigns[uyirIndex - 1]);
+                    vadamozhiRomanizationISO.push(vadamozhiBaseRomanISO[baseIndex] + uyirRomanizationISO[uyirIndex]);
+                    vadamozhiRomanizationSimple.push(vadamozhiBaseRomanSimple[baseIndex] + uyirRomanizationSimple[uyirIndex]);
+                }
+            });
+        });
+
+        // Add ஸ்ரீ separately
+        vadamozhiCombinations.push('ஸ்ரீ');
+        vadamozhiRomanizationISO.push('śrī');
+        vadamozhiRomanizationSimple.push('sri');
+
+        // Test state
+        let currentQuestion = {};
+        let currentConfig = {
+            category: 'all',
+            direction: 'tamil-to-english',
+            format: 'iso',
+            type: 'text'
+        };
+        let scores = {
+            correct: 0,
+            total: 0
+        };
+        let isTestActive = false;
+
+        // DOM elements
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsPanel = document.getElementById('settingsPanel');
+        const closeSettings = document.getElementById('closeSettings');
+        const overlay = document.getElementById('overlay');
+        const startScreen = document.getElementById('startScreen');
+        const questionArea = document.getElementById('questionArea');
+        const questionDisplay = document.getElementById('questionDisplay');
+        const answerInput = document.getElementById('answerInput');
+        const multipleChoice = document.getElementById('multipleChoice');
+        const feedback = document.getElementById('feedback');
+        const startBtn = document.getElementById('startBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const checkBtn = document.getElementById('checkBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const correctScore = document.getElementById('correctScore');
+        const totalScore = document.getElementById('totalScore');
+        const accuracyScore = document.getElementById('accuracyScore');
+
+        // Get letters for current category
+        function getLettersForCategory(category) {
+            const format = currentConfig.format;
+            const isoSuffix = format === 'iso' ? 'ISO' : 'Simple';
+            
+            switch (category) {
+                case 'uyir':
+                    return {
+                        letters: uyirEzhuthu,
+                        romanization: format === 'iso' ? uyirRomanizationISO : uyirRomanizationSimple
+                    };
+                case 'mey':
+                    return {
+                        letters: meyEzhuthu,
+                        romanization: format === 'iso' ? meyRomanizationISO : meyRomanizationSimple
+                    };
+                case 'ayudha':
+                    return {
+                        letters: ayudhaEzhuthu,
+                        romanization: format === 'iso' ? ayudhaRomanizationISO : ayudhaRomanizationSimple
+                    };
+                case 'uyir-mey':
+                    return {
+                        letters: uyirMeyEzhuthu,
+                        romanization: format === 'iso' ? uyirMeyRomanizationISO : uyirMeyRomanizationSimple
+                    };
+                case 'vadamozhi':
+                    return {
+                        letters: vadamozhiCombinations,
+                        romanization: format === 'iso' ? vadamozhiRomanizationISO : vadamozhiRomanizationSimple
+                    };
+                case 'all':
+                default:
+                    const allLetters = [
+                        ...uyirEzhuthu,
+                        ...meyEzhuthu,
+                        ...ayudhaEzhuthu,
+                        ...uyirMeyEzhuthu,
+                        ...vadamozhiCombinations
+                    ];
+                    const allRomanization = format === 'iso' ? [
+                        ...uyirRomanizationISO,
+                        ...meyRomanizationISO,
+                        ...ayudhaRomanizationISO,
+                        ...uyirMeyRomanizationISO,
+                        ...vadamozhiRomanizationISO
+                    ] : [
+                        ...uyirRomanizationSimple,
+                        ...meyRomanizationSimple,
+                        ...ayudhaRomanizationSimple,
+                        ...uyirMeyRomanizationSimple,
+                        ...vadamozhiRomanizationSimple
+                    ];
+                    return {
+                        letters: allLetters,
+                        romanization: allRomanization
+                    };
+            }
+        }
+
+        // Generate new question
+        function generateQuestion() {
+            const { letters, romanization } = getLettersForCategory(currentConfig.category);
+            const randomIndex = Math.floor(Math.random() * letters.length);
+            
+            if (currentConfig.direction === 'tamil-to-english') {
+                currentQuestion = {
+                    question: letters[randomIndex],
+                    answer: romanization[randomIndex],
+                    type: 'tamil'
+                };
+            } else {
+                currentQuestion = {
+                    question: romanization[randomIndex],
+                    answer: letters[randomIndex],
+                    type: 'english'
+                };
+            }
+
+            displayQuestion();
+        }
+
+        // Display question
+        function displayQuestion() {
+            questionDisplay.textContent = currentQuestion.question;
+            
+            if (currentConfig.type === 'text') {
+                answerInput.style.display = 'block';
+                multipleChoice.style.display = 'none';
+                answerInput.value = '';
+                answerInput.focus();
+            } else {
+                answerInput.style.display = 'none';
+                multipleChoice.style.display = 'grid';
+                generateMultipleChoices();
+            }
+
+            feedback.style.display = 'none';
+            checkBtn.style.display = 'inline-block';
+            nextBtn.style.display = 'none';
+        }
+
+        // Generate multiple choice options
+        function generateMultipleChoices() {
+            const { letters, romanization } = getLettersForCategory(currentConfig.category);
+            const correctAnswer = currentQuestion.answer;
+            const options = [correctAnswer];
+
+            // Generate 3 wrong answers
+            while (options.length < 4) {
+                const randomIndex = Math.floor(Math.random() * letters.length);
+                const option = currentConfig.direction === 'tamil-to-english' 
+                    ? romanization[randomIndex] 
+                    : letters[randomIndex];
+                    
+                if (!options.includes(option)) {
+                    options.push(option);
+                }
+            }
+
+            // Shuffle options
+            for (let i = options.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [options[i], options[j]] = [options[j], options[i]];
+            }
+
+            // Create choice buttons
+            multipleChoice.innerHTML = '';
+            options.forEach(option => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+                btn.textContent = option;
+                btn.addEventListener('click', () => handleMultipleChoice(option, btn));
+                multipleChoice.appendChild(btn);
+            });
+        }
+
+        // Handle multiple choice selection
+        function handleMultipleChoice(selectedAnswer, btnElement) {
+            const isCorrect = selectedAnswer === currentQuestion.answer;
+            
+            // Disable all buttons
+            document.querySelectorAll('.choice-btn').forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === currentQuestion.answer) {
+                    btn.classList.add('correct');
+                } else if (btn === btnElement && !isCorrect) {
+                    btn.classList.add('incorrect');
+                }
+            });
+
+            scores.total++;
+            if (isCorrect) {
+                scores.correct++;
+                showFeedback(true, 'Correct! Well done!');
+            } else {
+                showFeedback(false, `Incorrect. The correct answer is: ${currentQuestion.answer}`);
+            }
+
+            updateScores();
+            checkBtn.style.display = 'none';
+            nextBtn.style.display = 'inline-block';
+        }
+
+        // Check answer
+        function checkAnswer() {
+            if (currentConfig.type === 'multiple') return;
+
+            const userAnswer = answerInput.value.trim().toLowerCase();
+            const correctAnswer = currentQuestion.answer.toLowerCase();
+            const isCorrect = userAnswer === correctAnswer;
+
+            scores.total++;
+            if (isCorrect) {
+                scores.correct++;
+                showFeedback(true, 'Correct! Well done!');
+            } else {
+                showFeedback(false, `Incorrect. The correct answer is: ${currentQuestion.answer}`);
+            }
+
+            updateScores();
+            checkBtn.style.display = 'none';
+            nextBtn.style.display = 'inline-block';
+        }
+
+        // Show feedback
+        function showFeedback(isCorrect, message) {
+            feedback.textContent = message;
+            feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedback.style.display = 'block';
+        }
+
+        // Update scores
+        function updateScores() {
+            correctScore.textContent = scores.correct;
+            totalScore.textContent = scores.total;
+            const accuracy = scores.total > 0 ? Math.round((scores.correct / scores.total) * 100) : 0;
+            accuracyScore.textContent = `${accuracy}%`;
+        }
+
+        // Start test
+        function startTest() {
+            isTestActive = true;
+            startScreen.style.display = 'none';
+            questionArea.style.display = 'block';
+            startBtn.style.display = 'none';
+            resetBtn.style.display = 'inline-block';
+            generateQuestion();
+        }
+
+        // Reset test
+        function resetTest() {
+            isTestActive = false;
+            scores = { correct: 0, total: 0 };
+            updateScores();
+            startScreen.style.display = 'block';
+            questionArea.style.display = 'none';
+            startBtn.style.display = 'inline-block';
+            resetBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            checkBtn.style.display = 'none';
+        }
+
+        // Theme Management
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'orange';
+            setTheme(savedTheme);
+            
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.toggle('active', option.dataset.theme === savedTheme);
+            });
+        }
+
+        function setTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            
+            setTimeout(() => {
+                updateParticleColors();
+            }, 100);
+        }
+
+        function updateParticleColors() {
+            const particles = document.querySelectorAll('.particle');
+            const computedStyle = getComputedStyle(document.documentElement);
+            const particleColor = computedStyle.getPropertyValue('--particle-color').trim();
+            
+            particles.forEach(particle => {
+                particle.style.background = particleColor;
+            });
+        }
+
+        // Create particles
+        function createParticles() {
+            const container = document.querySelector('.container');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Event Listeners
+        settingsBtn.addEventListener('click', () => {
+            settingsPanel.classList.add('open');
+            overlay.classList.add('show');
+        });
+
+        function closeSettingsPanel() {
+            settingsPanel.classList.remove('open');
+            overlay.classList.remove('show');
+        }
+
+        closeSettings.addEventListener('click', closeSettingsPanel);
+        overlay.addEventListener('click', closeSettingsPanel);
+
+        // Theme Selection
+        document.querySelectorAll('.theme-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                setTheme(option.dataset.theme);
+            });
+        });
+
+        // Config options
+        document.querySelectorAll('.config-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const parent = option.parentElement;
+                parent.querySelectorAll('.config-option').forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+
+                // Update config
+                if (option.dataset.category) {
+                    currentConfig.category = option.dataset.category;
+                }
+                if (option.dataset.direction) {
+                    currentConfig.direction = option.dataset.direction;
+                }
+                if (option.dataset.format) {
+                    currentConfig.format = option.dataset.format;
+                }
+                if (option.dataset.type) {
+                    currentConfig.type = option.dataset.type;
+                }
+            });
+        });
+
+        // Test controls
+        startBtn.addEventListener('click', startTest);
+        resetBtn.addEventListener('click', resetTest);
+        checkBtn.addEventListener('click', checkAnswer);
+        nextBtn.addEventListener('click', generateQuestion);
+
+        // Enter key handling
+        answerInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && checkBtn.style.display !== 'none') {
+                checkAnswer();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            createParticles();
+            updateParticleColors();
+            updateScores();
+        });
+
+        // Interactive particle effects
+        document.addEventListener('mousemove', (e) => {
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach((particle, index) => {
+                if (index % 3 === 0) {
+                    const rect = particle.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const distance = Math.sqrt(x * x + y * y);
+                    
+                    if (distance < 150) {
+                        particle.style.transform = `translate(${x * 0.05}px, ${y * 0.05}px) scale(1.2)`;
+                        particle.style.opacity = '1';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
