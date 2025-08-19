@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorkuvai - Tamil Alphabet Dictionary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Tamil:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .help-icon {
+            color: var(--accent-color);
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: color 0.2s, box-shadow 0.2s;
+            outline: none;
+            position: relative;
+        }
+        .help-icon:hover,
+        .help-icon:focus {
+            color: var(--primary-color);
+            box-shadow: 0 0 12px var(--glow-color), 0 0 2px var(--primary-color);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            color: var(--text-primary);
+            padding: 2rem;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 90%;
+            margin: auto;
+            box-shadow: 0 8px 32px var(--glow-color);
+            position: relative;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--primary-color);
+        }
+
+        .modal-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .modal-text strong {
+            color: var(--primary-color);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #ff8c42;
+            --accent-color: #ffa726;
+            --glow-color: rgba(255, 107, 53, 0.3);
+            --glow-color-light: rgba(255, 107, 53, 0.1);
+            --glow-color-medium: rgba(255, 107, 53, 0.2);
+            --particle-color: #ff6b35;
+            --dark-bg: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-muted: #808080;
+            --border-color: #333333;
+            --shadow-light: 0 4px 20px var(--glow-color);
+            --shadow-medium: 0 8px 30px var(--glow-color);
+            --shadow-heavy: 0 20px 60px var(--glow-color);
+            --border-radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Theme variations */
+        [data-theme="orange"] {
+            --primary-color: #ff6b35;
+            --secondary-color: #ff8c42;
+            --accent-color: #ffa726;
+            --glow-color: rgba(255, 107, 53, 0.3);
+            --glow-color-light: rgba(255, 107, 53, 0.1);
+            --glow-color-medium: rgba(255, 107, 53, 0.2);
+            --particle-color: #ff6b35;
+        }
+
+        [data-theme="blue"] {
+            --primary-color: #3b82f6;
+            --secondary-color: #60a5fa;
+            --accent-color: #93c5fd;
+            --glow-color: rgba(59, 130, 246, 0.3);
+            --glow-color-light: rgba(59, 130, 246, 0.1);
+            --glow-color-medium: rgba(59, 130, 246, 0.2);
+            --particle-color: #3b82f6;
+        }
+
+        [data-theme="purple"] {
+            --primary-color: #8b5cf6;
+            --secondary-color: #a78bfa;
+            --accent-color: #c4b5fd;
+            --glow-color: rgba(139, 92, 246, 0.3);
+            --glow-color-light: rgba(139, 92, 246, 0.1);
+            --glow-color-medium: rgba(139, 92, 246, 0.2);
+            --particle-color: #8b5cf6;
+        }
+
+        [data-theme="green"] {
+            --primary-color: #10b981;
+            --secondary-color: #34d399;
+            --accent-color: #6ee7b7;
+            --glow-color: rgba(16, 185, 129, 0.3);
+            --glow-color-light: rgba(16, 185, 129, 0.1);
+            --glow-color-medium: rgba(16, 185, 129, 0.2);
+            --particle-color: #10b981;
+        }
+
+        [data-theme="red"] {
+            --primary-color: #ef4444;
+            --secondary-color: #f87171;
+            --accent-color: #fca5a5;
+            --glow-color: rgba(239, 68, 68, 0.3);
+            --glow-color-light: rgba(239, 68, 68, 0.1);
+            --glow-color-medium: rgba(239, 68, 68, 0.2);
+            --particle-color: #ef4444;
+        }
+
+        [data-theme="cyan"] {
+            --primary-color: #06b6d4;
+            --secondary-color: #22d3ee;
+            --accent-color: #67e8f9;
+            --glow-color: rgba(6, 182, 212, 0.3);
+            --glow-color-light: rgba(6, 182, 212, 0.1);
+            --glow-color-medium: rgba(6, 182, 212, 0.2);
+            --particle-color: #06b6d4;
+        }
+
+        [data-theme="pink"] {
+            --primary-color: #ec4899;
+            --secondary-color: #f472b6;
+            --accent-color: #f9a8d4;
+            --glow-color: rgba(236, 72, 153, 0.3);
+            --glow-color-light: rgba(236, 72, 153, 0.1);
+            --glow-color-medium: rgba(236, 72, 153, 0.2);
+            --particle-color: #ec4899;
+        }
+
+        [data-theme="amber"] {
+            --primary-color: #f59e0b;
+            --secondary-color: #fbbf24;
+            --accent-color: #fcd34d;
+            --glow-color: rgba(245, 158, 11, 0.3);
+            --glow-color-light: rgba(245, 158, 11, 0.1);
+            --glow-color-medium: rgba(245, 158, 11, 0.2);
+            --particle-color: #f59e0b;
+        }
+
+        [data-theme="emerald"] {
+            --primary-color: #059669;
+            --secondary-color: #10b981;
+            --accent-color: #34d399;
+            --glow-color: rgba(5, 150, 105, 0.3);
+            --glow-color-light: rgba(5, 150, 105, 0.1);
+            --glow-color-medium: rgba(5, 150, 105, 0.2);
+            --particle-color: #059669;
+        }
+
+        [data-theme="indigo"] {
+            --primary-color: #4f46e5;
+            --secondary-color: #6366f1;
+            --accent-color: #818cf8;
+            --glow-color: rgba(79, 70, 229, 0.3);
+            --glow-color-light: rgba(79, 70, 229, 0.1);
+            --glow-color-medium: rgba(79, 70, 229, 0.2);
+            --particle-color: #4f46e5;
+        }
+
+        [data-theme="rose"] {
+            --primary-color: #f43f5e;
+            --secondary-color: #fb7185;
+            --accent-color: #fda4af;
+            --glow-color: rgba(244, 63, 94, 0.3);
+            --glow-color-light: rgba(244, 63, 94, 0.1);
+            --glow-color-medium: rgba(244, 63, 94, 0.2);
+            --particle-color: #f43f5e;
+        }
+
+        [data-theme="violet"] {
+            --primary-color: #7c3aed;
+            --secondary-color: #8b5cf6;
+            --accent-color: #a78bfa;
+            --glow-color: rgba(124, 58, 237, 0.3);
+            --glow-color-light: rgba(124, 58, 237, 0.1);
+            --glow-color-medium: rgba(124, 58, 237, 0.2);
+            --particle-color: #7c3aed;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 50%, var(--glow-color-light) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, var(--glow-color-light) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, var(--glow-color-light) 0%, transparent 50%);
+            animation: bgFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes bgFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(1deg); }
+            66% { transform: translateY(10px) rotate(-1deg); }
+        }
+
+        /* Floating Particles */
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--particle-color);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        body[data-theme="orange"] .particle {
+            background: #ff6b35 !important;
+        }
+        body[data-theme="blue"] .particle {
+            background: #3b82f6 !important;
+        }
+        body[data-theme="purple"] .particle {
+            background: #8b5cf6 !important;
+        }
+        body[data-theme="green"] .particle {
+            background: #10b981 !important;
+        }
+        body[data-theme="red"] .particle {
+            background: #ef4444 !important;
+        }
+        body[data-theme="cyan"] .particle {
+            background: #06b6d4 !important;
+        }
+        body[data-theme="pink"] .particle {
+            background: #ec4899 !important;
+        }
+        body[data-theme="amber"] .particle {
+            background: #f59e0b !important;
+        }
+        body[data-theme="emerald"] .particle {
+            background: #059669 !important;
+        }
+        body[data-theme="indigo"] .particle {
+            background: #4f46e5 !important;
+        }
+        body[data-theme="rose"] .particle {
+            background: #f43f5e !important;
+        }
+        body[data-theme="violet"] .particle {
+            background: #7c3aed !important;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) translateX(0px); 
+                opacity: 0.3; 
+            }
+            25% { 
+                transform: translateY(-100px) translateX(20px); 
+                opacity: 0.8; 
+            }
+            50% { 
+                transform: translateY(-60px) translateX(-20px); 
+                opacity: 0.6; 
+            }
+            75% { 
+                transform: translateY(-120px) translateX(10px); 
+                opacity: 0.4; 
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 30px var(--glow-color);
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        /* Settings Button */
+        .settings-btn {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 1100;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .settings-btn:hover {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 350px;
+            height: 100vh;
+            background: var(--card-bg);
+            border-left: 1px solid var(--border-color);
+            padding: 2rem;
+            transition: var(--transition);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .settings-panel.open {
+            right: 0;
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .settings-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .close-settings {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .theme-section {
+            margin-bottom: 2rem;
+        }
+
+        .theme-label {
+            display: block;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .theme-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+        }
+
+        .theme-option {
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            background: var(--dark-bg);
+            font-size: 0.85rem;
+        }
+
+        .theme-option.active {
+            border-color: var(--primary-color);
+            background: var(--glow-color-light);
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+
+        .theme-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .nav-toggle {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            z-index: 1100;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .nav-toggle:hover {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+
+        /* Drawer */
+        .nav-drawer {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100vh;
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+        .nav-drawer.open {
+            left: 0;
+        }
+
+        .nav-drawer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .nav-title {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .close-nav {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 0.75rem 0.5rem;
+            overflow-y: auto;
+        }
+        .nav-list li {
+            margin: 0.25rem 0;
+        }
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.75rem 0.9rem;
+            border-radius: 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: var(--glow-color-light);
+            box-shadow: 0 0 12px var(--glow-color-light);
+            border: 1px solid var(--primary-color);
+        }
+
+        /* Alphabet Section */
+        .alphabet-section {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-medium);
+            animation: fadeInUp 1s ease-out 0.2s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body[data-theme="orange"] .alphabet-section {
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.15) !important;
+        }
+        body[data-theme="blue"] .alphabet-section {
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.15) !important;
+        }
+        body[data-theme="purple"] .alphabet-section {
+            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.15) !important;
+        }
+        body[data-theme="green"] .alphabet-section {
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.15) !important;
+        }
+        body[data-theme="red"] .alphabet-section {
+            box-shadow: 0 8px 30px rgba(239, 68, 68, 0.15) !important;
+        }
+        body[data-theme="cyan"] .alphabet-section {
+            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.15) !important;
+        }
+        body[data-theme="pink"] .alphabet-section {
+            box-shadow: 0 8px 30px rgba(236, 72, 153, 0.15) !important;
+        }
+        body[data-theme="amber"] .alphabet-section {
+            box-shadow: 0 8px 30px rgba(245, 158, 11, 0.15) !important;
+        }
+        body[data-theme="emerald"] .alphabet-section {
+            box-shadow: 0 8px 30px rgba(5, 150, 105, 0.15) !important;
+        }
+        body[data-theme="indigo"] .alphabet-section {
+            box-shadow: 0 8px 30px rgba(79, 70, 229, 0.15) !important;
+        }
+        body[data-theme="rose"] .alphabet-section {
+            box-shadow: 0 8px 30px rgba(244, 63, 94, 0.15) !important;
+        }
+        body[data-theme="violet"] .alphabet-section {
+            box-shadow: 0 8px 30px rgba(124, 58, 237, 0.15) !important;
+        }
+
+        .alphabet-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            animation: slideIn 2s ease-out;
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, var(--primary-color), transparent);
+            border: 2px solid var(--primary-color);
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            opacity: 0.97;
+            box-shadow: 0 4px 24px 0 var(--glow-color-light);
+        }
+
+        .category-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(120deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.07) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .category-header::after {
+            content: '';
+            position: absolute;
+            top: -60%;
+            left: -60%;
+            width: 220%;
+            height: 220%;
+            background: linear-gradient(60deg, transparent 60%, rgba(255,255,255,0.18) 80%, transparent 100%);
+            animation: shine 4s infinite;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .category-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: white;
+            margin: 0;
+            font-family: 'Noto Sans Tamil', 'Inter', sans-serif;
+            position: relative;
+            z-index: 3;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .letters-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .letter-card {
+            background: linear-gradient(135deg, var(--primary-color), transparent);
+            border: 1px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 90px;
+        }
+
+        .letter-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(120deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .letter-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px var(--glow-color);
+            border-color: var(--accent-color);
+        }
+
+        .letter-card:hover::before {
+            background: linear-gradient(120deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
+        }
+
+        .tamil-letter {
+            font-family: 'Noto Sans Tamil', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.3rem;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .romanization {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            line-height: 1;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(30deg); }
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .alphabet-section {
+                padding: 1.5rem;
+            }
+
+            .letters-grid {
+                grid-template-columns: repeat(auto-fit, minmax(75px, 1fr));
+                gap: 0.8rem;
+            }
+
+            .letter-card {
+                min-height: 75px;
+                padding: 0.8rem;
+            }
+
+            .tamil-letter {
+                font-size: 1.8rem;
+            }
+
+            .romanization {
+                font-size: 0.7rem;
+            }
+
+            .nav-toggle {
+                left: 1rem;
+                top: 1rem;
+            }
+            .nav-drawer {
+                width: 260px;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+    </style>
+</head>
+<body data-theme="orange">
+    <div class="bg-animation"></div>
+    
+    <!-- Settings Overlay -->
+    <div class="overlay" id="overlay"></div>
+    
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h3 class="settings-title">Settings</h3>
+            <button class="close-settings" id="closeSettings">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="theme-section">
+            <label class="theme-label">Theme Color</label>
+            <div class="theme-options">
+                <div class="theme-option active" data-theme="orange">
+                    <div class="theme-color" style="background: #ff6b35;"></div>
+                    <span>Orange</span>
+                </div>
+                <div class="theme-option" data-theme="blue">
+                    <div class="theme-color" style="background: #3b82f6;"></div>
+                    <span>Blue</span>
+                </div>
+                <div class="theme-option" data-theme="purple">
+                    <div class="theme-color" style="background: #8b5cf6;"></div>
+                    <span>Purple</span>
+                </div>
+                <div class="theme-option" data-theme="green">
+                    <div class="theme-color" style="background: #10b981;"></div>
+                    <span>Green</span>
+                </div>
+                <div class="theme-option" data-theme="red">
+                    <div class="theme-color" style="background: #ef4444;"></div>
+                    <span>Red</span>
+                </div>
+                <div class="theme-option" data-theme="cyan">
+                    <div class="theme-color" style="background: #06b6d4;"></div>
+                    <span>Cyan</span>
+                </div>
+                <div class="theme-option" data-theme="pink">
+                    <div class="theme-color" style="background: #ec4899;"></div>
+                    <span>Pink</span>
+                </div>
+                <div class="theme-option" data-theme="amber">
+                    <div class="theme-color" style="background: #f59e0b;"></div>
+                    <span>Amber</span>
+                </div>
+                <div class="theme-option" data-theme="emerald">
+                    <div class="theme-color" style="background: #059669;"></div>
+                    <span>Emerald</span>
+                </div>
+                <div class="theme-option" data-theme="indigo">
+                    <div class="theme-color" style="background: #4f46e5;"></div>
+                    <span>Indigo</span>
+                </div>
+                <div class="theme-option" data-theme="rose">
+                    <div class="theme-color" style="background: #f43f5e;"></div>
+                    <span>Rose</span>
+                </div>
+                <div class="theme-option" data-theme="violet">
+                    <div class="theme-color" style="background: #7c3aed;"></div>
+                    <span>Violet</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="nav-drawer" id="navDrawer" aria-hidden="true">
+        <div class="nav-drawer-header">
+            <span class="nav-title">Menu</span>
+            <button class="close-nav" id="closeNav" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="nav-list">
+            <li><a class="nav-link" href="index.html"><i class="fas fa-search"></i> Dictionary</a></li>
+            <li><a class="nav-link" href="alphabets.html"><i class="fas fa-language"></i> Tamil Alphabet</a></li>
+        </ul>
+    </nav>
+
+    <!-- Help Modals -->
+    <div id="uyirModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('uyirModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-text">
+                <strong>Uyir Ezhuthu (உயிர் எழுத்துக்கள்)</strong><br><br>
+                These are the 12 vowel letters in Tamil. They are usually only found at the start of a word.
+            </div>
+        </div>
+    </div>
+
+    <div id="meyModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('meyModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-text">
+                <strong>Mey Ezhuthu (மெய் எழுத்துக்கள்)</strong><br><br>
+                These are the 18 consonant letters in Tamil. They represent consonant sounds that need to be combined with vowels to form complete syllables. The consonant alone has a muted sound.
+            </div>
+        </div>
+    </div>
+
+    <div id="ayudhaModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('ayudhaModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-text">
+                <strong>Ayudha Ezhuthu (ஆயுத எழுத்து)</strong><br><br>
+                This is the special letter 'ஃ' (aytham) in Tamil. It represents a glottal stop sound and is used in certain Tamil words. It's neither a vowel nor a consonant but has its own unique category.
+            </div>
+        </div>
+    </div>
+
+    <div id="uyirMeyModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('uyirMeyModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-text">
+                <strong>Uyir Mey Ezhuthu (உயிர்மெய் எழுத்துக்கள்)</strong><br><br>
+                These are compound letters formed by combining consonants (mey) with vowels (uyir). Each consonant can combine with each of the 12 vowels to create different syllables. This creates the majority of Tamil script combinations used in writing.
+            </div>
+        </div>
+    </div>
+
+    <div id="vadamozhiModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('vadamozhiModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-text">
+                <strong>Vadamozhi Ezhuthu (வடமொழி எழுத்துக்கள்)</strong><br><br>
+                These are Sanskrit-derived letters used in Tamil to write words borrowed from Sanskrit. They include special consonants like ஸ், ஜ், ஷ், ஹ், and compound letters like க்ஷ் and ஸ்ரீ that don't exist in pure Tamil but are needed for Sanskrit loanwords.
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <button class="settings-btn" id="settingsBtn">
+                <i class="fas fa-cog"></i>
+            </button>
+            <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1 class="logo">தமிழ் எழுத்துக்கள்</h1>
+            <p class="subtitle">Tamil Alphabet Dictionary</p>
+        </header>
+
+        <div style="text-align:center; margin-top:2rem;">
+            <a href="alphabet-test.html" class="test-btn" style="
+                display: inline-block;
+                background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                color: #fff;
+                font-weight: 600;
+                padding: 1rem 2.5rem;
+                border-radius: 32px;
+                font-size: 1.1rem;
+                text-decoration: none;
+                box-shadow: 0 4px 20px var(--glow-color);
+                transition: background 0.2s, transform 0.2s;
+                margin-bottom: 2rem;
+            " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                Take the Alphabet Quiz &rarr;
+            </a>
+        </div>
+
+        <section class="alphabet-section">
+            <!-- Uyir Ezhuthu (Vowels) -->
+            <div class="category-header">
+                <h2 class="category-title">
+                    உயிர் எழுத்துக்கள் (Uyir Ezhuthu - Vowels)
+                    <span class="help-icon" tabindex="0" title="More info" onclick="openModal('uyirModal')">
+                        <i class="fas fa-question-circle"></i>
+                    </span>
+                </h2>
+            </div>
+            <div class="letters-grid" id="uyirGrid">
+                <!-- Vowels will be generated here -->
+            </div>
+
+            <!-- Mey Ezhuthu (Consonants) -->
+            <div class="category-header">
+                <h2 class="category-title">
+                    மெய் எழுத்துக்கள் (Mey Ezhuthu - Consonants)
+                    <span class="help-icon" tabindex="0" title="More info" onclick="openModal('meyModal')">
+                        <i class="fas fa-question-circle"></i>
+                    </span>
+                </h2>
+            </div>
+            <div class="letters-grid" id="meyGrid">
+                <!-- Consonants will be generated here -->
+            </div>
+
+            <!-- Ayudha Ezhuthu -->
+            <div class="category-header">
+                <h2 class="category-title">
+                    ஆயுத எழுத்து (Ayudha Ezhuthu - Aytham)
+                    <span class="help-icon" tabindex="0" title="More info" onclick="openModal('ayudhaModal')">
+                        <i class="fas fa-question-circle"></i>
+                    </span>
+                </h2>
+            </div>
+            <div class="letters-grid" id="ayudhaGrid">
+                <!-- Aytham will be generated here -->
+            </div>
+
+            <!-- Uyir Mey Ezhuthu (Consonant-Vowel combinations) -->
+            <div class="category-header">
+                <h2 class="category-title">
+                    உயிர்மெய் எழுத்துக்கள் (Uyir Mey Ezhuthu - Compound Letters)
+                    <span class="help-icon" tabindex="0" title="More info" onclick="openModal('uyirMeyModal')">
+                        <i class="fas fa-question-circle"></i>
+                    </span>
+                </h2>
+            </div>
+            <div class="letters-grid" id="uyirMeyGrid">
+                <!-- Compound letters will be generated here -->
+            </div>
+
+            <!-- Vadamozhi Ezhuthu (Sanskrit Letters) -->
+            <div class="category-header">
+                <h2 class="category-title">
+                    வடமொழி எழுத்துக்கள் (Vadamozhi Ezhuthu - Sanskrit Letters)
+                    <span class="help-icon" tabindex="0" title="More info" onclick="openModal('vadamozhiModal')">
+                        <i class="fas fa-question-circle"></i>
+                    </span>
+                </h2>
+            </div>
+            <div class="letters-grid" id="vadamozhiGrid">
+                <!-- Sanskrit letters will be generated here -->
+            </div>
+        </section>
+
+        <div style="text-align:center; margin-top:2rem;">
+        <a href="alphabet-test.html" class="test-btn" style="
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: #fff;
+            font-weight: 600;
+            padding: 1rem 2.5rem;
+            border-radius: 32px;
+            font-size: 1.1rem;
+            text-decoration: none;
+            box-shadow: 0 4px 20px var(--glow-color);
+            transition: background 0.2s, transform 0.2s;
+        " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            Take the Alphabet Quiz &rarr;
+        </a>
+    </div>
+
+    </div>
+
+    <script>
+        // Tamil alphabet data arrays with ISO 15919 transliteration
+        const uyirEzhuthu = ['அ', 'ஆ', 'இ', 'ஈ', 'உ', 'ஊ', 'எ', 'ஏ', 'ஐ', 'ஒ', 'ஓ', 'ஔ'];
+        const uyirRomanization = ['a', 'ā', 'i', 'ī', 'u', 'ū', 'e', 'ē', 'ai', 'o', 'ō', 'au'];
+
+        const meyEzhuthu = ['க்', 'ங்', 'ச்', 'ஞ்', 'ட்', 'ண்', 'த்', 'ந்', 'ப்', 'ம்', 'ய்', 'ர்', 'ல்', 'வ்', 'ழ்', 'ள்', 'ற்', 'ன்'];
+        const meyRomanization = ['k', 'ṅ', 'c', 'ñ', 'ṭ', 'ṇ', 't', 'n', 'p', 'm', 'y', 'r', 'l', 'v', 'ḻ', 'ḷ', 'ṟ', 'ṉ'];
+
+        const ayudhaEzhuthu = ['ஃ'];
+        const ayudhaRomanization = ['ḵ'];
+
+        // Generate uyir mey combinations in the same order as mey ezhuthu
+        const meyBases = ['க', 'ங', 'ச', 'ஞ', 'ட', 'ண', 'த', 'ந', 'ப', 'ம', 'ய', 'ர', 'ல', 'வ', 'ழ', 'ள', 'ற', 'ன'];
+        const meyBaseRoman = ['k', 'ṅ', 'c', 'ñ', 'ṭ', 'ṇ', 't', 'n', 'p', 'm', 'y', 'r', 'l', 'v', 'ḻ', 'ḷ', 'ṟ', 'ṉ'];
+
+        const uyirMeyEzhuthu = [];
+        const uyirMeyRomanization = [];
+
+        // Sanskrit (Vadamozhi) base consonants and their romanizations
+        const vadamozhiBases = ['ஸ', 'ஜ', 'ஷ', 'ஹ', 'க்ஷ'];
+        const vadamozhiBaseRoman = ['sa', 'ja', 'sha', 'ha', 'ksha'];
+
+        // Tamil vowel signs and romanizations (excluding the first, which is the base itself)
+        const vadamozhiVowelSigns = ['', 'ா', 'ி', 'ீ', 'ு', 'ூ', 'ெ', 'ே', 'ை', 'ொ', 'ோ', 'ௌ'];
+        const vadamozhiVowelRoman = ['a', 'ā', 'i', 'ī', 'u', 'ū', 'e', 'ē', 'ai', 'o', 'ō', 'au'];
+
+        // Generate all combinations
+        meyBases.forEach((meyBase, meyIndex) => {
+            uyirEzhuthu.forEach((uyir, uyirIndex) => {
+                if (uyirIndex === 0) {
+                    // For 'அ', use the base consonant
+                    uyirMeyEzhuthu.push(meyBase);
+                    uyirMeyRomanization.push(meyBaseRoman[meyIndex] + uyirRomanization[uyirIndex]);
+                } else {
+                    // For other vowels, combine consonant with vowel sign
+                    const vowelSigns = ['ா', 'ி', 'ீ', 'ு', 'ூ', 'ெ', 'ே', 'ை', 'ொ', 'ோ', 'ௌ'];
+                    uyirMeyEzhuthu.push(meyBase + vowelSigns[uyirIndex - 1]);
+                    uyirMeyRomanization.push(meyBaseRoman[meyIndex] + uyirRomanization[uyirIndex]);
+                }
+            });
+        });
+
+        // Generate all combinations for Vadamozhi (Sanskrit) letters
+        const vadamozhiCombinations = [];
+        const vadamozhiCombinationsRoman = [];
+
+        vadamozhiBases.forEach((base, baseIndex) => {
+            vadamozhiVowelSigns.forEach((sign, signIndex) => {
+                vadamozhiCombinations.push(base + sign);
+                vadamozhiCombinationsRoman.push(vadamozhiBaseRoman[baseIndex] + vadamozhiVowelRoman[signIndex]);
+            });
+        });
+        // Add ஸ்ரீ separately
+        vadamozhiCombinations.push('ஸ்ரீ');
+        vadamozhiCombinationsRoman.push('srī');
+
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsPanel = document.getElementById('settingsPanel');
+        const closeSettings = document.getElementById('closeSettings');
+        const overlay = document.getElementById('overlay');
+        const navToggle = document.getElementById('navToggle');
+        const navDrawer = document.getElementById('navDrawer');
+        const closeNav = document.getElementById('closeNav');
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
+        });
+
+        // Theme Management
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'orange';
+            setTheme(savedTheme);
+            
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.toggle('active', option.dataset.theme === savedTheme);
+            });
+        }
+
+        function setTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            
+            setTimeout(() => {
+                updateParticleColors();
+            }, 100);
+        }
+
+        function updateParticleColors() {
+            const particles = document.querySelectorAll('.particle');
+            const computedStyle = getComputedStyle(document.documentElement);
+            const particleColor = computedStyle.getPropertyValue('--particle-color').trim();
+            
+            particles.forEach(particle => {
+                particle.style.background = particleColor;
+            });
+        }
+
+        function openNavDrawer() {
+            navDrawer.classList.add('open');
+            navDrawer.setAttribute('aria-hidden', 'false');
+            overlay.classList.add('show');
+        }
+
+        function closeNavDrawer() {
+            navDrawer.classList.remove('open');
+            navDrawer.setAttribute('aria-hidden', 'true');
+            overlay.classList.remove('show');
+        }
+
+        navToggle.addEventListener('click', openNavDrawer);
+        closeNav.addEventListener('click', closeNavDrawer);
+        overlay.addEventListener('click', () => {
+            closeNavDrawer();
+            closeSettingsPanel();
+        });
+
+        document.querySelectorAll('.nav-link').forEach(a => {
+            a.addEventListener('click', closeNavDrawer);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeNavDrawer();
+                closeSettingsPanel();
+                // Close any open modals
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
+        });
+
+        // Settings Panel
+        settingsBtn.addEventListener('click', () => {
+            settingsPanel.classList.add('open');
+            overlay.classList.add('show');
+        });
+
+        function closeSettingsPanel() {
+            settingsPanel.classList.remove('open');
+            overlay.classList.remove('show');
+        }
+
+        closeSettings.addEventListener('click', closeSettingsPanel);
+
+        // Theme Selection
+        document.querySelectorAll('.theme-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                setTheme(option.dataset.theme);
+            });
+        });
+
+        // Create particles
+        function createParticles() {
+            const container = document.querySelector('.container');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Generate letter cards
+        function generateLetterCards(letters, romanizations, containerId) {
+            const container = document.getElementById(containerId);
+            letters.forEach((letter, index) => {
+                const card = document.createElement('div');
+                card.className = 'letter-card';
+                card.innerHTML = `
+                    <div class="tamil-letter">${letter}</div>
+                    <div class="romanization">${romanizations[index]}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Interactive particle effects
+        document.addEventListener('mousemove', (e) => {
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach((particle, index) => {
+                if (index % 3 === 0) {
+                    const rect = particle.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const distance = Math.sqrt(x * x + y * y);
+                    
+                    if (distance < 150) {
+                        particle.style.transform = `translate(${x * 0.05}px, ${y * 0.05}px) scale(1.2)`;
+                        particle.style.opacity = '1';
+                    }
+                }
+            });
+        });
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            createParticles();
+            updateParticleColors();
+            
+            // Generate all letter cards
+            generateLetterCards(uyirEzhuthu, uyirRomanization, 'uyirGrid');
+            generateLetterCards(meyEzhuthu, meyRomanization, 'meyGrid');
+            generateLetterCards(ayudhaEzhuthu, ayudhaRomanization, 'ayudhaGrid');
+            generateLetterCards(uyirMeyEzhuthu, uyirMeyRomanization, 'uyirMeyGrid');
+            generateLetterCards(vadamozhiCombinations, vadamozhiCombinationsRoman, 'vadamozhiGrid');
+        });
+    </script>
+</body>
+</html>
