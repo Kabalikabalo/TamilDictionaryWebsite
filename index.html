@@ -1383,8 +1383,13 @@
         }
 
         async function doSearch(word) {
-            word = word.trim().toLowerCase().replace(/\s+/g, '_');
+            word = word.trim();
             if (!word) return;
+
+            // Only replace spaces with underscores if input is English
+            if (/^[a-zA-Z\s]+$/.test(word)) {
+                word = word.toLowerCase().replace(/\s+/g, '_');
+            }
 
             resultDiv.style.display = 'none';
             spinner.style.display = 'block';
