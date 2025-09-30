@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tamil English Dictionary</title>
+    <title>Sorkuvai - Tamil English Dictionary</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Tamil:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -182,7 +182,7 @@
             background: radial-gradient(circle at 20% 50%, var(--glow-color-light) 0%, transparent 50%),
                         radial-gradient(circle at 80% 20%, var(--glow-color-light) 0%, transparent 50%),
                         radial-gradient(circle at 40% 80%, var(--glow-color-light) 0%, transparent 50%);
-            /*animation: bgFloat 20s ease-in-out infinite;*/
+            animation: bgFloat 20s ease-in-out infinite;
         }
 
         @keyframes bgFloat {
@@ -1092,6 +1092,139 @@
             color: #fff;
             box-shadow: 0 0 12px var(--glow-color);
         }
+
+        /* Romanization Options Styling */
+        .romanization-section {
+            margin-bottom: 2rem;
+        }
+
+        .romanization-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .romanization-option {
+            position: relative;
+            cursor: pointer;
+            display: block;
+        }
+
+        .romanization-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .option-content {
+            display: block;
+            padding: 1rem 1.2rem;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--dark-bg);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--glow-color-light), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .romanization-option:hover .option-content {
+            border-color: var(--primary-color);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px var(--glow-color-light);
+        }
+
+        .romanization-option:hover .option-content::before {
+            opacity: 1;
+        }
+
+        .romanization-option input[type="radio"]:checked + .option-content {
+            border-color: var(--primary-color);
+            background: var(--glow-color-light);
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+
+        .romanization-option input[type="radio"]:checked + .option-content::before {
+            opacity: 1;
+        }
+
+        .option-title {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .option-desc {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 2;
+        }
+
+        .romanization-option input[type="radio"]:checked + .option-content .option-title {
+            color: var(--primary-color);
+        }
+
+        .romanization-option input[type="radio"]:checked + .option-content .option-desc {
+            color: var(--text-primary);
+        }
+
+        /* Radio button indicator */
+        .option-content::after {
+            content: '';
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            background: transparent;
+            transition: var(--transition);
+            z-index: 2;
+        }
+
+        .romanization-option input[type="radio"]:checked + .option-content::after {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            box-shadow: inset 0 0 0 3px var(--card-bg);
+        }
+
+        @media (max-width: 768px) {
+            .romanization-options {
+                gap: 0.6rem;
+            }
+            
+            .option-content {
+                padding: 0.8rem 1rem;
+            }
+            
+            .option-title {
+                font-size: 0.9rem;
+            }
+            
+            .option-desc {
+                font-size: 0.75rem;
+            }
+        }
     </style>
 </head>
 <body data-theme="orange">
@@ -1141,6 +1274,33 @@
             <button class="close-settings" id="closeSettings">
                 <i class="fas fa-times"></i>
             </button>
+        </div>
+
+        <div class="romanization-section">
+            <label class="theme-label">Romanization</label>
+            <div class="romanization-options">
+                <label class="romanization-option" data-value="iso">
+                    <input type="radio" name="romanization" value="iso" id="romanIso">
+                    <span class="option-content">
+                        <span class="option-title">ISO 15919</span>
+                        <span class="option-desc">ā, ī, ū, ṅ, ñ</span>
+                    </span>
+                </label>
+                <label class="romanization-option" data-value="simple">
+                    <input type="radio" name="romanization" value="simple" id="romanSimple">
+                    <span class="option-content">
+                        <span class="option-title">Simple</span>
+                        <span class="option-desc">aa, ii, uu, ng, ny</span>
+                    </span>
+                </label>
+                <label class="romanization-option" data-value="off">
+                    <input type="radio" name="romanization" value="off" id="romanOff" checked>
+                    <span class="option-content">
+                        <span class="option-title">Off</span>
+                        <span class="option-desc">No romanization</span>
+                    </span>
+                </label>
+            </div>
         </div>
         
         <div class="theme-section">
@@ -1203,8 +1363,8 @@
             <button class="settings-btn" id="settingsBtn">
                 <i class="fas fa-cog"></i>
             </button>
-            <h1 class="logo">அகராதி</h1>
-            <p class="subtitle">English ↔ Tamil Dictionary</p>
+            <h1 class="logo">சொற்குவை</h1>
+            <p class="subtitle">Tamil - English Dictionary</p>
         </header>
 
         <section class="search-section">
@@ -1212,7 +1372,7 @@
                 <div class="search-input-wrapper">
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" class="search-input" id="searchInput" 
-                           placeholder="Search for a word..." 
+                           placeholder="Search for words in English..." 
                            autocomplete="off">
                     <button class="search-btn" id="searchBtn">
                         <i class="fas fa-arrow-right"></i>
@@ -1232,6 +1392,195 @@
     </div>
 
     <script>
+
+    // Complete ISO 15919 and Simple Romanization maps
+    const isoMap = {
+        // Basic vowels
+        'அ': 'a', 'ஆ': 'ā', 'இ': 'i', 'ஈ': 'ī', 'உ': 'u', 'ஊ': 'ū', 
+        'எ': 'e', 'ஏ': 'ē', 'ஐ': 'ai', 'ஒ': 'o', 'ஓ': 'ō', 'ஔ': 'au',
+        
+        // க series
+        'க': 'ka', 'கா': 'kā', 'கி': 'ki', 'கீ': 'kī', 'கு': 'ku', 'கூ': 'kū', 'கெ': 'ke', 'கே': 'kē', 'கை': 'kai', 'கொ': 'ko', 'கோ': 'kō', 'கௌ': 'kau', 'க்': 'k',
+        
+        // ங series
+        'ங': 'ṅa', 'ஙா': 'ṅā', 'ஙி': 'ṅi', 'ஙீ': 'ṅī', 'ஙு': 'ṅu', 'ஙூ': 'ṅū', 'ஙெ': 'ṅe', 'ஙே': 'ṅē', 'ஙை': 'ṅai', 'ஙொ': 'ṅo', 'ஙோ': 'ṅō', 'ஙௌ': 'ṅau', 'ங்': 'ṅ',
+        
+        // ச series
+        'ச': 'ca', 'சா': 'cā', 'சி': 'ci', 'சீ': 'cī', 'சு': 'cu', 'சூ': 'cū', 'செ': 'ce', 'சே': 'cē', 'சை': 'cai', 'சொ': 'co', 'சோ': 'cō', 'சௌ': 'cau', 'ச்': 'c',
+        
+        // ஞ series
+        'ஞ': 'ña', 'ஞா': 'ñā', 'ஞி': 'ñi', 'ஞீ': 'ñī', 'ஞு': 'ñu', 'ஞூ': 'ñū', 'ஞெ': 'ñe', 'ஞே': 'ñē', 'ஞை': 'ñai', 'ஞொ': 'ño', 'ஞோ': 'ñō', 'ஞௌ': 'ñau', 'ஞ்': 'ñ',
+        
+        // ட series
+        'ட': 'ṭa', 'டா': 'ṭā', 'டி': 'ṭi', 'டீ': 'ṭī', 'டு': 'ṭu', 'டூ': 'ṭū', 'டெ': 'ṭe', 'டே': 'ṭē', 'டை': 'ṭai', 'டொ': 'ṭo', 'டோ': 'ṭō', 'டௌ': 'ṭau', 'ட்': 'ṭ',
+        
+        // ண series
+        'ண': 'ṇa', 'ணா': 'ṇā', 'ணி': 'ṇi', 'ணீ': 'ṇī', 'ணு': 'ṇu', 'ணூ': 'ṇū', 'ணெ': 'ṇe', 'ணே': 'ṇē', 'ணை': 'ṇai', 'ணொ': 'ṇo', 'ணோ': 'ṇō', 'ணௌ': 'ṇau', 'ண்': 'ṇ',
+        
+        // த series
+        'த': 'ta', 'தா': 'tā', 'தி': 'ti', 'தீ': 'tī', 'து': 'tu', 'தூ': 'tū', 'தெ': 'te', 'தே': 'tē', 'தை': 'tai', 'தொ': 'to', 'தோ': 'tō', 'தௌ': 'tau', 'த்': 't',
+        
+        // ந series
+        'ந': 'na', 'நா': 'nā', 'நி': 'ni', 'நீ': 'nī', 'நு': 'nu', 'நூ': 'nū', 'நெ': 'ne', 'நே': 'nē', 'நை': 'nai', 'நொ': 'no', 'நோ': 'nō', 'நௌ': 'nau', 'ந்': 'n',
+        
+        // ப series
+        'ப': 'pa', 'பா': 'pā', 'பி': 'pi', 'பீ': 'pī', 'பு': 'pu', 'பூ': 'pū', 'பெ': 'pe', 'பே': 'pē', 'பை': 'pai', 'பொ': 'po', 'போ': 'pō', 'பௌ': 'pau', 'ப்': 'p',
+        
+        // ம series
+        'ம': 'ma', 'மா': 'mā', 'மி': 'mi', 'மீ': 'mī', 'மு': 'mu', 'மூ': 'mū', 'மெ': 'me', 'மே': 'mē', 'மை': 'mai', 'மொ': 'mo', 'மோ': 'mō', 'மௌ': 'mau', 'ம்': 'm',
+        
+        // ய series
+        'ய': 'ya', 'யா': 'yā', 'யி': 'yi', 'யீ': 'yī', 'யு': 'yu', 'யூ': 'yū', 'யெ': 'ye', 'யே': 'yē', 'யை': 'yai', 'யொ': 'yo', 'யோ': 'yō', 'யௌ': 'yau', 'ய்': 'y',
+        
+        // ர series
+        'ர': 'ra', 'ரா': 'rā', 'ரி': 'ri', 'ரீ': 'rī', 'ரு': 'ru', 'ரூ': 'rū', 'ரெ': 're', 'ரே': 'rē', 'ரை': 'rai', 'ரொ': 'ro', 'ரோ': 'rō', 'ரௌ': 'rau', 'ர்': 'r',
+        
+        // ல series
+        'ல': 'la', 'லா': 'lā', 'லி': 'li', 'லீ': 'lī', 'லு': 'lu', 'லூ': 'lū', 'லெ': 'le', 'லே': 'lē', 'லை': 'lai', 'லொ': 'lo', 'லோ': 'lō', 'லௌ': 'lau', 'ல்': 'l',
+        
+        // வ series
+        'வ': 'va', 'வா': 'vā', 'வி': 'vi', 'வீ': 'vī', 'வு': 'vu', 'வூ': 'vū', 'வெ': 've', 'வே': 'vē', 'வை': 'vai', 'வொ': 'vo', 'வோ': 'vō', 'வௌ': 'vau', 'வ்': 'v',
+        
+        // ழ series
+        'ழ': 'ḻa', 'ழா': 'ḻā', 'ழி': 'ḻi', 'ழீ': 'ḻī', 'ழு': 'ḻu', 'ழூ': 'ḻū', 'ழெ': 'ḻe', 'ழே': 'ḻē', 'ழை': 'ḻai', 'ழொ': 'ḻo', 'ழோ': 'ḻō', 'ழௌ': 'ḻau', 'ழ்': 'ḻ',
+        
+        // ள series
+        'ள': 'ḷa', 'ளா': 'ḷā', 'ளி': 'ḷi', 'ளீ': 'ḷī', 'ளு': 'ḷu', 'ளூ': 'ḷū', 'ளெ': 'ḷe', 'ளே': 'ḷē', 'ளை': 'ḷai', 'ளொ': 'ḷo', 'ளோ': 'ḷō', 'ளௌ': 'ḷau', 'ள்': 'ḷ',
+        
+        // ற series
+        'ற': 'ṟa', 'றா': 'ṟā', 'றி': 'ṟi', 'றீ': 'ṟī', 'று': 'ṟu', 'றூ': 'ṟū', 'றெ': 'ṟe', 'றே': 'ṟē', 'றை': 'ṟai', 'றொ': 'ṟo', 'றோ': 'ṟō', 'றௌ': 'ṟau', 'ற்': 'ṟ',
+        
+        // ன series
+        'ன': 'ṉa', 'னா': 'ṉā', 'னி': 'ṉi', 'னீ': 'ṉī', 'னு': 'ṉu', 'னூ': 'ṉū', 'னெ': 'ṉe', 'னே': 'ṉē', 'னை': 'ṉai', 'னொ': 'ṉo', 'னோ': 'ṉō', 'னௌ': 'ṉau', 'ன்': 'ṉ',
+        
+        // Grantha letters
+        'ஜ': 'ja', 'ஜா': 'jā', 'ஜி': 'ji', 'ஜீ': 'jī', 'ஜு': 'ju', 'ஜூ': 'jū', 'ஜெ': 'je', 'ஜே': 'jē', 'ஜை': 'jai', 'ஜொ': 'jo', 'ஜோ': 'jō', 'ஜௌ': 'jau', 'ஜ்': 'j',
+        'ஶ': 'śa', 'ஶா': 'śā', 'ஶி': 'śi', 'ஶீ': 'śī', 'ஶு': 'śu', 'ஶூ': 'śū', 'ஶெ': 'śe', 'ஶே': 'śē', 'ஶை': 'śai', 'ஶொ': 'śo', 'ஶோ': 'śō', 'ஶௌ': 'śau', 'ஶ்': 'ś',
+        'ஷ': 'ṣa', 'ஷா': 'ṣā', 'ஷி': 'ṣi', 'ஷீ': 'ṣī', 'ஷு': 'ṣu', 'ஷூ': 'ṣū', 'ஷெ': 'ṣe', 'ஷே': 'ṣē', 'ஷை': 'ṣai', 'ஷொ': 'ṣo', 'ஷோ': 'ṣō', 'ஷௌ': 'ṣau', 'ஷ்': 'ṣ',
+        'ஸ': 'sa', 'ஸா': 'sā', 'ஸி': 'si', 'ஸீ': 'sī', 'ஸு': 'su', 'ஸூ': 'sū', 'ஸெ': 'se', 'ஸே': 'sē', 'ஸை': 'sai', 'ஸொ': 'so', 'ஸோ': 'sō', 'ஸௌ': 'sau', 'ஸ்': 's',
+        'ஹ': 'ha', 'ஹா': 'hā', 'ஹி': 'hi', 'ஹீ': 'hī', 'ஹு': 'hu', 'ஹூ': 'hū', 'ஹெ': 'he', 'ஹே': 'hē', 'ஹை': 'hai', 'ஹொ': 'ho', 'ஹோ': 'hō', 'ஹௌ': 'hau', 'ஹ்': 'h',
+        
+        // Special compound letters
+        'ன்று': 'ṉṟu', 'ப்போ': 'ppō', 'த்து': 'ttu', 'ல்லை': 'llai', 'ல்லா': 'llā', 'க்ஷ': 'kṣa',
+        
+        // Ayudha Ezhuthu
+        'ஃ': 'ḥ',
+        
+        // Numbers
+        '௦': '0', '௧': '1', '௨': '2', '௩': '3', '௪': '4', '௫': '5',
+        '௬': '6', '௭': '7', '௮': '8', '௯': '9'
+    };
+
+    const simpleMap = {
+        // Basic vowels
+        'அ': 'a', 'ஆ': 'aa', 'இ': 'i', 'ஈ': 'ii', 'உ': 'u', 'ஊ': 'uu',
+        'எ': 'e', 'ஏ': 'ee', 'ஐ': 'ai', 'ஒ': 'o', 'ஓ': 'oo', 'ஔ': 'au',
+        
+        // க series
+        'க': 'ka', 'கா': 'kaa', 'கி': 'ki', 'கீ': 'kii', 'கு': 'ku', 'கூ': 'kuu', 'கெ': 'ke', 'கே': 'kee', 'கை': 'kai', 'கொ': 'ko', 'கோ': 'koo', 'கௌ': 'kau', 'க்': 'k',
+        
+        // ங series
+        'ங': 'nga', 'ஙா': 'ngaa', 'ஙி': 'ngi', 'ஙீ': 'ngii', 'ஙு': 'ngu', 'ஙூ': 'nguu', 'ஙெ': 'nge', 'ஙே': 'ngee', 'ஙை': 'ngai', 'ஙொ': 'ngo', 'ஙோ': 'ngoo', 'ஙௌ': 'ngau', 'ங்': 'ng',
+        
+        // ச series
+        'ச': 'cha', 'சா': 'chaa', 'சி': 'chi', 'சீ': 'chii', 'சு': 'chu', 'சூ': 'chuu', 'செ': 'che', 'சே': 'chee', 'சை': 'chai', 'சொ': 'cho', 'சோ': 'choo', 'சௌ': 'chau', 'ச்': 'ch',
+        
+        // ஞ series
+        'ஞ': 'nya', 'ஞா': 'nyaa', 'ஞி': 'nyi', 'ஞீ': 'nyii', 'ஞு': 'nyu', 'ஞூ': 'nyuu', 'ஞெ': 'nye', 'ஞே': 'nyee', 'ஞை': 'nyai', 'ஞொ': 'nyo', 'ஞோ': 'nyoo', 'ஞௌ': 'nyau', 'ஞ்': 'ny',
+        
+        // ட series
+        'ட': 'ta', 'டா': 'taa', 'டி': 'ti', 'டீ': 'tii', 'டு': 'tu', 'டூ': 'tuu', 'டெ': 'te', 'டே': 'tee', 'டை': 'tai', 'டொ': 'to', 'டோ': 'too', 'டௌ': 'tau', 'ட்': 't',
+        
+        // ண series
+        'ண': 'na', 'ணா': 'naa', 'ணி': 'ni', 'ணீ': 'nii', 'ணு': 'nu', 'ணூ': 'nuu', 'ணெ': 'ne', 'ணே': 'nee', 'ணை': 'nai', 'ணொ': 'no', 'ணோ': 'noo', 'ணௌ': 'nau', 'ண்': 'n',
+        
+        // த series
+        'த': 'tha', 'தா': 'thaa', 'தி': 'thi', 'தீ': 'thii', 'து': 'thu', 'தூ': 'thuu', 'தெ': 'the', 'தே': 'thee', 'தை': 'thai', 'தொ': 'tho', 'தோ': 'thoo', 'தௌ': 'thau', 'த்': 'th',
+        
+        // ந series
+        'ந': 'na', 'நா': 'naa', 'நி': 'ni', 'நீ': 'nii', 'நு': 'nu', 'நூ': 'nuu', 'நெ': 'ne', 'நே': 'nee', 'நை': 'nai', 'நொ': 'no', 'நோ': 'noo', 'நௌ': 'nau', 'ந்': 'n',
+        
+        // ப series
+        'ப': 'pa', 'பா': 'paa', 'பி': 'pi', 'பீ': 'pii', 'பு': 'pu', 'பூ': 'puu', 'பெ': 'pe', 'பே': 'pee', 'பை': 'pai', 'பொ': 'po', 'போ': 'poo', 'பௌ': 'pau', 'ப்': 'p',
+        
+        // ம series
+        'ம': 'ma', 'மா': 'maa', 'மி': 'mi', 'மீ': 'mii', 'மு': 'mu', 'மூ': 'muu', 'மெ': 'me', 'மே': 'mee', 'மை': 'mai', 'மொ': 'mo', 'மோ': 'moo', 'மௌ': 'mau', 'ம்': 'm',
+        
+        // ய series
+        'ய': 'ya', 'யா': 'yaa', 'யி': 'yi', 'யீ': 'yii', 'யு': 'yu', 'யூ': 'yuu', 'யெ': 'ye', 'யே': 'yee', 'யை': 'yai', 'யொ': 'yo', 'யோ': 'yoo', 'யௌ': 'yau', 'ய்': 'y',
+        
+        // ர series
+        'ர': 'ra', 'ரா': 'raa', 'ரி': 'ri', 'ரீ': 'rii', 'ரு': 'ru', 'ரூ': 'ruu', 'ரெ': 're', 'ரே': 'ree', 'ரை': 'rai', 'ரொ': 'ro', 'ரோ': 'roo', 'ரௌ': 'rau', 'ர்': 'r',
+        
+        // ல series
+        'ல': 'la', 'லா': 'laa', 'லி': 'li', 'லீ': 'lii', 'லு': 'lu', 'லூ': 'luu', 'லெ': 'le', 'லே': 'lee', 'லை': 'lai', 'லொ': 'lo', 'லோ': 'loo', 'லௌ': 'lau', 'ல்': 'l',
+        
+        // வ series
+        'வ': 'va', 'வா': 'vaa', 'வி': 'vi', 'வீ': 'vii', 'வு': 'vu', 'வூ': 'vuu', 'வெ': 've', 'வே': 'vee', 'வை': 'vai', 'வொ': 'vo', 'வோ': 'voo', 'வௌ': 'vau', 'வ்': 'v',
+        
+        // ழ series
+        'ழ': 'zha', 'ழா': 'zhaa', 'ழி': 'zhi', 'ழீ': 'zhii', 'ழு': 'zhu', 'ழூ': 'zhuu', 'ழெ': 'zhe', 'ழே': 'zhee', 'ழை': 'zhai', 'ழொ': 'zho', 'ழோ': 'zhoo', 'ழௌ': 'zhau', 'ழ்': 'zh',
+        
+        // ள series
+        'ள': 'la', 'ளா': 'laa', 'ளி': 'li', 'ளீ': 'lii', 'ளு': 'lu', 'ளூ': 'luu', 'ளெ': 'le', 'ளே': 'lee', 'ளை': 'lai', 'ளொ': 'lo', 'ளோ': 'loo', 'ளௌ': 'lau', 'ள்': 'l',
+        
+        // ற series
+        'ற': 'ra', 'றா': 'raa', 'றி': 'ri', 'றீ': 'rii', 'று': 'ru', 'றூ': 'ruu', 'றெ': 're', 'றே': 'ree', 'றை': 'rai', 'றொ': 'ro', 'றோ': 'roo', 'றௌ': 'rau', 'ற்': 'r',
+        
+        // ன series
+        'ன': 'na', 'னா': 'naa', 'னி': 'ni', 'னீ': 'nii', 'னு': 'nu', 'னூ': 'nuu', 'னெ': 'ne', 'னே': 'nee', 'னை': 'nai', 'னொ': 'no', 'னோ': 'noo', 'னௌ': 'nau', 'ன்': 'n',
+        
+        // Grantha letters
+        'ஜ': 'ja', 'ஜா': 'jaa', 'ஜி': 'ji', 'ஜீ': 'jii', 'ஜு': 'ju', 'ஜூ': 'juu', 'ஜெ': 'je', 'ஜே': 'jee', 'ஜை': 'jai', 'ஜொ': 'jo', 'ஜோ': 'joo', 'ஜௌ': 'jau', 'ஜ்': 'j',
+        'ஶ': 'sha', 'ஶா': 'shaa', 'ஶி': 'shi', 'ஶீ': 'shii', 'ஶு': 'shu', 'ஶூ': 'shuu', 'ஶெ': 'she', 'ஶே': 'shee', 'ஶை': 'shai', 'ஶொ': 'sho', 'ஶோ': 'shoo', 'ஶௌ': 'shau', 'ஶ்': 'sh',
+        'ஷ': 'sha', 'ஷா': 'shaa', 'ஷி': 'shi', 'ஷீ': 'shii', 'ஷு': 'shu', 'ஷூ': 'shuu', 'ஷெ': 'she', 'ஷே': 'shee', 'ஷை': 'shai', 'ஷொ': 'sho', 'ஷோ': 'shoo', 'ஷௌ': 'shau', 'ஷ்': 'sh',
+        'ஸ': 'sa', 'ஸா': 'saa', 'ஸி': 'si', 'ஸீ': 'sii', 'ஸு': 'su', 'ஸூ': 'suu', 'ஸெ': 'se', 'ஸே': 'see', 'ஸை': 'sai', 'ஸொ': 'so', 'ஸோ': 'soo', 'ஸௌ': 'sau', 'ஸ்': 's',
+        'ஹ': 'ha', 'ஹா': 'haa', 'ஹி': 'hi', 'ஹீ': 'hii', 'ஹு': 'hu', 'ஹூ': 'huu', 'ஹெ': 'he', 'ஹே': 'hee', 'ஹை': 'hai', 'ஹொ': 'ho', 'ஹோ': 'hoo', 'ஹௌ': 'hau', 'ஹ்': 'h',
+        
+        // Special compound letters
+        'வணக்கம்': 'vanakkam', 'ன்று': 'nru', 'ப்போ': 'ppo', 'த்து': 'tthu', 'ல்லை': 'llai', 'ல்லா': 'llaa', 'க்ஷ': 'ksha',
+        
+        // Ayudha Ezhuthu
+        'ஃ': 'ah',
+        
+        // Numbers
+        '௦': '0', '௧': '1', '௨': '2', '௩': '3', '௪': '4', '௫': '5',
+        '௬': '6', '௭': '7', '௮': '8', '௯': '9'
+    };
+
+    function romanizeTamil(str, mode) {
+        if (!str || mode === 'off') return '';
+        const map = mode === 'iso' ? isoMap : simpleMap;
+        
+        let result = '';
+        let i = 0;
+        
+        while (i < str.length) {
+            let matched = false;
+            
+            // Try longer sequences first (4, 3, 2, 1 characters)
+            for (let len = 4; len >= 1; len--) {
+                if (i + len <= str.length) {
+                    let substr = str.substring(i, i + len);
+                    if (map[substr]) {
+                        result += map[substr];
+                        i += len;
+                        matched = true;
+                        break;
+                    }
+                }
+            }
+            
+            // If no match found, keep the original character
+            if (!matched) {
+                result += str[i];
+                i++;
+            }
+        }
+
+        return result;
+    }
+
     // Hide hamburger when nav drawer is open
     document.addEventListener('DOMContentLoaded', function() {
         var navMenu = document.getElementById('navMenu');
@@ -1288,6 +1637,33 @@
             });
         }
 
+        // Romanization Management
+        function getRomanizationSetting() {
+            return localStorage.getItem('romanization') || 'off';
+        }
+
+        function setRomanizationSetting(val) {
+            localStorage.setItem('romanization', val);
+        }
+
+        function initRomanization() {
+            const setting = getRomanizationSetting();
+            document.getElementById('romanIso').checked = setting === 'iso';
+            document.getElementById('romanSimple').checked = setting === 'simple';
+            document.getElementById('romanOff').checked = setting === 'off';
+            
+            // Add event listeners
+            document.querySelectorAll('input[name="romanization"]').forEach(radio => {
+                radio.addEventListener('change', () => {
+                    setRomanizationSetting(radio.value);
+                    // Refresh results if there are any
+                    if (resultDiv.style.display === 'block') {
+                        doSearch(input.value);
+                    }
+                });
+            });
+        }
+
         // Settings Panel
         settingsBtn.addEventListener('click', () => {
             settingsPanel.classList.add('open');
@@ -1314,7 +1690,7 @@
         // Create particles
         function createParticles() {
             const container = document.querySelector('.container');
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < 30; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 particle.style.left = Math.random() * 100 + '%';
@@ -1348,23 +1724,34 @@
                 translations = [translations];
             }
             
+            const romanizationMode = getRomanizationSetting();
+            
             return translations.map(translation => {
                 if (Array.isArray(translation)) {
-                    // Handle nested arrays
                     return translation.map(word => {
+                        let romanText = '';
+                        if (romanizationMode !== 'off' && /[\u0B80-\u0BFF]/.test(word)) {
+                            const romanized = romanizeTamil(word, romanizationMode);
+                            if (romanized) romanText = ` – ${romanized}`;
+                        }
                         const escapedWord = escapeHTML(word);
                         return `
                             <div class="translation-bubble" onclick="copyToClipboard('${escapedWord}', this.querySelector('.copy-btn'))">
-                                ${escapedWord}
+                                ${escapedWord}${romanText}
                                 <button class="copy-btn" title="Copy">⧉</button>
                             </div>
                         `;
                     }).join('');
                 } else {
+                    let romanText = '';
+                    if (romanizationMode !== 'off' && /[\u0B80-\u0BFF]/.test(translation)) {
+                        const romanized = romanizeTamil(translation, romanizationMode);
+                        if (romanized) romanText = ` – ${romanized}`;
+                    }
                     const escapedWord = escapeHTML(translation);
                     return `
                         <div class="translation-bubble" onclick="copyToClipboard('${escapedWord}', this.querySelector('.copy-btn'))">
-                            ${escapedWord}
+                            ${escapedWord}${romanText}
                             <button class="copy-btn" title="Copy">⧉</button>
                         </div>
                     `;
@@ -1382,7 +1769,16 @@
             resultDiv.style.display = 'block';
         }
 
+        function capitalizeEachWord(str) {
+            return str.replace(/\b\w/g, c => c.toUpperCase());
+        }
+
+        function removeTrailingDot(str) {
+            return typeof str === "string" ? str.replace(/\.$/, "") : str;
+        }
+
         async function doSearch(word) {
+
             word = word.trim();
             if (!word) return;
 
@@ -1476,6 +1872,7 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             initTheme();
+            initRomanization();
             createParticles();
             updateParticleColors();
             
