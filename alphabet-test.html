@@ -12,13 +12,11 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         /* Remove tap highlight color on mobile */
         * {
             -webkit-tap-highlight-color: transparent;
             -webkit-touch-callout: none;
         }
-
         :root {
             --primary-color: #ff6b35;
             --secondary-color: #ff8c42;
@@ -307,6 +305,12 @@
             color: var(--text-secondary);
             cursor: pointer;
             transition: var(--transition);
+        }
+
+        .settings-btn.behind {
+            z-index: 0 !important;
+            pointer-events: none !important;
+            opacity: 0.2;
         }
 
         .settings-btn:hover {
@@ -1480,11 +1484,13 @@
         settingsBtn.addEventListener('click', () => {
             settingsPanel.classList.add('open');
             overlay.classList.add('show');
+            settingsBtn.classList.add('behind'); // ADD THIS LINE
         });
 
         function closeSettingsPanel() {
             settingsPanel.classList.remove('open');
             overlay.classList.remove('show');
+            settingsBtn.classList.remove('behind'); // ADD THIS LINE
         }
 
         closeSettings.addEventListener('click', closeSettingsPanel);
