@@ -182,15 +182,14 @@
             background: radial-gradient(circle at 20% 50%, var(--glow-color-light) 0%, transparent 50%),
                         radial-gradient(circle at 80% 20%, var(--glow-color-light) 0%, transparent 50%),
                         radial-gradient(circle at 40% 80%, var(--glow-color-light) 0%, transparent 50%);
-            animation: bgFloat 20s ease-in-out infinite;
+            animation: bgPulse 12s ease-in-out infinite;
         }
 
-        @keyframes bgFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-20px) rotate(1deg); }
-            66% { transform: translateY(10px) rotate(-1deg); }
+        @keyframes bgPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
-
+        
         /* Floating Particles */
         .particle {
             position: absolute;
@@ -854,8 +853,8 @@
             left: 1.5rem;
             width: 44px;
             height: 44px;
-            background: var(--card-bg);
-            border: 2px solid var(--border-color);
+            background: #1a1a1a00;
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             cursor: pointer;
             display: flex;
@@ -895,7 +894,7 @@
         }
 
         .hamburger-line {
-            width: 22px;
+            width: 16px;
             height: 2px;
             background: var(--text-secondary);
             margin: 3px 0;
