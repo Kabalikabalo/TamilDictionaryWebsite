@@ -1115,16 +1115,33 @@
             });
         });
 
+        // Use the complete ISO 15919 mapping from your dictionary
+        const isoMap = {
+            // All your existing mappings...
+            'ஸ': 'sa', 'ஸா': 'sā', 'ஸி': 'si', 'ஸீ': 'sī', 'ஸு': 'su', 'ஸூ': 'sū', 'ஸெ': 'se', 'ஸே': 'sē', 'ஸை': 'sai', 'ஸொ': 'so', 'ஸோ': 'sō', 'ஸௌ': 'sau',
+            'ஜ': 'ja', 'ஜா': 'jā', 'ஜி': 'ji', 'ஜீ': 'jī', 'ஜு': 'ju', 'ஜூ': 'jū', 'ஜெ': 'je', 'ஜே': 'jē', 'ஜை': 'jai', 'ஜொ': 'jo', 'ஜோ': 'jō', 'ஜௌ': 'jau',
+            'ஷ': 'ṣa', 'ஷா': 'ṣā', 'ஷி': 'ṣi', 'ஷீ': 'ṣī', 'ஷு': 'ṣu', 'ஷூ': 'ṣū', 'ஷெ': 'ṣe', 'ஷே': 'ṣē', 'ஷை': 'ṣai', 'ஷொ': 'ṣo', 'ஷோ': 'ṣō', 'ஷௌ': 'ṣau',
+            'ஹ': 'ha', 'ஹா': 'hā', 'ஹி': 'hi', 'ஹீ': 'hī', 'ஹு': 'hu', 'ஹூ': 'hū', 'ஹெ': 'he', 'ஹே': 'hē', 'ஹை': 'hai', 'ஹொ': 'ho', 'ஹோ': 'hō', 'ஹௌ': 'hau',
+            'க்ஷ': 'kṣa', 'க்ஷா': 'kṣā', 'க்ஷி': 'kṣi', 'க்ஷீ': 'kṣī', 'க்ஷு': 'kṣu', 'க்ஷூ': 'kṣū', 
+            'க்ஷெ': 'kṣe', 'க்ஷே': 'kṣē', 'க்ஷை': 'kṣai', 'க்ஷொ': 'kṣo', 'க்ஷோ': 'kṣō', 'க்ஷௌ': 'kṣau',
+            'ஸ்ரீ': 'śrī'
+        };
+
         // Generate all combinations for Vadamozhi (Sanskrit) letters
         const vadamozhiCombinations = [];
         const vadamozhiCombinationsRoman = [];
 
         vadamozhiBases.forEach((base, baseIndex) => {
             vadamozhiVowelSigns.forEach((sign, signIndex) => {
-                vadamozhiCombinations.push(base + sign);
-                vadamozhiCombinationsRoman.push(vadamozhiBaseRoman[baseIndex] + vadamozhiVowelRoman[signIndex]);
+                const tamilLetter = base + sign;
+                vadamozhiCombinations.push(tamilLetter);
+                
+                // Use the ISO map for correct romanization
+                const romanization = isoMap[tamilLetter] || (vadamozhiBaseRoman[baseIndex] + vadamozhiVowelRoman[signIndex]);
+                vadamozhiCombinationsRoman.push(romanization);
             });
         });
+
         // Add ஸ்ரீ separately
         vadamozhiCombinations.push('ஸ்ரீ');
         vadamozhiCombinationsRoman.push('srī');
