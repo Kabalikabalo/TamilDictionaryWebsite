@@ -1528,8 +1528,8 @@
     category = 'oblique';
     stem = obliqueStems[noun];
     stemBase = removeLast(stem);
-    if (noun.endsWith('ல்')) {
-      dativeSuffix = 'ுக்கு';
+    if (noun.endsWith('ல்') || noun.endsWith('ன்') || noun.endsWith('ண்')) {
+      dativeSuffix = 'க்கு';
     } else {
       dativeSuffix = 'க்கு';
     }
@@ -1645,7 +1645,9 @@
     const baseWithoutM = noun.slice(0, -2);
     dative = baseWithoutM + 'த்' + dativeSuffix;
   } else if (category === 'oblique') {
-    dative = stemBase + dativeSuffix;
+    // For oblique nouns ending in ல், ன், ண், use stem + ுக்கு
+    // For others (டு, று endings), use stem + க்கு
+    dative = stem + dativeSuffix;
   } else if (category === 'fallback' && noun.endsWith('்')) {
     dative = noun.slice(0, -1) + 'ுக்கு';
   } else {
