@@ -1002,6 +1002,10 @@
                 width: 300px; 
             }
 
+            .case-name {
+                min-width: 100px;
+            }
+
             .results-header {
                 flex-direction: column;
                 align-items: flex-start;
@@ -1779,7 +1783,11 @@
         
 
         function displayDeclension(noun) {
-    const translitMode = (showTranslitChecked ? getTranslitConvention() : 'off');
+    let translitMode = 'off';
+    if (showTranslitChecked) {
+        const stored = localStorage.getItem('romanization');
+        translitMode = stored ? stored : 'iso';
+    }
     const declensions = getDeclension(noun, translitMode);
 
     let tableRows = declensions.map(row => `
