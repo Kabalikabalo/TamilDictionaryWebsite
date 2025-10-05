@@ -1010,6 +1010,17 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
+            .declension-table th,
+            .declension-table td {
+                padding: 0.4rem 0.5rem; /* Reduce horizontal and vertical padding */
+                font-size: 0.95rem;
+            }
+            .tamil-form {
+                font-size: 1.05rem;
+            }
+            .case-name {
+                min-width: 70px; /* Reduce min-width for the case column */
+            }
         }
 
         /* Custom Scrollbar */
@@ -1278,6 +1289,183 @@
         }
 
         function getDeclension(noun, transliterationMode) {
+  // Hardcoded pronoun declensions
+  const pronounDeclensions = {
+    'நான்': [
+      { case: 'Nominative', tamil: 'நான்' },
+      { case: 'Accusative', tamil: 'என்னை' },
+      { case: 'Instrumental', tamil: 'என்னால்' },
+      { case: 'Dative', tamil: 'எனக்கு' },
+      { case: 'Sociative', tamil: 'என்னுடன்' },
+      { case: 'Genitive in', tamil: 'என்' },
+      { case: 'Genitive udaiya', tamil: 'என்னுடைய' },
+      { case: 'Ablative', tamil: 'என்னிடமிருந்து' },
+      { case: 'Locative', tamil: 'என்னிடம்' }
+    ],
+    'நீ': [
+      { case: 'Nominative', tamil: 'நீ' },
+      { case: 'Accusative', tamil: 'உன்னை' },
+      { case: 'Instrumental', tamil: 'உன்னால்' },
+      { case: 'Dative', tamil: 'உனக்கு' },
+      { case: 'Sociative', tamil: 'உன்னுடன்' },
+      { case: 'Genitive in', tamil: 'உன்' },
+      { case: 'Genitive udaiya', tamil: 'உன்னுடைய' },
+      { case: 'Ablative', tamil: 'உன்னிடமிருந்து' },
+      { case: 'Locative', tamil: 'உன்னிடம்' }
+    ],
+    'நீங்கள்': [
+      { case: 'Nominative', tamil: 'நீங்கள்' },
+      { case: 'Accusative', tamil: 'உங்களை' },
+      { case: 'Instrumental', tamil: 'உங்களால்' },
+      { case: 'Dative', tamil: 'உங்களுக்கு' },
+      { case: 'Sociative', tamil: 'உங்களுடன்' },
+      { case: 'Genitive in', tamil: 'உங்கள்' },
+      { case: 'Genitive udaiya', tamil: 'உங்களுடைய' },
+      { case: 'Ablative', tamil: 'உங்களிடமிருந்து' },
+      { case: 'Locative', tamil: 'உங்களிடம்' }
+    ],
+    'நாங்கள்': [
+      { case: 'Nominative', tamil: 'நாங்கள்' },
+      { case: 'Accusative', tamil: 'எங்களை' },
+      { case: 'Instrumental', tamil: 'எங்களால்' },
+      { case: 'Dative', tamil: 'எங்களுக்கு' },
+      { case: 'Sociative', tamil: 'எங்களுடன்' },
+      { case: 'Genitive in', tamil: 'எங்கள்' },
+      { case: 'Genitive udaiya', tamil: 'எங்களுடைய' },
+      { case: 'Ablative', tamil: 'எங்களிடமிருந்து' },
+      { case: 'Locative', tamil: 'எங்களிடம்' }
+    ],
+    'நாம்': [
+      { case: 'Nominative', tamil: 'நாம்' },
+      { case: 'Accusative', tamil: 'நம்மை' },
+      { case: 'Instrumental', tamil: 'நம்மால்' },
+      { case: 'Dative', tamil: 'நமக்கு' },
+      { case: 'Sociative', tamil: 'நம்முடன்' },
+      { case: 'Genitive in', tamil: 'நம்' },
+      { case: 'Genitive udaiya', tamil: 'நம்முடைய' },
+      { case: 'Ablative', tamil: 'நம்மிடமிருந்து' },
+      { case: 'Locative', tamil: 'நம்மிடம்' }
+    ],
+    'அவை': [
+      { case: 'Nominative', tamil: 'அவை' },
+      { case: 'Accusative', tamil: 'அவற்றை' },
+      { case: 'Instrumental', tamil: 'அவற்றால்' },
+      { case: 'Dative', tamil: 'அவற்றுக்கு' },
+      { case: 'Sociative', tamil: 'அவற்றுடன்' },
+      { case: 'Genitive in', tamil: 'அவற்றின்' },
+      { case: 'Genitive udaiya', tamil: 'அவற்றுடைய' },
+      { case: 'Ablative', tamil: 'அவற்றிலிருந்து' },
+      { case: 'Locative', tamil: 'அவற்றில்' }
+    ],
+    'இவை': [
+      { case: 'Nominative', tamil: 'இவை' },
+      { case: 'Accusative', tamil: 'இவற்றை' },
+      { case: 'Instrumental', tamil: 'இவற்றால்' },
+      { case: 'Dative', tamil: 'இவற்றுக்கு' },
+      { case: 'Sociative', tamil: 'இவற்றுடன்' },
+      { case: 'Genitive in', tamil: 'இவற்றின்' },
+      { case: 'Genitive udaiya', tamil: 'இவற்றுடைய' },
+      { case: 'Ablative', tamil: 'இவற்றிலிருந்து' },
+      { case: 'Locative', tamil: 'இவற்றில்' }
+    ],
+    'அவர்': [
+      { case: 'Nominative', tamil: 'அவர்' },
+      { case: 'Accusative', tamil: 'அவரை' },
+      { case: 'Instrumental', tamil: 'அவரால்' },
+      { case: 'Dative', tamil: 'அவருக்கு' },
+      { case: 'Sociative', tamil: 'அவருடன்' },
+      { case: 'Genitive in', tamil: 'அவரின்' },
+      { case: 'Genitive udaiya', tamil: 'அவருடைய' },
+      { case: 'Ablative', tamil: 'அவரிடமிருந்து' },
+      { case: 'Locative', tamil: 'அவரிடம்' }
+    ],
+    'இவர்': [
+      { case: 'Nominative', tamil: 'இவர்' },
+      { case: 'Accusative', tamil: 'இவரை' },
+      { case: 'Instrumental', tamil: 'இவரால்' },
+      { case: 'Dative', tamil: 'இவருக்கு' },
+      { case: 'Sociative', tamil: 'இவருடன்' },
+      { case: 'Genitive in', tamil: 'இவரின்' },
+      { case: 'Genitive udaiya', tamil: 'இவருடைய' },
+      { case: 'Ablative', tamil: 'இவரிடமிருந்து' },
+      { case: 'Locative', tamil: 'இவரிடம்' }
+    ],
+    'அவன்': [
+      { case: 'Nominative', tamil: 'அவன்' },
+      { case: 'Accusative', tamil: 'அவனை' },
+      { case: 'Instrumental', tamil: 'அவனால்' },
+      { case: 'Dative', tamil: 'அவனுக்கு' },
+      { case: 'Sociative', tamil: 'அவனுடன்' },
+      { case: 'Genitive in', tamil: 'அவனின்' },
+      { case: 'Genitive udaiya', tamil: 'அவனுடைய' },
+      { case: 'Ablative', tamil: 'அவனிடமிருந்து' },
+      { case: 'Locative', tamil: 'அவனிடம்' }
+    ],
+    'இவன்': [
+      { case: 'Nominative', tamil: 'இவன்' },
+      { case: 'Accusative', tamil: 'இவனை' },
+      { case: 'Instrumental', tamil: 'இவனால்' },
+      { case: 'Dative', tamil: 'இவனுக்கு' },
+      { case: 'Sociative', tamil: 'இவனுடன்' },
+      { case: 'Genitive in', tamil: 'இவனின்' },
+      { case: 'Genitive udaiya', tamil: 'இவனுடைய' },
+      { case: 'Ablative', tamil: 'இவனிடமிருந்து' },
+      { case: 'Locative', tamil: 'இவனிடம்' }
+    ],
+    'அவள்': [
+      { case: 'Nominative', tamil: 'அவள்' },
+      { case: 'Accusative', tamil: 'அவளை' },
+      { case: 'Instrumental', tamil: 'அவளால்' },
+      { case: 'Dative', tamil: 'அவளுக்கு' },
+      { case: 'Sociative', tamil: 'அவளுடன்' },
+      { case: 'Genitive in', tamil: 'அவளின்' },
+      { case: 'Genitive udaiya', tamil: 'அவளுடைய' },
+      { case: 'Ablative', tamil: 'அவளிடமிருந்து' },
+      { case: 'Locative', tamil: 'அவளிடம்' }
+    ],
+    'இவள்': [
+      { case: 'Nominative', tamil: 'இவள்' },
+      { case: 'Accusative', tamil: 'இவளை' },
+      { case: 'Instrumental', tamil: 'இவளால்' },
+      { case: 'Dative', tamil: 'இவளுக்கு' },
+      { case: 'Sociative', tamil: 'இவளுடன்' },
+      { case: 'Genitive in', tamil: 'இவளின்' },
+      { case: 'Genitive udaiya', tamil: 'இவளுடைய' },
+      { case: 'Ablative', tamil: 'இவளிடமிருந்து' },
+      { case: 'Locative', tamil: 'இவளிடம்' }
+    ],
+    'அது': [
+      { case: 'Nominative', tamil: 'அது' },
+      { case: 'Accusative', tamil: 'அதை' },
+      { case: 'Instrumental', tamil: 'அதால்' },
+      { case: 'Dative', tamil: 'அதற்கு' },
+      { case: 'Sociative', tamil: 'அதுடன்' },
+      { case: 'Genitive in', tamil: 'அதன்' },
+      { case: 'Genitive udaiya', tamil: 'அதனுடைய' },
+      { case: 'Ablative', tamil: 'அதிலிருந்து' },
+      { case: 'Locative', tamil: 'அதில்' }
+    ],
+    'இது': [
+      { case: 'Nominative', tamil: 'இது' },
+      { case: 'Accusative', tamil: 'இதை' },
+      { case: 'Instrumental', tamil: 'இதால்' },
+      { case: 'Dative', tamil: 'இதற்கு' },
+      { case: 'Sociative', tamil: 'இதுடன்' },
+      { case: 'Genitive in', tamil: 'இதன்' },
+      { case: 'Genitive udaiya', tamil: 'இதனுடைய' },
+      { case: 'Ablative', tamil: 'இதிலிருந்து' },
+      { case: 'Locative', tamil: 'இதில்' }
+    ]
+  };
+  
+  // Check if noun is a hardcoded pronoun
+  if (pronounDeclensions[noun]) {
+    return pronounDeclensions[noun].map(decl => ({
+      ...decl,
+      roman: romanizeTamil(decl.tamil, transliterationMode)
+    }));
+  }
+  
   // Helper function to get the last character
   const lastChar = (str) => str.charAt(str.length - 1);
   
@@ -1314,22 +1502,19 @@
     'பாடு': 'பாட்டு',
     'சேறு': 'சேற்று',
     'பெண்': 'பெண்ணு',
-    'வில்': 'வில்லு',
-    'வானவில்': 'வானவில்லு',
     'பொன்': 'பொன்னு',
     'கண்': 'கண்ணு',
-    'செங்கல்': 'செங்கல்லு',
-    'மண்': 'மண்ணு'
+    'மண்': 'மண்ணு',
     'முகாம்': 'முகாமு',
-    'ஆடு' : 'ஆட்டு',
-    'முள்' : 'முள்ளு',
-    'ஓடு' : 'ஓட்டு',
-    'கூடு' : 'கூட்டு',
-    'கோடு' : 'கோட்டு',
-    'அண்' : 'அண்ணு',
-    'இல்' : 'இல்லு',
-    'வரலாறு' : 'வராலற்று',
-    'இன்' : 'இன்னு',
+    'ஆடு': 'ஆட்டு',
+    'முள்': 'முள்ளு',
+    'ஓடு': 'ஓட்டு',
+    'கூடு': 'கூட்டு',
+    'கோடு': 'கோட்டு',
+    'அண்': 'அண்ணு',
+    'இல்': 'இல்லு',
+    'வரலாறு': 'வரலாற்று',
+    'இன்': 'இன்னு',
   };
   
   let stem = '';
