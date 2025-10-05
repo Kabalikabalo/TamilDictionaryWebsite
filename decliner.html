@@ -1078,6 +1078,15 @@
             font-family: 'Inter', sans-serif;
         }
 
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .declension-table {
+            min-width: 500px; 
+        }
+
     </style>
 </head>
 <body data-theme="orange">
@@ -1770,35 +1779,37 @@
         
 
         function displayDeclension(noun) {
-            const translitMode = (showTranslitChecked ? getTranslitConvention() : 'off');
-            const declensions = getDeclension(noun, translitMode);
+    const translitMode = (showTranslitChecked ? getTranslitConvention() : 'off');
+    const declensions = getDeclension(noun, translitMode);
 
-            let tableRows = declensions.map(row => `
-                <tr>
-                    <td class="case-name">${row.case}</td>
-                    <td class="tamil-form">${row.tamil}</td>
-                    ${showTranslitChecked ? `<td class="roman-form">${row.roman}</td>` : ''}
-                </tr>
-            `).join('');
+    let tableRows = declensions.map(row => `
+        <tr>
+            <td class="case-name">${row.case}</td>
+            <td class="tamil-form">${row.tamil}</td>
+            ${showTranslitChecked ? `<td class="roman-form">${row.roman}</td>` : ''}
+        </tr>
+    `).join('');
 
-            resultsSection.innerHTML = `
-                <div class="result-card">
-                    <h2 class="results-header">Declensions for <span class="noun">${noun}</span></h2>
-                    <table class="declension-table">
-                        <thead>
-                            <tr>
-                                <th>Case</th>
-                                <th>Tamil</th>
-                                ${showTranslitChecked ? `<th>Transliteration</th>` : ''}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${tableRows}
-                        </tbody>
-                    </table>
-                </div>
-            `;
-        }
+    resultsSection.innerHTML = `
+        <div class="result-card">
+            <h2 class="results-header">Declensions for <span class="noun">${noun}</span></h2>
+            <div class="table-container">
+                <table class="declension-table">
+                    <thead>
+                        <tr>
+                            <th>Case</th>
+                            <th>Tamil</th>
+                            ${showTranslitChecked ? `<th>Transliteration</th>` : ''}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${tableRows}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    `;
+}
 
         function showNoResults(query) {
             resultsSection.innerHTML = `
