@@ -948,6 +948,11 @@
             padding: 4rem 2rem;
         }
 
+        .declension-table th,
+        .declension-table td {
+            white-space: nowrap;
+        }
+
         .empty-icon {
             font-size: 5rem;
             color: var(--text-muted);
@@ -979,17 +984,6 @@
                 padding: 1.5rem;
             }
 
-            .results-section table, .results-section td, .results-section th {
-                font-size: 1rem;
-                padding: 0.5em 0.3em;
-                word-break: break-word;
-            }
-            .results-section table {
-                width: 100%;
-                table-layout: fixed;
-              
-            }
-
             .search-input {
                 padding: 1rem 1.2rem;
                 font-size: 1rem;
@@ -1013,25 +1007,28 @@
                 width: 300px; 
             }
 
-            .case-name {
-                min-width: 100px;
-            }
-
             .results-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
             .declension-table th,
             .declension-table td {
-                padding: 0.4rem 0.5rem; /* Reduce horizontal and vertical padding */
-                font-size: 0.95rem;
-            }
-            .tamil-form {
-                font-size: 1.05rem;
+                padding: 0.2rem 0.3rem; /* Less space between columns */
+                font-size: 0.9rem;
             }
             .case-name {
-                min-width: 70px; /* Reduce min-width for the case column */
+                min-width: 40px;   /* Make the "Case" column much narrower */
+                font-size: 0.9rem;
             }
+            .tamil-form {
+                font-size: 0.98rem;
+                min-width: 50px;   /* Make the "Tamil" column narrower */
+            }
+            .declension-table th {
+                font-size: 0.85rem;
+                padding: 0.2rem 0.3rem;
+            }
+            
         }
 
         /* Custom Scrollbar */
@@ -2003,7 +2000,7 @@
     let translitMode = 'off';
     if (showTranslitChecked) {
         const stored = localStorage.getItem('romanization');
-        translitMode = stored ? stored : 'iso';
+        translitMode = (!stored || stored === 'off') ? 'iso' : stored;
     }
     const declensions = getDeclension(noun, translitMode);
 
