@@ -6,7 +6,8 @@ const urlsToCache = [
   'conjugator.html',
   'decliner.html',
   'alphabets.html',
-  'alphabet-test.html'
+  'alphabet-test.html',
+  'file_000000008b8862469e10533f5ba0c662.png'
 ];
 
 self.addEventListener('install', event => {
