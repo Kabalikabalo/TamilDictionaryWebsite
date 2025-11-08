@@ -1734,6 +1734,77 @@
             });
         }
 
+        // Category label translations map
+        const categoryLabels = {
+            'மருத்துவம்.': 'Medicine',
+            'பொறியியல்.': 'Engineering',
+            'இயற்பியல்.': 'Physics',
+            'வேளாண்மை.': 'Agriculture',
+            'வேதியியல்.': 'Chemistry',
+            'விலங்கியல்.': 'Zoology',
+            'கால்நடையியல்.': 'Veterinary Science',
+            'கணிதம்.': 'Mathematics',
+            'நிலவியல்.': 'Geography',
+            'தாவரவியல்.': 'Botany',
+            'கட்டுமானவியல்.': 'Architecture',
+            'மீன்வளம்.': '=Aquaculture',
+            'உளவியல்.': 'Psychology',
+            'மாழையியல்.': 'Oceanography',
+            'மரபியல்.': 'Genetics',
+            'பொருளியல்.': 'Economics',
+            'வணிகவியல்.': 'Commerce',
+            'தடைய அறிவியல்.': 'Criminology',
+            'மொழியியல்.': 'Linguistics',
+            'கைத்தொழில்.': 'Industry',
+            'நெசவுத்தொழில்.': 'Textiles',
+            'புள்ளியியல்.': 'Statistics',
+            'மனையியல்.': 'Psychiatry',
+            'தொழில்.': 'Occupation',
+            'கணினி.': 'Computer Science',
+            'கபடி': 'Kabaddi',
+            'கணினியியல்': 'Computer Science',
+            'மருத்துவம்': 'Medicine',
+            'கணினி': 'Computer Science',
+            'இயற்.': 'Physics',
+            'பொறி.': 'Engineering',
+            'வேதியியல்': 'Chemistry',
+            'பெ': 'Female',
+            'அறிவியல்.': 'Science',
+            'கணி.': 'Mathematics',
+            'பறவையியல்:': 'Ornithology',
+            'இயற்பியல்': 'Physics',
+            'கரிம வேதியியல்': 'Organic Chemistry',
+            'வேதி.': 'Chemistry',
+            'பறவையியல்.': 'Ornithology',
+            "O'": 'O\'',
+            'போரியல்': 'Military Science',
+            'பேச்சுவழக்கு': 'Colloquial',
+            'புவியியல்.': 'Geography',
+            'வானியல்.': 'Astronomy',
+            'விலங்.': 'Zoology',
+            'விளையாட்டு.': 'Sports',
+            'கணிதம்': 'Mathematics',
+            'நிலவியல்': 'Geography',
+            'பொறியியல்': 'Engineering',
+            'வி.': 'Science',
+            'மரு.': 'Medicine',
+            'கணினியியல்.': 'Computer Science',
+            'உயிரியல்.': 'Biology'
+        };
+
+        function translateCategoryLabels(text) {
+            if (typeof text !== 'string') return text;
+            
+            // Replace [தமிழ்] patterns with (English) in italics
+            return text.replace(/\[([^\]]+)\]/g, (match, label) => {
+                const translation = categoryLabels[label];
+                if (translation) {
+                    return `<i>(${translation})</i>`;
+                }
+                return match; // Keep original if no translation found
+            });
+        }
+
         function createTranslationBubbles(translations) {
             if (!Array.isArray(translations)) {
                 translations = [translations];
@@ -1746,15 +1817,19 @@
                     return translation.map(word => {
                         // Remove trailing period
                         word = typeof word === 'string' ? word.replace(/\.$/, '') : word;
+                        // Remove category labels from original text for transliteration
+                        const textForRomanization = typeof word === 'string' ? word.replace(/\[([^\]]+)\]\s*/g, '') : word;
+                        // Translate category labels for display
+                        const displayWord = translateCategoryLabels(word);
                         let romanText = '';
-                        if (romanizationMode !== 'off' && /[\u0B80-\u0BFF]/.test(word)) {
-                            const romanized = romanizeTamil(word, romanizationMode);
+                        // Romanize only the text without category labels
+                        if (romanizationMode !== 'off' && /[\u0B80-\u0BFF]/.test(textForRomanization)) {
+                            const romanized = romanizeTamil(textForRomanization, romanizationMode);
                             if (romanized) romanText = ` – ${romanized}`;
                         }
-                        const escapedWord = escapeHTML(word);
                         return `
-                            <div class="translation-bubble" onclick="copyToClipboard('${escapedWord}', this.querySelector('.copy-btn'))">
-                                ${escapedWord}${romanText}
+                            <div class="translation-bubble" onclick="copyToClipboard('${escapeHTML(textForRomanization)}', this.querySelector('.copy-btn'))">
+                                ${displayWord}${romanText}
                                 <button class="copy-btn" title="Copy">⧉</button>
                             </div>
                         `;
@@ -1762,15 +1837,19 @@
                 } else {
                     // Remove trailing period
                     translation = typeof translation === 'string' ? translation.replace(/\.$/, '') : translation;
+                    // Remove category labels from original text for transliteration
+                    const textForRomanization = typeof translation === 'string' ? translation.replace(/\[([^\]]+)\]\s*/g, '') : translation;
+                    // Translate category labels for display
+                    const displayText = translateCategoryLabels(translation);
                     let romanText = '';
-                    if (romanizationMode !== 'off' && /[\u0B80-\u0BFF]/.test(translation)) {
-                        const romanized = romanizeTamil(translation, romanizationMode);
+                    // Romanize only the text without category labels
+                    if (romanizationMode !== 'off' && /[\u0B80-\u0BFF]/.test(textForRomanization)) {
+                        const romanized = romanizeTamil(textForRomanization, romanizationMode);
                         if (romanized) romanText = ` – ${romanized}`;
                     }
-                    const escapedWord = escapeHTML(translation);
                     return `
-                        <div class="translation-bubble" onclick="copyToClipboard('${escapedWord}', this.querySelector('.copy-btn'))">
-                            ${escapedWord}${romanText}
+                        <div class="translation-bubble" onclick="copyToClipboard('${escapeHTML(textForRomanization)}', this.querySelector('.copy-btn'))">
+                            ${displayText}${romanText}
                             <button class="copy-btn" title="Copy">⧉</button>
                         </div>
                     `;
