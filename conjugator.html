@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tamil Dictionary - Search & Learn</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Tamil:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="file_000000008b8862469e10533f5ba0c662.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Tamil:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="manifest" href="/TamilDictionaryWebsite/manifest.json">
     <style>
@@ -952,9 +954,9 @@
         }
 
         .verbtable h4 {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(90deg, var(--primary-color), transparent);
             color: white;
-            padding: 0.8rem 1rem;
+            padding: 0.3rem 1rem;
             margin: 0;
             font-size: 1rem;
             font-weight: 600;
@@ -1369,7 +1371,9 @@
 
         // Get transliteration convention from localStorage, default to 'iso'
         function getTranslitConvention() {
-            return localStorage.getItem('romanization') || 'iso';
+            const mode = localStorage.getItem('romanization') || 'iso';
+            // If mode is 'off', default to 'simple' for actual romanization
+            return mode === 'off' ? 'simple' : mode;
         }
 
         // Complete ISO 15919 and Simple Romanization maps
@@ -1574,7 +1578,7 @@
         }
 
         // Split conjugation into Tamil and transliteration
-        function processConjugationHTML(html, translitMode) {
+        function processConjugationHTML(html, translitMode, verbEnding) {
             const pronounMap = {
                 "Sg.1": "நான்",
                 "Sg.2": "நீ",
@@ -1639,7 +1643,19 @@
                         cells[0].classList.add('pronoun');
 
                         const wordCell = cells[1];
-                        const text = wordCell.textContent.trim();
+                        let text = wordCell.textContent.trim();
+
+                        // Handle semicolon-separated conjugations based on verb ending
+                        if (verbEnding && text.includes(';')) {
+                            const parts = text.split(';').map(p => p.trim());
+                            if (verbEnding === 'த்தல்' && parts.length > 1) {
+                                // Use the part after the semicolon
+                                text = parts[1];
+                            } else if (verbEnding === 'தல்' && parts.length > 0) {
+                                // Use the part before the semicolon
+                                text = parts[0];
+                            }
+                        }
 
                         // Remove row if any Latin letters are present
                         if (/[a-zA-Z]/.test(text)) {
@@ -1648,14 +1664,24 @@
                             hasTamilRows = true;
                             wordCell.innerHTML = `<span class="tamil-word">${text}</span>`;
 
-                            // Add transliteration column if requested
+                            // Handle transliteration column
                             if (translitMode && translitMode !== 'off') {
-                                // Only add if not already present
-                                if (!cells[2]) {
-                                    const translitCell = document.createElement('td');
-                                    translitCell.className = 'translit';
-                                    translitCell.textContent = romanizeTamil(text, translitMode);
-                                    row.appendChild(translitCell);
+                                // Check for existing transliteration cell (3rd cell)
+                                const existingTranslit = row.querySelector('td:nth-child(3)');
+                                if (existingTranslit) {
+                                    existingTranslit.remove();
+                                }
+                                // Add new transliteration column
+                                const translitCell = document.createElement('td');
+                                translitCell.className = 'translit';
+                                const romanized = romanizeTamil(text, translitMode);
+                                translitCell.textContent = romanized;
+                                row.appendChild(translitCell);
+                            } else {
+                                // Remove transliteration cell if mode is off
+                                const existingTranslit = row.querySelector('td:nth-child(3)');
+                                if (existingTranslit) {
+                                    existingTranslit.remove();
                                 }
                             }
                         }
@@ -1695,7 +1721,7 @@
 
         // Display conjugation result
 
-        function displayConjugation(apiData, query) {
+        function displayConjugation(apiData, query, verbEnding) {
             if (!apiData.p1 || !apiData.p1.html) {
                 showNoResults(query);
                 return;
@@ -1704,7 +1730,7 @@
             let translitMode = getTranslitConvention();
 
             // Use the remembered toggle state
-            let processedHTML = processConjugationHTML(apiData.p1.html, showTranslitChecked ? translitMode : 'off');
+            let processedHTML = processConjugationHTML(apiData.p1.html, showTranslitChecked ? translitMode : 'off', verbEnding);
 
             resultsSection.innerHTML = `
                 <div class="results-header">
@@ -1725,17 +1751,27 @@
             translitToggle.addEventListener("change", (e) => {
                 showTranslitChecked = e.target.checked; // Remember state
                 const mode = showTranslitChecked ? translitMode : 'off';
-                const newHTML = processConjugationHTML(apiData.p1.html, mode);
+                const newHTML = processConjugationHTML(apiData.p1.html, mode, verbEnding);
                 document.getElementById('conjCard').innerHTML = newHTML;
             });
         }
 
         // Search functionality
         async function performSearch() {
-            const query = searchInput.value.trim();
+            let query = searchInput.value.trim();
             if (!query) {
                 showEmptyState();
                 return;
+            }
+
+            // Track which ending was present
+            let verbEnding = null;
+            if (query.endsWith('த்தல்')) {
+                verbEnding = 'த்தல்';
+                query = query.slice(0, -5); // Remove த்தல் (5 characters)
+            } else if (query.endsWith('தல்')) {
+                verbEnding = 'தல்';
+                query = query.slice(0, -3); // Remove தல் (3 characters)
             }
 
             showLoading();
@@ -1747,7 +1783,7 @@
                 return;
             }
 
-            displayConjugation(apiData, query);
+            displayConjugation(apiData, query, verbEnding);
         }
 
         function showLoading() {
