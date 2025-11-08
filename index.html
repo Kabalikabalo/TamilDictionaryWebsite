@@ -1744,6 +1744,8 @@
             return translations.map(translation => {
                 if (Array.isArray(translation)) {
                     return translation.map(word => {
+                        // Remove trailing period
+                        word = typeof word === 'string' ? word.replace(/\.$/, '') : word;
                         let romanText = '';
                         if (romanizationMode !== 'off' && /[\u0B80-\u0BFF]/.test(word)) {
                             const romanized = romanizeTamil(word, romanizationMode);
@@ -1758,6 +1760,8 @@
                         `;
                     }).join('');
                 } else {
+                    // Remove trailing period
+                    translation = typeof translation === 'string' ? translation.replace(/\.$/, '') : translation;
                     let romanText = '';
                     if (romanizationMode !== 'off' && /[\u0B80-\u0BFF]/.test(translation)) {
                         const romanized = romanizeTamil(translation, romanizationMode);
