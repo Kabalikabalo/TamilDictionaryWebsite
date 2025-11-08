@@ -1774,6 +1774,24 @@
                 query = query.slice(0, -3); // Remove தல் (3 characters)
             }
 
+            // Transform ending: ணு/ளு/லு → ண்/ள்/ல்
+            if (query.endsWith('ணு')) {
+                query = query.slice(0, -2) + 'ண்';
+            } else if (query.endsWith('ளு')) {
+                query = query.slice(0, -2) + 'ள்';
+            } else if (query.endsWith('லு')) {
+                query = query.slice(0, -2) + 'ல்';
+            }
+
+            // If last letter appears twice, remove the second occurrence
+            if (query.length >= 2) {
+                const lastChar = query[query.length - 1];
+                const secondLastChar = query[query.length - 2];
+                if (lastChar === secondLastChar) {
+                    query = query.slice(0, -1);
+                }
+            }
+
             showLoading();
 
             const apiData = await fetchConjugation(query);
