@@ -9,6 +9,10 @@
     <link rel="manifest" href="/TamilDictionaryWebsite/manifest.json">
     <style>
         * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+        }
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -1596,6 +1600,17 @@
                     /^sample sentences/i.test(txt)
                 ) {
                     el.remove();
+                }
+            });
+
+            // Remove duplicate consecutive tense headers (h4)
+            let lastHeader = null;
+            wrapper.querySelectorAll('h4').forEach(hdr => {
+                const txt = hdr.textContent.trim();
+                if (lastHeader && lastHeader.textContent.trim() === txt) {
+                    hdr.remove();
+                } else {
+                    lastHeader = hdr;
                 }
             });
 
