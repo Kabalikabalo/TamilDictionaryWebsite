@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tamil Dictionary - Search & Learn</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Tamil:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="file_000000008b8862469e10533f5ba0c662.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Tamil:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="manifest" href="/TamilDictionaryWebsite/manifest.json">
     <style>
@@ -1732,10 +1734,17 @@
 
         // Search functionality
         async function performSearch() {
-            const query = searchInput.value.trim();
+            let query = searchInput.value.trim();
             if (!query) {
                 showEmptyState();
                 return;
+            }
+
+            // Remove த்தல் or தல் endings if present
+            if (query.endsWith('த்தல்')) {
+                query = query.slice(0, -5); // Remove த்தல் (5 characters)
+            } else if (query.endsWith('தல்')) {
+                query = query.slice(0, -3); // Remove தல் (3 characters)
             }
 
             showLoading();
