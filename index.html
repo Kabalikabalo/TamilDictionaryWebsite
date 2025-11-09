@@ -1232,6 +1232,249 @@
                 font-size: 0.75rem;
             }
         }
+
+        /* API Key Section */
+        .api-key-section {
+            margin-top: 1.5rem;
+        }
+
+        .api-key-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .api-key-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .api-key-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 20px var(--glow-color),
+                        0 0 30px var(--glow-color-medium),
+                        0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .api-key-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .api-key-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .api-key-btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .verify-btn {
+            background: var(--accent);
+            color: white;
+        }
+
+        .verify-btn:hover:not(:disabled) {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px var(--glow-color),
+                        0 4px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .verify-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .clear-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .clear-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .api-key-status {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            animation: fadeInUp 0.3s ease-out;
+        }
+
+        .api-key-status.show {
+            display: flex;
+        }
+
+        .api-key-status.success {
+            background: rgba(76, 175, 80, 0.15);
+            color: #4CAF50;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.3),
+                        0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .api-key-status.error {
+            background: rgba(244, 67, 54, 0.15);
+            color: #f44336;
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            box-shadow: 0 0 15px rgba(244, 67, 54, 0.3),
+                        0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .api-key-status.info {
+            background: rgba(33, 150, 243, 0.15);
+            color: #2196F3;
+            border: 1px solid rgba(33, 150, 243, 0.3);
+            box-shadow: 0 0 15px rgba(33, 150, 243, 0.3),
+                        0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .api-key-note {
+            margin-top: 0.8rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
+        }
+
+        .api-key-note a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .api-key-note a:hover {
+            text-decoration: underline;
+        }
+
+        /* Example Sentences Section */
+        .example-sentences {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+        }
+
+        .example-sentences-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .example-sentences-header i {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+        }
+
+        .example-sentences-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .examples-loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .examples-loading i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .sentence-item {
+            padding: 1rem 1.2rem;
+            margin-bottom: 0.8rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            border-left: 3px solid var(--primary-color);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease-out both;
+        }
+
+        .sentence-item:nth-child(2) { animation-delay: 0.1s; }
+        .sentence-item:nth-child(3) { animation-delay: 0.2s; }
+        .sentence-item:nth-child(4) { animation-delay: 0.3s; }
+        .sentence-item:nth-child(5) { animation-delay: 0.4s; }
+
+        .sentence-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(5px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .sentence-text {
+            font-size: 1.05rem;
+            line-height: 1.5;
+            color: var(--text-primary);
+            margin-bottom: 0.6rem;
+        }
+
+        .sentence-translation {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: var(--text-secondary);
+            padding-left: 0.8rem;
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .examples-error {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .examples-disclaimer {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 3px solid #ffc107;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body data-theme="orange">
@@ -1315,6 +1558,36 @@
                         <span class="option-desc">No romanization</span>
                     </span>
                 </label>
+            </div>
+        </div>
+
+        <div class="api-key-section">
+            <label class="theme-label">Gemini API Key (Optional)</label>
+            <div class="api-key-input-group">
+                <input 
+                    type="password" 
+                    class="api-key-input" 
+                    id="apiKeyInput" 
+                    placeholder="Enter your Gemini API key for AI features"
+                    autocomplete="off"
+                >
+                <div class="api-key-buttons">
+                    <button class="api-key-btn verify-btn" id="verifyApiKey">
+                        <i class="fas fa-check"></i> Verify & Save
+                    </button>
+                    <button class="api-key-btn clear-btn" id="clearApiKey">
+                        <i class="fas fa-trash"></i> Clear
+                    </button>
+                </div>
+                <div class="api-key-status" id="apiKeyStatus">
+                    <i class="fas fa-circle-notch fa-spin"></i>
+                    <span id="apiKeyStatusText"></span>
+                </div>
+                <div class="api-key-note">
+                    <i class="fas fa-info-circle"></i> 
+                    Get your free API key from <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a>. 
+                    This enables AI-generated example sentences for each search.
+                </div>
             </div>
         </div>
         
@@ -1693,6 +1966,108 @@
         closeSettings.addEventListener('click', closeSettingsPanel);
         overlay.addEventListener('click', closeSettingsPanel);
 
+        // API Key Management
+        const apiKeyInput = document.getElementById('apiKeyInput');
+        const verifyApiKeyBtn = document.getElementById('verifyApiKey');
+        const clearApiKeyBtn = document.getElementById('clearApiKey');
+        const apiKeyStatus = document.getElementById('apiKeyStatus');
+        const apiKeyStatusText = document.getElementById('apiKeyStatusText');
+
+        // Load saved API key on page load
+        function loadApiKey() {
+            const savedKey = localStorage.getItem('geminiApiKey');
+            if (savedKey) {
+                apiKeyInput.value = savedKey;
+                // Silently load - no status message needed
+            }
+        }
+
+        // Show status message
+        function showApiKeyStatus(message, type) {
+            apiKeyStatusText.textContent = message;
+            apiKeyStatus.className = 'api-key-status show ' + type;
+            
+            // Update icon based on type
+            const icon = apiKeyStatus.querySelector('i');
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle';
+            } else if (type === 'error') {
+                icon.className = 'fas fa-exclamation-circle';
+            } else if (type === 'info') {
+                icon.className = 'fas fa-info-circle';
+            }
+            
+            setTimeout(() => {
+                apiKeyStatus.classList.remove('show');
+            }, 5000);
+        }
+
+        // Verify API key
+        async function verifyApiKey() {
+            const apiKey = apiKeyInput.value.trim();
+            
+            if (!apiKey) {
+                showApiKeyStatus('Please enter an API key', 'error');
+                return;
+            }
+
+            verifyApiKeyBtn.disabled = true;
+            verifyApiKeyBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Verifying...';
+
+            try {
+                // Try with Gemini 1.5 Flash model (newer and faster)
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: 'Hello'
+                            }]
+                        }]
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    // Check if we got a valid response
+                    if (data.candidates && data.candidates.length > 0) {
+                        localStorage.setItem('geminiApiKey', apiKey);
+                        showApiKeyStatus('✓ API key verified and saved! Example sentences will now appear.', 'success');
+                    } else {
+                        showApiKeyStatus('Unexpected response from API. Please try again.', 'error');
+                    }
+                } else {
+                    const errorData = await response.json().catch(() => ({}));
+                    const errorMsg = errorData.error?.message || 'Invalid API key';
+                    showApiKeyStatus(`✗ ${errorMsg}`, 'error');
+                    console.error('API Error:', errorData);
+                }
+            } catch (error) {
+                showApiKeyStatus('✗ Network error. Please check your connection and try again.', 'error');
+                console.error('Verification error:', error);
+            } finally {
+                verifyApiKeyBtn.disabled = false;
+                verifyApiKeyBtn.innerHTML = '<i class="fas fa-check"></i> Verify & Save';
+            }
+        }
+
+        // Clear API key
+        function clearApiKey() {
+            apiKeyInput.value = '';
+            localStorage.removeItem('geminiApiKey');
+            showApiKeyStatus('API key cleared', 'info');
+        }
+
+        // Event listeners for API key buttons
+        verifyApiKeyBtn.addEventListener('click', verifyApiKey);
+        clearApiKeyBtn.addEventListener('click', clearApiKey);
+
+        // Load API key on page load
+        loadApiKey();
+
         // Theme Selection
         document.querySelectorAll('.theme-option').forEach(option => {
             option.addEventListener('click', () => {
@@ -1903,12 +2278,29 @@
                 spinner.style.display = "none";
 
                 let html = '';
+                // Collect all translations (sanitized) so the sentence generator can use them
+                const allTranslations = [];
                 
                 // Process each category (key) in the response
                 Object.keys(data).forEach(category => {
                     const translations = data[category];
                     
                     if (translations && Array.isArray(translations)) {
+                        // Collect translations into a flat array (remove trailing dots and category labels)
+                        translations.forEach(item => {
+                            if (Array.isArray(item)) {
+                                item.forEach(sub => {
+                                    if (typeof sub === 'string') {
+                                        const s = sub.replace(/\.$/, '').replace(/\[([^\]]+)\]\s*/g, '').trim();
+                                        if (s) allTranslations.push(s);
+                                    }
+                                });
+                            } else if (typeof item === 'string') {
+                                const s = item.replace(/\.$/, '').replace(/\[([^\]]+)\]\s*/g, '').trim();
+                                if (s) allTranslations.push(s);
+                            }
+                        });
+
                         // Create bubbles for this category
                         const bubblesHtml = createTranslationBubbles(translations);
                         
@@ -1943,10 +2335,16 @@
                     }
                 });
 
+                // Deduplicate and limit translations (we only need a handful of distinct senses)
+                const uniqueTranslations = Array.from(new Set(allTranslations)).slice(0, 8);
+
                 if (html) {
                     resultDiv.innerHTML = html;
                     resultDiv.style.display = 'block';
                     localStorage.setItem("lastSearch", input.value);
+                    
+                    // Generate example sentences using collected translations
+                    generateExampleSentences(input.value, uniqueTranslations);
                 } else {
                     showError("No translations found for this word.");
                 }
@@ -1959,6 +2357,137 @@
                     showError("Failed to fetch. Please check your internet or try another word.");
                 }
             }
+        }
+
+        // Generate Example Sentences using Gemini API
+        async function generateExampleSentences(word, translations = []) {
+            const apiKey = localStorage.getItem('geminiApiKey');
+            
+            // Silently skip if no API key
+            if (!apiKey) return;
+
+            // Add example sentences section to the results
+            const examplesSection = document.createElement('div');
+            examplesSection.className = 'example-sentences';
+            examplesSection.innerHTML = `
+                <div class="example-sentences-header">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3 class="example-sentences-title">Example Sentences</h3>
+                    <div style="margin-left:auto;font-size:0.85rem;color:var(--text-secondary)">Showing 4 example sentences</div>
+                </div>
+                <div class="examples-loading">
+                    <i class="fas fa-circle-notch fa-spin"></i>
+                    <p>Generating example sentences...</p>
+                </div>
+            `;
+            resultDiv.appendChild(examplesSection);
+
+            try {
+                // Detect if input is Tamil or English
+                const isTamil = /[\u0B80-\u0BFF]/.test(word);
+
+                // Build a short senses list to give the model context (if available)
+                const senses = (Array.isArray(translations) && translations.length) ? translations.slice(0,6).join('; ') : word;
+
+                // Create a prompt asking for authentic, varied sentences (no mention of AI)
+                const prompt = isTamil
+                    ? `Using these senses: ${senses}\n\nGenerate 4 authentic, natural Tamil sentences that use the word "${word}" in different senses when possible. For each sentence, provide two lines exactly in this format:\nTamil: [Tamil sentence]\nEnglish: [English translation]\n\nDo not add any commentary, labels, or explanations—only the sentence pairs.`
+                    : `Using these senses: ${senses}\n\nGenerate 4 authentic, natural English sentences that use the word "${word}" in different senses when possible. For each sentence, provide two lines exactly in this format:\nEnglish: [English sentence]\nTamil: [Tamil translation]\n\nDo not add any commentary, labels, or explanations—only the sentence pairs.`;
+
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }]
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    console.error('API Error:', errorData);
+                    throw new Error(errorData.error?.message || 'Failed to generate sentences');
+                }
+
+                const data = await response.json();
+                if (!data || !data.candidates || !data.candidates[0] || !data.candidates[0].content) {
+                    throw new Error('Invalid response from API');
+                }
+
+                const generatedText = data.candidates[0].content.parts[0].text || '';
+
+                // Parse the generated sentences
+                const sentences = parseSentences(generatedText, isTamil);
+
+                // Display sentences compactly (with expand controls)
+                displaySentences(examplesSection, sentences, isTamil);
+
+            } catch (error) {
+                console.error('Error generating sentences:', error);
+                examplesSection.querySelector('.examples-loading').innerHTML = `
+                    <div class="examples-error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Could not generate example sentences. Please check your API key in settings.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Parse sentences from Gemini response
+        function parseSentences(text, isTamil) {
+            const sentences = [];
+            const lines = text.split('\n').map(l => l.trim()).filter(l => l);
+            let current = {};
+
+            for (let line of lines) {
+                if (isTamil) {
+                    if (line.startsWith('Tamil:')) {
+                        if (current.tamil && current.english) { sentences.push(current); current = {}; }
+                        current.tamil = line.replace('Tamil:', '').trim();
+                    } else if (line.startsWith('English:')) {
+                        current.english = line.replace('English:', '').trim();
+                    }
+                } else {
+                    if (line.startsWith('English:')) {
+                        if (current.english && current.tamil) { sentences.push(current); current = {}; }
+                        current.english = line.replace('English:', '').trim();
+                    } else if (line.startsWith('Tamil:')) {
+                        current.tamil = line.replace('Tamil:', '').trim();
+                    }
+                }
+            }
+            if (current.tamil && current.english) sentences.push(current);
+            // Return up to 4 sentence pairs
+            return sentences.filter(s => s.tamil && s.english).slice(0,4);
+        }
+
+        // Display sentences in the UI (compact with expand toggles)
+        function displaySentences(container, sentences, isTamil) {
+            if (!sentences || sentences.length === 0) {
+                container.querySelector('.examples-loading').innerHTML = `
+                    <div class="examples-error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>No example sentences could be generated.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let sentencesHtml = '';
+            sentences.forEach((s, idx) => {
+                // Always show Tamil first, English second
+                const first = s.tamil;
+                const second = s.english;
+
+                sentencesHtml += `
+                    <div class="sentence-item">
+                        <div class="sentence-text">${escapeHTML(first)}</div>
+                        <div class="sentence-translation">${escapeHTML(second)}</div>
+                    </div>
+                `;
+            });
+
+            // Replace loading block with sentences
+            container.querySelector('.examples-loading').outerHTML = sentencesHtml;
         }
 
         // Event listeners
