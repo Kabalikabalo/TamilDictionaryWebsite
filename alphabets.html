@@ -1299,6 +1299,13 @@
                     <div class="tamil-letter">${letter}</div>
                     <div class="romanization">${romanizations[index]}</div>
                 `;
+                
+                // Add click event to play audio
+                card.addEventListener('click', () => {
+                    const audio = new Audio(`sounds/${letter}.mp3`);
+                    audio.play().catch(err => console.log('Audio play failed:', err));
+                });
+                
                 container.appendChild(card);
             });
         }
