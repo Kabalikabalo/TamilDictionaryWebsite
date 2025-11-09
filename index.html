@@ -2391,8 +2391,8 @@
 
                 // Create a prompt asking for authentic, varied sentences (no mention of AI)
                 const prompt = isTamil
-                    ? `Using these senses: ${senses}\n\nGenerate 4 authentic, natural Tamil sentences that use the word "${word}" in different senses when possible. For each sentence, provide two lines exactly in this format:\nTamil: [Tamil sentence]\nEnglish: [English translation]\n\nDo not add any commentary, labels, or explanations—only the sentence pairs.`
-                    : `Using these senses: ${senses}\n\nGenerate 4 authentic, natural English sentences that use the word "${word}" in different senses when possible. For each sentence, provide two lines exactly in this format:\nEnglish: [English sentence]\nTamil: [Tamil translation]\n\nDo not add any commentary, labels, or explanations—only the sentence pairs.`;
+                    ? `Using these senses: ${senses}\n\nGenerate 4 authentic, natural Tamil sentences that use the word "${word}" in different senses when possible, try to make the first one relatively simple and make all grammaticaly flawless. For each sentence, provide two lines exactly in this format:\nTamil: [Tamil sentence]\nEnglish: [English translation]\n\nDo not add any commentary, labels, or explanations—only the sentence pairs.`
+                    : `Using these senses: ${senses}\n\nGenerate 4 authentic, natural English sentences that use the word "${word}" in different senses when possible, try to make the the first one relatively simple and make all grammaticaly flawless. For each sentence, provide two lines exactly in this format:\nEnglish: [English sentence]\nTamil: [Tamil translation]\n\nDo not add any commentary, labels, or explanations—only the sentence pairs.`;
 
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
                     method: 'POST',
