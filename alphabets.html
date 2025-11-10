@@ -382,6 +382,174 @@
             box-shadow: 0 0 20px var(--glow-color);
         }
 
+        /* Navigation - Hamburger Menu */
+        .hamburger {
+            position: fixed !important;
+            top: 1.5rem !important;
+            left: 1.5rem !important;
+            width: 44px;
+            height: 44px;
+            background: #1a1a1a00;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: var(--transition);
+            overflow: hidden;
+            z-index: 1100 !important;
+        }
+
+        .hamburger::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--glow-color-light), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .hamburger:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px var(--glow-color);
+            transform: scale(1.05);
+        }
+
+        .hamburger:hover::before {
+            opacity: 1;
+        }
+
+        .hamburger-lines {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hamburger-line {
+            width: 16px;
+            height: 2px;
+            background: var(--text-secondary);
+            margin: 3px 0;
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        .hamburger:hover .hamburger-line {
+            background: var(--primary-color);
+        }
+
+        .hamburger.active .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Navigation Menu */
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            left: -350px;
+            width: 350px;
+            height: 100vh;
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            transition: var(--transition);
+            z-index: 1050;
+            overflow-y: auto;
+            backdrop-filter: blur(20px);
+        }
+
+        .nav-menu.open {
+            left: 0;
+            box-shadow: 0 0 50px var(--glow-color);
+        }
+
+        .nav-close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-close-btn:hover {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px var(--glow-color);
+        }
+
+        .nav-items {
+            padding: 5rem 0 2rem 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 2rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+            font-size: 1.05rem;
+        }
+
+        .nav-item:hover {
+            background: var(--glow-color-light);
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
+        }
+
+        .nav-item.active {
+            background: var(--glow-color-light);
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            width: 24px;
+        }
+
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 1040;
+        }
+
+        .nav-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
         /* Settings Panel */
         .settings-panel {
             position: fixed;
@@ -893,6 +1061,50 @@
         </div>
     </div>
 
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- Hamburger Menu -->
+    <nav class="navbar">
+        <div class="hamburger" id="hamburger" style="position: fixed; top: 1.5rem; left: 1.5rem; z-index: 1100;">
+            <div class="hamburger-lines">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Navigation Menu -->
+    <div class="nav-menu" id="navMenu">
+        <button id="drawerCloseBtn" class="nav-close-btn" aria-label="Close navigation">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="nav-items">
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Dictionary</span>
+            </a>
+            <a href="alphabets.html" class="nav-item active">
+                <i class="fas fa-language"></i>
+                <span>Alphabets</span>
+            </a>
+            <a href="alphabet-test.html" class="nav-item">
+                <i class="fas fa-pen"></i>
+                <span>Alphabet Quiz</span>
+            </a>
+            <a href="conjugator.html" class="nav-item">
+                <i class="fas fa-language"></i>
+                <span>Conjugator</span>
+            </a>
+            <a href="decliner.html" class="nav-item">
+                <i class="fas fa-grip-vertical"></i>
+                <span>Noun Decliner</span>
+            </a>
+        </div>
+    </div>
+    <div class="bg-animation"></div>
+
     <nav class="nav-drawer" id="navDrawer" aria-hidden="true">
         <div class="nav-drawer-header">
             <span class="nav-title">Menu</span>
@@ -973,9 +1185,6 @@
         <header class="header">
             <button class="settings-btn" id="settingsBtn">
                 <i class="fas fa-cog"></i>
-            </button>
-            <button class="nav-toggle" id="navToggle" aria-label="Open menu">
-                <i class="fas fa-bars"></i>
             </button>
             <h1 class="logo">தமிழ் எழுத்துக்கள்</h1>
             <p class="subtitle">Tamil Alphabet Dictionary</p>
@@ -1162,9 +1371,6 @@
         const settingsPanel = document.getElementById('settingsPanel');
         const closeSettings = document.getElementById('closeSettings');
         const overlay = document.getElementById('overlay');
-        const navToggle = document.getElementById('navToggle');
-        const navDrawer = document.getElementById('navDrawer');
-        const closeNav = document.getElementById('closeNav');
 
         // Modal functions
         function openModal(modalId) {
@@ -1220,41 +1426,7 @@
             });
         }
 
-        function openNavDrawer() {
-            navDrawer.classList.add('open');
-            navDrawer.setAttribute('aria-hidden', 'false');
-            overlay.classList.add('show');
-        }
-
-        function closeNavDrawer() {
-            navDrawer.classList.remove('open');
-            navDrawer.setAttribute('aria-hidden', 'true');
-            overlay.classList.remove('show');
-        }
-
-        navToggle.addEventListener('click', openNavDrawer);
-        closeNav.addEventListener('click', closeNavDrawer);
-        overlay.addEventListener('click', () => {
-            closeNavDrawer();
-            closeSettingsPanel();
-        });
-
-        document.querySelectorAll('.nav-link').forEach(a => {
-            a.addEventListener('click', closeNavDrawer);
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeNavDrawer();
-                closeSettingsPanel();
-                // Close any open modals
-                document.querySelectorAll('.modal').forEach(modal => {
-                    modal.style.display = 'none';
-                });
-            }
-        });
-
-        // Settings Panel
+        // Settings Panel Logic
         settingsBtn.addEventListener('click', () => {
             settingsPanel.classList.add('open');
             overlay.classList.add('show');
@@ -1266,6 +1438,20 @@
         }
 
         closeSettings.addEventListener('click', closeSettingsPanel);
+        
+        overlay.addEventListener('click', () => {
+            closeSettingsPanel();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeSettingsPanel();
+                // Close any open modals
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
+        });
 
         // Theme Selection
         document.querySelectorAll('.theme-option').forEach(option => {
@@ -1342,6 +1528,34 @@
             generateLetterCards(uyirMeyEzhuthu, uyirMeyRomanization, 'uyirMeyGrid');
             generateLetterCards(vadamozhiCombinations, vadamozhiCombinationsRoman, 'vadamozhiGrid');
         });
+
+        // Navigation hamburger logic
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        const navOverlay = document.getElementById('navOverlay');
+        const drawerCloseBtn = document.getElementById('drawerCloseBtn');
+
+        if (hamburger && navMenu && navOverlay) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('open');
+                navOverlay.classList.toggle('show');
+            });
+
+            navOverlay.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('open');
+                navOverlay.classList.remove('show');
+            });
+
+            if (drawerCloseBtn) {
+                drawerCloseBtn.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('open');
+                    navOverlay.classList.remove('show');
+                });
+            }
+        }
 
         if ('serviceWorker' in navigator) {
           window.addEventListener('load', function() {
