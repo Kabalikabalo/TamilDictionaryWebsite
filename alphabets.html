@@ -461,11 +461,13 @@
             left: -350px;
             width: 350px;
             height: 100vh;
-            background: var(--card-bg);
+            background: rgba(26, 26, 26, 0.4);
             border-right: 1px solid var(--border-color);
             transition: var(--transition);
             z-index: 1050;
             overflow-y: auto;
+            backdrop-filter: blur(40px) saturate(150%);
+            -webkit-backdrop-filter: blur(40px) saturate(150%);
         }
 
         .nav-menu.open {
@@ -1094,11 +1096,11 @@
         </button>
         <div class="nav-items">
             <a href="index.html" class="nav-item">
-                <i class="fas fa-home"></i>
+                <i class="fas fa-book"></i>
                 <span>Dictionary</span>
             </a>
             <a href="alphabets.html" class="nav-item active">
-                <i class="fas fa-language"></i>
+                <i class="fas fa-font"></i>
                 <span>Alphabets</span>
             </a>
             <a href="alphabet-test.html" class="nav-item">
@@ -1106,7 +1108,7 @@
                 <span>Alphabet Quiz</span>
             </a>
             <a href="conjugator.html" class="nav-item">
-                <i class="fas fa-language"></i>
+                <i class="fas fa-spell-check"></i>
                 <span>Conjugator</span>
             </a>
             <a href="decliner.html" class="nav-item">
