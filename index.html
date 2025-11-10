@@ -361,7 +361,7 @@
         }
 
         .theme-section {
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
 
         .theme-label {
@@ -1102,7 +1102,7 @@
 
         /* Romanization Options Styling */
         .romanization-section {
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
 
         .romanization-options {
@@ -1235,7 +1235,7 @@
 
         /* API Key Section */
         .api-key-section {
-            margin-top: 1.5rem;
+            margin-top: 3rem;
         }
 
         .api-key-input-group {
@@ -1291,6 +1291,7 @@
             justify-content: center;
             gap: 0.4rem;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 50px;
         }
 
         .verify-btn {
@@ -1328,6 +1329,7 @@
             align-items: center;
             gap: 0.5rem;
             animation: fadeInUp 0.3s ease-out;
+            margin-top: 0.8rem;
         }
 
         .api-key-status.show {
@@ -1335,33 +1337,28 @@
         }
 
         .api-key-status.success {
-            background: rgba(76, 175, 80, 0.15);
-            color: #4CAF50;
-            border: 1px solid rgba(76, 175, 80, 0.3);
-            box-shadow: 0 0 15px rgba(76, 175, 80, 0.3),
-                        0 2px 8px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 107, 53, 0.15);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            box-shadow: 0 0 15px var(--glow-color);
         }
 
         .api-key-status.error {
             background: rgba(244, 67, 54, 0.15);
             color: #f44336;
             border: 1px solid rgba(244, 67, 54, 0.3);
-            box-shadow: 0 0 15px rgba(244, 67, 54, 0.3),
-                        0 2px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 15px rgba(244, 67, 54, 0.3);
         }
 
         .api-key-status.info {
-            background: rgba(33, 150, 243, 0.15);
-            color: #2196F3;
-            border: 1px solid rgba(33, 150, 243, 0.3);
-            box-shadow: 0 0 15px rgba(33, 150, 243, 0.3),
-                        0 2px 8px rgba(0, 0, 0, 0.2);
+            background: rgba(108, 98, 95, 0.1);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            box-shadow: 0 0 15px var(--glow-color);
         }
 
         .api-key-note {
-            margin-top: 0.8rem;
-            padding: 0.75rem;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0);
             border-left: 3px solid var(--accent);
             border-radius: 4px;
             font-size: 0.8rem;
@@ -2336,7 +2333,6 @@
                 if (html) {
                     resultDiv.innerHTML = html;
                     resultDiv.style.display = 'block';
-                    localStorage.setItem("lastSearch", input.value);
                     
                     // Generate example sentences using collected translations
                     generateExampleSentences(input.value, uniqueTranslations);
@@ -2496,16 +2492,10 @@
             createParticles();
             updateParticleColors();
             
-            // Load last search or default word
-            const last = localStorage.getItem("lastSearch");
-            if (last) {
-                input.value = last;
-                doSearch(last);
-            } else {
-                const defaultWord = 'paint';
-                input.value = defaultWord;
-                doSearch(defaultWord);
-            }
+            // Load default word
+            const defaultWord = 'paint';
+            input.value = defaultWord;
+            doSearch(defaultWord);
         });
 
         // Interactive particle effects
