@@ -426,7 +426,7 @@
 
         .hamburger-lines {
             position: relative;
-            z-index: -1;
+            z-index: 2;
         }
 
         .hamburger-line {
@@ -442,13 +442,16 @@
             background: var(--primary-color);
         }
 
-        .hamburger.active {
-            border-color: transparent;
-            box-shadow: none;
+        .hamburger.active .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
         }
 
-        .hamburger.active .hamburger-line {
+        .hamburger.active .hamburger-line:nth-child(2) {
             opacity: 0;
+        }
+
+        .hamburger.active .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
         }
 
         /* Navigation Menu */
@@ -472,29 +475,31 @@
 
         .nav-close-btn {
             position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: none;
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
+            top: 1.2rem;
+            right: 1.2rem;
             width: 40px;
             height: 40px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: var(--transition);
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: var(--text-secondary);
+            font-size: 1.3rem;
+            cursor: pointer;
+            z-index: 1200;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
         }
 
         .nav-close-btn:hover {
-            color: var(--primary-color);
-            border-color: var(--primary-color);
-            box-shadow: 0 0 15px var(--glow-color);
+            background: var(--primary-color);
+            color: #fff;
+            box-shadow: 0 0 12px var(--glow-color);
         }
 
         .nav-items {
-            padding: 5rem 0 2rem 0;
+            padding: 1.5rem 0 2rem 0;
         }
 
         .nav-item {
@@ -1535,6 +1540,19 @@
                     navOverlay.classList.remove('show');
                 });
             }
+
+            // Hide hamburger when nav drawer is open (like index.html)
+            function updateHamburgerVisibility() {
+                if (navMenu.classList.contains('open')) {
+                    hamburger.style.display = 'none';
+                } else {
+                    hamburger.style.display = '';
+                }
+            }
+
+            // Watch for changes to nav menu open state
+            const observer = new MutationObserver(updateHamburgerVisibility);
+            observer.observe(navMenu, { attributes: true, attributeFilter: ['class'] });
         }
 
         if ('serviceWorker' in navigator) {
