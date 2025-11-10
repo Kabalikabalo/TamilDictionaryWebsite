@@ -29,7 +29,7 @@
         }
 
         :root {
-            --primary-color: #ff6b35;
+            --primary-color: #ff4a08;
             --secondary-color: #ff8c42;
             --accent-color: #ffa726;
             --glow-color: rgba(255, 107, 53, 0.3);
@@ -1455,6 +1455,16 @@
             border-left: 2px solid rgba(255, 255, 255, 0.1);
         }
 
+        .sentence-romanization {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            color: #5b5b5b;
+            font-style: italic;
+            margin-top: 0.3rem;
+            margin-bottom: 0.3rem;
+            opacity: 0.9;
+        }
+
         .examples-error {
             text-align: center;
             padding: 1.5rem;
@@ -2256,8 +2266,9 @@
             spinner.style.display = 'block';
 
             try {
-                const url = `https://tamildictionary.onrender.com/word/${encodeURIComponent(word)}`;
-                const res = await fetch(url);
+                // Always fetch fresh data by adding a cache-busting query param
+                const url = `https://tamildictionary.onrender.com/word/${encodeURIComponent(word)}?t=${Date.now()}`;
+                const res = await fetch(url, { cache: 'reload' });
                 
                 if (!res.ok) {
                     if (res.status === 404) {
@@ -2275,6 +2286,9 @@
                 
                 // Process each category (key) in the response
                 Object.keys(data).forEach(category => {
+                    let displayCategory = category;
+                    if (category === 'பெயர்ச்சொல்') displayCategory = 'Noun';
+                    if (category === 'வினைச்சொல்') displayCategory = 'Verb';
                     const translations = data[category];
                     
                     if (translations && Array.isArray(translations)) {
@@ -2302,7 +2316,7 @@
                                 html += `
                                     <div class="category-card">
                                         <div class="category-header">
-                                            <h3 class="category-title">${escapeHTML(category)}</h3>
+                                            <h3 class="category-title">${escapeHTML(displayCategory)}</h3>
                                         </div>
                                         <div class="category-content">
                                             <div class="bubbles-container">
@@ -2333,6 +2347,9 @@
                 if (html) {
                     resultDiv.innerHTML = html;
                     resultDiv.style.display = 'block';
+                    
+                    // Save the last searched word (not the translations)
+                    localStorage.setItem('lastSearchedWord', input.value);
                     
                     // Generate example sentences using collected translations
                     generateExampleSentences(input.value, uniqueTranslations);
@@ -2461,15 +2478,26 @@
                 return;
             }
 
+            const romanizationMode = getRomanizationSetting();
             let sentencesHtml = '';
             sentences.forEach((s, idx) => {
                 // Always show Tamil first, English second
                 const first = s.tamil;
                 const second = s.english;
 
+                // Add transliteration if enabled
+                let romanText = '';
+                if (romanizationMode !== 'off' && /[\u0B80-\u0BFF]/.test(first)) {
+                    const romanized = romanizeTamil(first, romanizationMode);
+                    if (romanized) {
+                        romanText = `<div class="sentence-romanization">${escapeHTML(romanized)}</div>`;
+                    }
+                }
+
                 sentencesHtml += `
                     <div class="sentence-item">
                         <div class="sentence-text">${escapeHTML(first)}</div>
+                        ${romanText}
                         <div class="sentence-translation">${escapeHTML(second)}</div>
                     </div>
                 `;
@@ -2492,10 +2520,10 @@
             createParticles();
             updateParticleColors();
             
-            // Load default word
-            const defaultWord = 'paint';
-            input.value = defaultWord;
-            doSearch(defaultWord);
+            // Load last searched word or default to 'paint'
+            const lastWord = localStorage.getItem('lastSearchedWord') || 'paint';
+            input.value = lastWord;
+            doSearch(lastWord);
         });
 
         // Interactive particle effects
