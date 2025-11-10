@@ -9,6 +9,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="manifest" href="/TamilDictionaryWebsite/manifest.json">
     <style>
+    /* Prevent FOUC - hide elements until CSS is fully loaded */
+    .settings-btn, .hamburger {
+        opacity: 0;
+        transition: opacity 0.1s ease-in;
+    }
+    .settings-btn.loaded, .hamburger.loaded {
+        opacity: 1;
+    }
     /* Hide hamburger when nav drawer is open */
     .nav-menu.open ~ .navbar .hamburger {
         display: none;
@@ -29,13 +37,13 @@
         }
 
         :root {
-            --primary-color: #ff4a08;
+            --primary-color: #ff4400;
             --secondary-color: #ff8c42;
             --accent-color: #ffa726;
             --glow-color: rgba(255, 107, 53, 0.3);
             --glow-color-light: rgba(255, 107, 53, 0.1);
             --glow-color-medium: rgba(255, 107, 53, 0.2);
-            --particle-color: #ff6b35;
+            --particle-color: #ff4400;
             --dark-bg: #0a0a0a;
             --card-bg: #1a1a1a;
             --text-primary: #ffffff;
@@ -301,10 +309,10 @@
 
         /* Settings Button */
         .settings-btn {
-            position: fixed;
-            top: 1.5rem;
-            right: 1.5rem;
-            z-index: 1100;
+            position: fixed !important;
+            top: 1.5rem !important;
+            right: 1.5rem !important;
+            z-index: 1100 !important;
             background: #1a1a1a00;
             border: 1px solid var(--border-color);
             border-radius: 12px;
@@ -857,8 +865,9 @@
         }
 
         .hamburger {
-            top: 1.5rem;
-            left: 1.5rem;
+            position: fixed !important;
+            top: 1.5rem !important;
+            left: 1.5rem !important;
             width: 44px;
             height: 44px;
             background: #1a1a1a00;
@@ -870,8 +879,8 @@
             justify-content: center;
             align-items: center;
             transition: var(--transition);
-            position: relative;
             overflow: hidden;
+            z-index: 1100 !important;
         }
 
         .hamburger::before {
@@ -1490,7 +1499,7 @@
 
     <!-- Hamburger Menu -->
     <nav class="navbar">
-        <div class="hamburger" id="hamburger">
+        <div class="hamburger" id="hamburger" style="position: fixed; top: 1.5rem; left: 1.5rem; z-index: 1100;">
             <div class="hamburger-lines">
                 <div class="hamburger-line"></div>
                 <div class="hamburger-line"></div>
@@ -1650,7 +1659,7 @@
     
     <div class="container">
         <header class="header">
-            <button class="settings-btn" id="settingsBtn">
+            <button class="settings-btn" id="settingsBtn" style="position: fixed; top: 1.5rem; right: 1.5rem; z-index: 1100;">
                 <i class="fas fa-cog"></i>
             </button>
             <h1 class="logo">சொற்குவை</h1>
@@ -2519,6 +2528,10 @@
             initRomanization();
             createParticles();
             updateParticleColors();
+            
+            // Show settings button and hamburger after CSS is loaded
+            document.querySelector('.settings-btn')?.classList.add('loaded');
+            document.querySelector('.hamburger')?.classList.add('loaded');
             
             // Load last searched word or default to 'paint'
             const lastWord = localStorage.getItem('lastSearchedWord') || 'paint';
