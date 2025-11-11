@@ -744,21 +744,21 @@
             align-items: center;
             gap: 0.5rem;
             color: white;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             cursor: pointer;
-            padding: 0.6rem 1.2rem;
+            padding: 0.5rem 1rem;
             background: linear-gradient(135deg, var(--primary-color), transparent);
             border: 2px solid var(--primary-color);
             border-radius: 8px;
             transition: transform 0.3s, box-shadow 0.3s;
             box-shadow: 0 4px 15px var(--glow-color);
             font-weight: 600;
-            width: 200px;
-            min-width: 200px;
-            max-width: 200px;
-            height: 42px;
-            min-height: 42px;
-            max-height: 42px;
+            width: 180px;
+            min-width: 180px;
+            max-width: 180px;
+            height: 38px;
+            min-height: 38px;
+            max-height: 38px;
             box-sizing: border-box;
             justify-content: center;
             white-space: nowrap;
@@ -810,19 +810,19 @@
             background: linear-gradient(135deg, var(--primary-color), transparent);
             border: 2px solid var(--primary-color);
             border-radius: 8px;
-            padding: 0.6rem 1.2rem;
+            padding: 0.5rem 1rem;
             color: white;
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
             box-shadow: 0 4px 15px var(--glow-color);
-            font-size: 0.9rem;
-            width: 200px;
-            min-width: 200px;
-            max-width: 200px;
-            height: 42px;
-            min-height: 42px;
-            max-height: 42px;
+            font-size: 0.85rem;
+            width: 180px;
+            min-width: 180px;
+            max-width: 180px;
+            height: 38px;
+            min-height: 38px;
+            max-height: 38px;
             box-sizing: border-box;
         }
 
@@ -897,7 +897,7 @@
             align-items: center;
             margin-bottom: 1.5rem;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 0.75rem;
         }
 
         .results-title {
@@ -1201,7 +1201,7 @@
                 text-align: center;
                 justify-content: center;
                 flex-wrap: wrap;
-                gap: 1.5rem;
+                gap: 1rem;
             }
 
             .results-title,
@@ -1944,6 +1944,36 @@
                 
                 // Clone the content
                 const clone = conjCard.cloneNode(true);
+                // Make sure tables have solid backgrounds and proper text colors in PDF
+                const tables = clone.querySelectorAll('.verbtable');
+                tables.forEach(table => {
+                    table.style.background = '#1a1a1a';
+                    table.style.color = '#ffffff';
+                });
+                
+                // Make table headers visible
+                const headers = clone.querySelectorAll('.verbtable h4');
+                headers.forEach(h => {
+                    h.style.color = '#ffffff';
+                    h.style.background = primaryColor;
+                });
+                
+                // Make pronouns and tamil words visible
+                const pronouns = clone.querySelectorAll('.pronoun');
+                pronouns.forEach(p => {
+                    p.style.color = '#ffa726';
+                });
+                
+                const tamilWords = clone.querySelectorAll('.tamil-word');
+                tamilWords.forEach(tw => {
+                    tw.style.color = '#ffffff';
+                });
+                
+                const translits = clone.querySelectorAll('.translit');
+                translits.forEach(t => {
+                    t.style.color = '#b0b0b0';
+                });
+                
                 wrapper.appendChild(clone);
                 
                 document.body.appendChild(wrapper);
@@ -1953,7 +1983,8 @@
                     backgroundColor: '#0a0a0a',
                     scale: 2,
                     logging: false,
-                    useCORS: true
+                    useCORS: true,
+                    allowTaint: true
                 });
 
                 // Remove temporary wrapper

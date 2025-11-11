@@ -980,6 +980,80 @@
             color: var(--text-muted);
         }
 
+        /* Toggle transliteration */
+        .toggle-translit {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            font-size: 0.85rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--primary-color), transparent);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px var(--glow-color);
+            font-weight: 600;
+            width: 180px;
+            min-width: 180px;
+            max-width: 180px;
+            height: 38px;
+            min-height: 38px;
+            max-height: 38px;
+            box-sizing: border-box;
+            justify-content: center;
+            white-space: nowrap;
+            overflow: hidden;
+            vertical-align: middle;
+        }
+
+        .toggle-translit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--glow-color);
+        }
+
+        .toggle-translit input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 4px;
+            background: transparent;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.2s, border-color 0.2s;
+            flex-shrink: 0;
+        }
+
+        .toggle-translit input[type="checkbox"]:checked {
+            background: white;
+            border-color: white;
+        }
+
+        .toggle-translit input[type="checkbox"]:checked::after {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 4px;
+            top: 0px;
+            width: 4px;
+            height: 8px;
+            border: solid var(--primary-color);
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .controls-container {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: nowrap;
+        }
+
         /* Mobile adjustments */
         @media (max-width: 768px) {
             .container {
@@ -1015,6 +1089,11 @@
 
             .nav-menu, .settings-panel { 
                 width: 300px; 
+            }
+
+            .controls-container {
+                gap: 1rem;
+                flex-wrap: wrap;
             }
 
             .results-header {
@@ -1264,14 +1343,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Place this after the search-section, before results-section -->
-        <div class="translit-toggle-section">
-            <label class="toggle-translit">
-                <input type="checkbox" id="toggleTranslit">
-                <span></i> Show Transliteration</span>
-            </label>
-        </div>
 
         <!-- Results Section -->
         <section class="results-section" id="resultsSection">
@@ -2027,7 +2098,12 @@
     `).join('');
 
     resultsSection.innerHTML = `
-        <div class="result-card">
+        <div class="controls-container">
+            <label class="toggle-translit">
+                <input type="checkbox" id="showTranslit"> Show transliteration
+            </label>
+        </div>
+        <div class="result-card" id="declCard">
             <h2 class="results-header">Declensions for <span class="noun">${noun}</span></h2>
             <div class="table-container">
                 <table class="declension-table">
@@ -2045,6 +2121,16 @@
             </div>
         </div>
     `;
+
+    // Add event listener for the transliteration toggle
+    const translitToggle = document.getElementById("showTranslit");
+    if (translitToggle) {
+        translitToggle.checked = showTranslitChecked;
+        translitToggle.addEventListener("change", (e) => {
+            showTranslitChecked = e.target.checked;
+            displayDeclension(noun);
+        });
+    }
 }
 
         function showNoResults(query) {
