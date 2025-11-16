@@ -14,14 +14,13 @@
             color: var(--accent-color);
             cursor: pointer;
             font-size: 1.5rem;
-            transition: color 0.2s, box-shadow 0.2s;
+            transition: color 0.2s;
             outline: none;
             position: relative;
         }
         .help-icon:hover,
         .help-icon:focus {
             color: var(--primary-color);
-            box-shadow: 0 0 12px var(--glow-color), 0 0 2px var(--primary-color);
         }
 
         .modal {
@@ -38,7 +37,7 @@
         }
 
         .modal-content {
-            background: var(--card-bg);
+            background: rgba(26, 26, 26, 0.4);
             color: var(--text-primary);
             padding: 2rem;
             border-radius: 16px;
@@ -48,6 +47,8 @@
             box-shadow: 0 8px 32px var(--glow-color);
             position: relative;
             border: 1px solid var(--border-color);
+            backdrop-filter: blur(40px) saturate(150%);
+            -webkit-backdrop-filter: blur(40px) saturate(150%);
         }
 
         .modal-close {
@@ -847,6 +848,7 @@
             grid-template-columns: repeat(12, 1fr);
             gap: 1rem;
             margin-bottom: 3rem;
+            justify-items: stretch;
         }
 
         .letter-card {
@@ -1212,7 +1214,7 @@
             <div class="category-header">
                 <h2 class="category-title">
                     உயிர் எழுத்துக்கள் (Uyir Ezhuthu - Vowels)
-                    <span class="help-icon" tabindex="0" title="More info" onclick="openModal('uyirModal')">
+                    <span class="help-icon" tabindex="0" onclick="openModal('uyirModal')">
                         <i class="fas fa-question-circle"></i>
                     </span>
                 </h2>
@@ -1225,7 +1227,7 @@
             <div class="category-header">
                 <h2 class="category-title">
                     ஆயுத எழுத்து (Ayudha Ezhuthu - Aytham)
-                    <span class="help-icon" tabindex="0" title="More info" onclick="openModal('ayudhaModal')">
+                    <span class="help-icon" tabindex="0" onclick="openModal('ayudhaModal')">
                         <i class="fas fa-question-circle"></i>
                     </span>
                 </h2>
@@ -1238,7 +1240,7 @@
             <div class="category-header">
                 <h2 class="category-title">
                     மெய் எழுத்துக்கள் (Mey Ezhuthu - Consonants)
-                    <span class="help-icon" tabindex="0" title="More info" onclick="openModal('meyModal')">
+                    <span class="help-icon" tabindex="0" onclick="openModal('meyModal')">
                         <i class="fas fa-question-circle"></i>
                     </span>
                 </h2>
@@ -1251,7 +1253,7 @@
             <div class="category-header">
                 <h2 class="category-title">
                     உயிர்மெய் எழுத்துக்கள் (Uyir Mey Ezhuthu - Compound Letters)
-                    <span class="help-icon" tabindex="0" title="More info" onclick="openModal('uyirMeyModal')">
+                    <span class="help-icon" tabindex="0" onclick="openModal('uyirMeyModal')">
                         <i class="fas fa-question-circle"></i>
                     </span>
                 </h2>
@@ -1264,7 +1266,7 @@
             <div class="category-header">
                 <h2 class="category-title">
                     வடமொழி எழுத்துக்கள் (Vadamozhi Ezhuthu - Sanskrit Letters)
-                    <span class="help-icon" tabindex="0" title="More info" onclick="openModal('vadamozhiModal')">
+                    <span class="help-icon" tabindex="0" onclick="openModal('vadamozhiModal')">
                         <i class="fas fa-question-circle"></i>
                     </span>
                 </h2>

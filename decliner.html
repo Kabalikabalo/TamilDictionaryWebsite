@@ -1382,6 +1382,20 @@
                 showEmptyState();
                 return;
             }
+            
+            // Check if input contains Tamil characters
+            const tamilRegex = /[\u0B80-\u0BFF]/;
+            if (!tamilRegex.test(query)) {
+                resultsSection.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h3>Tamil Characters Required</h3>
+                        <p>Please enter a word in Tamil script. The decliner only works with Tamil text.</p>
+                    </div>
+                `;
+                return;
+            }
+            
             showLoading();
 
             // Simulate async for consistency (remove if not needed)
