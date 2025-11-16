@@ -41,6 +41,7 @@
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --success-color: #10b98180;
             --error-color: #ef444475;
+            --bg-brightness: 1;
         }
 
         /* Theme variations */
@@ -184,7 +185,8 @@
             background: radial-gradient(circle at 20% 50%, var(--glow-color-light) 0%, transparent 50%),
                         radial-gradient(circle at 80% 20%, var(--glow-color-light) 0%, transparent 50%),
                         radial-gradient(circle at 40% 80%, var(--glow-color-light) 0%, transparent 50%);
-            /* animation: bgFloat 20s ease-in-out infinite; */
+            opacity: var(--bg-brightness);
+            transition: opacity 0.3s ease;
         }
 
         @keyframes bgFloat {
@@ -329,16 +331,56 @@
             right: -350px;
             width: 350px;
             height: 100vh;
-            background: var(--card-bg);
+            background: rgba(26, 26, 26, 0.4);
             border-left: 1px solid var(--border-color);
             padding: 2rem;
             transition: var(--transition);
             z-index: 1000;
             overflow-y: auto;
+            backdrop-filter: blur(40px) saturate(150%);
+            -webkit-backdrop-filter: blur(40px) saturate(150%);
         }
 
         .settings-panel.open {
             right: 0;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.15);
+        }
+
+        body[data-theme="orange"] .settings-panel.open {
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.15);
+        }
+        body[data-theme="blue"] .settings-panel.open {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+        }
+        body[data-theme="purple"] .settings-panel.open {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+        }
+        body[data-theme="green"] .settings-panel.open {
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+        }
+        body[data-theme="red"] .settings-panel.open {
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.15);
+        }
+        body[data-theme="cyan"] .settings-panel.open {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
+        }
+        body[data-theme="pink"] .settings-panel.open {
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.15);
+        }
+        body[data-theme="amber"] .settings-panel.open {
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
+        }
+        body[data-theme="emerald"] .settings-panel.open {
+            box-shadow: 0 0 20px rgba(5, 150, 105, 0.15);
+        }
+        body[data-theme="indigo"] .settings-panel.open {
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.15);
+        }
+        body[data-theme="rose"] .settings-panel.open {
+            box-shadow: 0 0 20px rgba(244, 63, 94, 0.15);
+        }
+        body[data-theme="violet"] .settings-panel.open {
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.15);
         }
 
         .settings-header {
@@ -902,6 +944,21 @@
             .score-display {
                 flex-direction: column;
                 gap: 1rem;
+            }
+            
+            .nav-menu, .settings-panel {
+                width: 85vw;
+                max-width: 320px;
+            }
+            
+            .hamburger {
+                top: 0.75rem !important;
+                left: 0.75rem !important;
+            }
+            
+            .settings-btn {
+                top: 0.75rem;
+                right: 0.75rem;
             }
         }
         @media (max-width: 600px) {
@@ -1547,10 +1604,22 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             initTheme();
+            initBrightness();
             createParticles();
             updateParticleColors();
             updateScores();
         });
+
+        // Brightness Control (synced from index.html)
+        function getBrightness() {
+            return localStorage.getItem('brightness') || '100';
+        }
+
+        function initBrightness() {
+            const brightness = getBrightness();
+            const opacity = brightness / 100;
+            document.documentElement.style.setProperty('--bg-brightness', opacity);
+        }
 
         // Interactive particle effects
         document.addEventListener('mousemove', (e) => {
