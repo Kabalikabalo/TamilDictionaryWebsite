@@ -298,7 +298,7 @@
             position: fixed;
             top: 1.5rem;
             right: 1.5rem;
-            z-index: 1100;
+            z-index: 1;
             background: #1a1a1a40;
             border: 1px solid var(--border-color);
             border-radius: 12px;
@@ -802,6 +802,10 @@
             transform: rotate(45deg);
         }
 
+        .toggle-text-short {
+            display: none;
+        }
+
         /* Download button */
         .download-btn {
             display: inline-flex;
@@ -1213,6 +1217,52 @@
             .download-btn {
                 width: auto;
                 justify-content: center;
+            }
+
+            /* Mobile: Make buttons fit on one row */
+            .toggle-translit {
+                min-width: auto;
+                max-width: none;
+                width: auto;
+                padding: 0.4rem 0.6rem;
+                font-size: 0.75rem;
+                height: 36px;
+                min-height: 36px;
+                max-height: 36px;
+                flex: 1.5;
+            }
+
+            .toggle-text-full {
+                display: inline;
+            }
+
+            .toggle-text-short {
+                display: none;
+            }
+
+            .download-btn {
+                min-width: auto;
+                max-width: none;
+                width: auto;
+                padding: 0.4rem 0.6rem;
+                font-size: 0.75rem;
+                height: 36px;
+                min-height: 36px;
+                max-height: 36px;
+                flex: 0.5;
+            }
+
+            .download-btn .btn-text {
+                display: none;
+            }
+
+            .download-btn .btn-content {
+                gap: 0;
+            }
+
+            /* Ensure buttons wrap container flexes properly */
+            .results-header {
+                gap: 0.4rem;
             }
         }
 
@@ -1830,7 +1880,10 @@
                     <div class="results-title">Verb Conjugation</div>
                     <div class="results-count">Results for "<strong>${query}</strong>"</div>
                     <label class="toggle-translit">
-                        <input type="checkbox" id="showTranslit"> Show transliteration
+                        <input type="checkbox" id="showTranslit"> <span class="toggle-text-full">Show transliteration</span><span class="toggle-text-short">Translit</span>
+                    </label>
+                    <label class="toggle-translit">
+                        <input type="checkbox" id="showEnglishPronouns"><span class="toggle-text-full">English pronouns</span><span class="toggle-text-short">English</span>
                     </label>
                     <button class="download-btn" id="downloadBtn">
                         <span class="btn-content">
@@ -1852,6 +1905,72 @@
                 const mode = showTranslitChecked ? translitMode : 'off';
                 const newHTML = processConjugationHTML(apiData.p1.html, mode, verbEnding);
                 document.getElementById('conjCard').innerHTML = newHTML;
+                
+                // Re-apply English pronouns if the toggle is checked
+                const englishPronounsToggle = document.getElementById("showEnglishPronouns");
+                if (englishPronounsToggle.checked) {
+                    applyEnglishPronouns();
+                }
+            });
+
+            // English pronouns toggle
+            const englishPronounsToggle = document.getElementById("showEnglishPronouns");
+            
+            function applyEnglishPronouns() {
+                const pronouns = document.querySelectorAll('.pronoun');
+                
+                const tamilToEnglish = {
+                    "நான்": "I",
+                    "நீ": "you (singular)",
+                    "அவன்": "he",
+                    "அவள்": "she",
+                    "அவர்": "he/she (honorific)",
+                    "அது": "it",
+                    "நாம்/நாங்கள்": "we",
+                    "நீங்கள்": "you (plural)",
+                    "அவர்கள்": "they (people)",
+                    "அவை": "they (things)",
+                    "அனைவரும்": "all persons"
+                };
+                
+                pronouns.forEach(pronoun => {
+                    const text = pronoun.textContent.trim();
+                    if (tamilToEnglish[text]) {
+                        pronoun.textContent = tamilToEnglish[text];
+                    }
+                });
+            }
+            
+            englishPronounsToggle.addEventListener("change", (e) => {
+                const showEnglish = e.target.checked;
+                
+                if (showEnglish) {
+                    applyEnglishPronouns();
+                } else {
+                    // Convert back to Tamil
+                    const pronouns = document.querySelectorAll('.pronoun');
+                    
+                    const englishToTamil = {
+                        "I": "நான்",
+                        "you (singular)": "நீ",
+                        "he": "அவன்",
+                        "she": "அவள்",
+                        "he/she (honorific)": "அவர்",
+                        "it": "அது",
+                        "we": "நாம்/நாங்கள்",
+                        "you (plural)": "நீங்கள்",
+                        "they (people)": "அவர்கள்",
+                        "they (things)": "அவை",
+                        "all persons": "அனைவரும்"
+                    };
+                    
+                    pronouns.forEach(pronoun => {
+                        const text = pronoun.textContent.trim();
+                        if (englishToTamil[text]) {
+                            pronoun.textContent = englishToTamil[text];
+                        }
+                    });
+                }
             });
 
             // Download button functionality
@@ -1961,7 +2080,7 @@
                 // Make pronouns and tamil words visible
                 const pronouns = clone.querySelectorAll('.pronoun');
                 pronouns.forEach(p => {
-                    p.style.color = '#ffa726';
+                    p.style.color = primaryColor;
                 });
                 
                 const tamilWords = clone.querySelectorAll('.tamil-word');
@@ -1990,21 +2109,27 @@
                 // Remove temporary wrapper
                 document.body.removeChild(wrapper);
 
-                // Convert canvas to PDF
+                // Convert canvas to image data
                 const imgData = canvas.toDataURL('image/png');
-                const imgWidth = canvas.width;
-                const imgHeight = canvas.height;
-                
-                // Create PDF with proper dimensions
-                const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF({
-                    orientation: imgHeight > imgWidth ? 'portrait' : 'landscape',
-                    unit: 'px',
-                    format: [imgWidth / 2, imgHeight / 2],
-                    compress: true
-                });
 
-                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth / 2, imgHeight / 2);
+                // Create PDF that fills the entire page
+                const { jsPDF } = window.jspdf;
+                
+                const pdfWidth = 210; // A4 width in mm
+                const pdfHeight = 297; // A4 height in mm
+                
+                // Always fill to width, let height extend as needed
+                const imgWidth = pdfWidth;
+                const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+                
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+                
+                // Fill entire page width, start from top
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
                 pdf.save(`tamil-conjugation-${verbName}.pdf`);
 
             } catch (error) {

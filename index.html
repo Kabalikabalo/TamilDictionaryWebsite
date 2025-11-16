@@ -309,11 +309,11 @@
 
         /* Settings Button */
         .settings-btn {
-            position: fixed !important;
-            top: 1.5rem !important;
-            right: 1.5rem !important;
-            z-index: 1100 !important;
-            background: #1a1a1a00;
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 1100;
+            background: #1a1a1a40;
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 0.8rem;
@@ -369,7 +369,7 @@
         }
 
         .theme-section {
-            margin-bottom: 3rem;
+            margin-bottom: 1.5rem;
         }
 
         .theme-label {
@@ -489,19 +489,28 @@
             animation: slideIn 2s ease-out;
         }
 
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
         .search-container {
             position: relative;
             max-width: 700px;
+            width: 100%;
             margin: 0 auto;
         }
 
         .search-input-wrapper {
             position: relative;
             margin-bottom: 1.5rem;
+            width: 100%;
         }
 
         .search-input {
             width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
             padding: 1.2rem 1.8rem 1.2rem 3.5rem;
             background: #0a0a0a9c;
             border: 2px solid var(--border-color);
@@ -549,6 +558,200 @@
             box-shadow: var(--shadow-medium);
         }
 
+        /* Word of the Day Button */
+        .wotd-container {
+            max-width: 700px;
+            margin: 1rem auto 0;
+        }
+
+        .wotd-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-color), #a78bfa00);
+            border: 2px solid var(--primary-color);
+            border-radius: 50px;
+            padding: 0.9rem 1.8rem;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-light);
+            width: 100%;
+        }
+
+        .wotd-btn:hover {
+            transform: scale(1.03);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .wotd-btn:active {
+            transform: scale(0.98);
+        }
+
+        .wotd-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .wotd-btn i {
+            font-size: 1.1rem;
+        }
+        
+        .wotd-container.hidden {
+            display: none;
+        }
+
+        /* Toggle Switch Styles */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            width: 100%;
+        }
+
+        .wotd-button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            width: 100%;
+        }
+
+        .wotd-toggle-btn {
+            position: relative;
+            flex: 1;
+            padding: 1rem 1.2rem;
+            background: var(--dark-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            text-align: left;
+            overflow: hidden;
+        }
+
+        .wotd-toggle-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--glow-color-light), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .wotd-toggle-btn i {
+            position: relative;
+            z-index: 2;
+            margin-right: 0.5rem;
+        }
+
+        .wotd-toggle-btn span {
+            position: relative;
+            z-index: 2;
+        }
+
+        .wotd-toggle-btn::after {
+            content: '';
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            background: transparent;
+            transition: var(--transition);
+            z-index: 2;
+        }
+
+        .wotd-toggle-btn:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px var(--glow-color-light);
+        }
+
+        .wotd-toggle-btn:hover::before {
+            opacity: 1;
+        }
+
+        .wotd-toggle-btn.active {
+            border-color: var(--primary-color);
+            background: var(--glow-color-light);
+            box-shadow: 0 0 20px var(--glow-color);
+            color: var(--primary-color);
+        }
+
+        .wotd-toggle-btn.active::before {
+            opacity: 1;
+        }
+
+        .wotd-toggle-btn.active::after {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            box-shadow: inset 0 0 0 3px var(--card-bg);
+        }
+
+        body[data-theme="orange"] .wotd-btn,
+        body[data-theme="orange"] .wotd-btn:hover {
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3) !important;
+        }
+        body[data-theme="blue"] .wotd-btn,
+        body[data-theme="blue"] .wotd-btn:hover {
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3) !important;
+        }
+        body[data-theme="purple"] .wotd-btn,
+        body[data-theme="purple"] .wotd-btn:hover {
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3) !important;
+        }
+        body[data-theme="green"] .wotd-btn,
+        body[data-theme="green"] .wotd-btn:hover {
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3) !important;
+        }
+        body[data-theme="red"] .wotd-btn,
+        body[data-theme="red"] .wotd-btn:hover {
+            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3) !important;
+        }
+        body[data-theme="cyan"] .wotd-btn,
+        body[data-theme="cyan"] .wotd-btn:hover {
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3) !important;
+        }
+        body[data-theme="pink"] .wotd-btn,
+        body[data-theme="pink"] .wotd-btn:hover {
+            box-shadow: 0 4px 20px rgba(236, 72, 153, 0.3) !important;
+        }
+        body[data-theme="amber"] .wotd-btn,
+        body[data-theme="amber"] .wotd-btn:hover {
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3) !important;
+        }
+        body[data-theme="emerald"] .wotd-btn,
+        body[data-theme="emerald"] .wotd-btn:hover {
+            box-shadow: 0 4px 20px rgba(5, 150, 105, 0.3) !important;
+        }
+        body[data-theme="indigo"] .wotd-btn,
+        body[data-theme="indigo"] .wotd-btn:hover {
+            box-shadow: 0 4px 20px rgba(79, 70, 229, 0.3) !important;
+        }
+        body[data-theme="rose"] .wotd-btn,
+        body[data-theme="rose"] .wotd-btn:hover {
+            box-shadow: 0 4px 20px rgba(244, 63, 94, 0.3) !important;
+        }
+        body[data-theme="violet"] .wotd-btn,
+        body[data-theme="violet"] .wotd-btn:hover {
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3) !important;
+        }
+
+        
+
         body[data-theme="orange"] .search-btn,
         body[data-theme="orange"] .search-btn:hover {
             box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3) !important;
@@ -572,6 +775,26 @@
         body[data-theme="cyan"] .search-btn,
         body[data-theme="cyan"] .search-btn:hover {
             box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3) !important;
+        }
+
+
+        body[data-theme="orange"] .wotd-toggle-btn.active {
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.3) !important;
+        }
+        body[data-theme="blue"] .wotd-toggle-btn.active {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3) !important;
+        }
+        body[data-theme="purple"] .wotd-toggle-btn.active {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3) !important;
+        }
+        body[data-theme="green"] .wotd-toggle-btn.active {
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3) !important;
+        }
+        body[data-theme="red"] .wotd-toggle-btn.active {
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.3) !important;
+        }
+        body[data-theme="cyan"] .wotd-toggle-btn.active {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.3) !important;
         }
         body[data-theme="pink"] .search-btn,
         body[data-theme="pink"] .search-btn:hover {
@@ -800,6 +1023,24 @@
 
             .search-section {
                 padding: 1.5rem;
+            }
+
+            .search-input {
+                padding-right: 5.5rem;
+            }
+
+            .search-input::placeholder {
+                font-size: 0.95rem;
+            }
+
+            .search-btn {
+                padding: 0.8rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .wotd-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.95rem;
             }
 
             .bubbles-container {
@@ -1112,7 +1353,7 @@
 
         /* Romanization Options Styling */
         .romanization-section {
-            margin-bottom: 3rem;
+            margin-bottom: 1.5rem;
         }
 
         .romanization-options {
@@ -1242,28 +1483,18 @@
                 font-size: 0.75rem;
             }
             
-            /* Move buttons closer to screen corners on mobile */
-            .settings-btn {
-                top: 0.75rem !important;
-                right: 0.75rem !important;
-            }
-            
-            .hamburger {
-                top: 0.75rem !important;
-                left: 0.75rem !important;
-            }
         }
 
         /* API Key Section */
         .api-key-section {
-            margin-top: 3rem;
+            margin-top: 0.5rem;
         }
 
         .api-key-input-group {
             display: flex;
             flex-direction: column;
             gap: 0.8rem;
-            margin-top: 1rem;
+            margin-top: 0.5rem;
         }
 
         .api-key-input {
@@ -1312,7 +1543,7 @@
             justify-content: center;
             gap: 0.4rem;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            margin-bottom: 50px;
+            margin-bottom: 15px;
         }
 
         .verify-btn {
@@ -1350,7 +1581,7 @@
             align-items: center;
             gap: 0.5rem;
             animation: fadeInUp 0.3s ease-out;
-            margin-top: 0.8rem;
+            margin-bottom: 1rem;
         }
 
         .api-key-status.show {
@@ -1589,6 +1820,20 @@
             </div>
         </div>
 
+        <div class="theme-section">
+            <label class="theme-label">Word of the Day</label>
+            <div class="toggle-container">
+                <div class="wotd-button-group">
+                    <button class="wotd-toggle-btn active" data-state="show">
+                        <i class="fas fa-eye"></i><span>Show</span>
+                    </button>
+                    <button class="wotd-toggle-btn" data-state="hide">
+                        <i class="fas fa-eye-slash"></i><span>Hide</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <div class="api-key-section">
             <label class="theme-label">Gemini API Key (Optional)</label>
             <div class="api-key-input-group">
@@ -1671,7 +1916,7 @@
     
     <div class="container">
         <header class="header">
-            <button class="settings-btn" id="settingsBtn" style="position: fixed; top: 1.5rem; right: 1.5rem; z-index: 1100;">
+            <button class="settings-btn" id="settingsBtn">
                 <i class="fas fa-cog"></i>
             </button>
             <h1 class="logo">சொற்குவை</h1>
@@ -1683,10 +1928,16 @@
                 <div class="search-input-wrapper">
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" class="search-input" id="searchInput" 
-                           placeholder="Search for words in English..." 
+                           placeholder="Search for words..." 
                            autocomplete="off">
                     <button class="search-btn" id="searchBtn">
                         <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="wotd-container">
+                    <button class="wotd-btn" id="wotdBtn">
+                        <i class="fas fa-star"></i>
+                        <span>Word of the Day</span>
                     </button>
                 </div>
             </div>
@@ -1973,6 +2224,58 @@
                     }
                 });
             });
+        }
+
+        // Word of the Day Settings Management
+        function getWotdSetting() {
+            const setting = localStorage.getItem('wotd');
+            return setting === null ? true : setting === 'true';
+        }
+
+        function setWotdSetting(val) {
+            localStorage.setItem('wotd', val.toString());
+        }
+
+        function updateWotdVisibility() {
+            const wotdContainer = document.querySelector('.wotd-container');
+            const setting = getWotdSetting();
+            if (wotdContainer) {
+                if (!setting) {
+                    wotdContainer.classList.add('hidden');
+                } else {
+                    wotdContainer.classList.remove('hidden');
+                }
+            }
+        }
+
+        function initWotdSettings() {
+            const setting = getWotdSetting();
+            const buttons = document.querySelectorAll('.wotd-toggle-btn');
+            
+            // Set initial active state
+            buttons.forEach(btn => {
+                const state = btn.getAttribute('data-state');
+                if ((state === 'show' && setting) || (state === 'hide' && !setting)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+                
+                // Add click handler
+                btn.addEventListener('click', () => {
+                    const newState = state === 'show';
+                    setWotdSetting(newState);
+                    
+                    // Update active states
+                    buttons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    updateWotdVisibility();
+                });
+            });
+            
+            // Set initial visibility
+            updateWotdVisibility();
         }
 
         // Settings Panel
@@ -2528,16 +2831,56 @@
             container.querySelector('.examples-loading').outerHTML = sentencesHtml;
         }
 
+        // Word of the Day functionality
+        async function loadWordOfTheDay() {
+            const wotdBtn = document.getElementById('wotdBtn');
+            const originalContent = wotdBtn.innerHTML;
+            
+            // Show loading state
+            wotdBtn.disabled = true;
+            wotdBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> <span>Loading...</span>';
+            
+            try {
+                const response = await fetch('https://tamildictionary.onrender.com/word-of-the-day');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch word of the day');
+                }
+                const data = await response.json();
+                
+                // Extract the word from the response
+                // The API returns: { key: "word", entry: {...}, source: "...", wordOfTheDay: true }
+                const word = data.key || data.word || data;
+                
+                // Set the word in the search input
+                input.value = word;
+                
+                // Search for the word
+                await doSearch(word);
+                
+            } catch (error) {
+                console.error('Error fetching word of the day:', error);
+                showError('Could not load word of the day. Please try again later.');
+            } finally {
+                // Restore button
+                wotdBtn.disabled = false;
+                wotdBtn.innerHTML = originalContent;
+            }
+        }
+
         // Event listeners
         searchBtn.addEventListener('click', () => doSearch(input.value));
         input.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') doSearch(input.value);
         });
+        
+        // Word of the Day button
+        document.getElementById('wotdBtn')?.addEventListener('click', loadWordOfTheDay);
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             initTheme();
             initRomanization();
+            initWotdSettings();
             createParticles();
             updateParticleColors();
             
