@@ -14,13 +14,14 @@
             color: var(--accent-color);
             cursor: pointer;
             font-size: 1.5rem;
-            transition: color 0.2s;
+            transition: color 0.2s, box-shadow 0.2s;
             outline: none;
             position: relative;
         }
         .help-icon:hover,
         .help-icon:focus {
             color: var(--primary-color);
+            box-shadow: 0 0 12px var(--glow-color), 0 0 2px var(--primary-color);
         }
 
         .modal {
@@ -37,7 +38,7 @@
         }
 
         .modal-content {
-            background: rgba(26, 26, 26, 0.4);
+            background: var(--card-bg);
             color: var(--text-primary);
             padding: 2rem;
             border-radius: 16px;
@@ -47,8 +48,6 @@
             box-shadow: 0 8px 32px var(--glow-color);
             position: relative;
             border: 1px solid var(--border-color);
-            backdrop-filter: blur(40px) saturate(150%);
-            -webkit-backdrop-filter: blur(40px) saturate(150%);
         }
 
         .modal-close {
@@ -108,7 +107,6 @@
             --shadow-heavy: 0 20px 60px var(--glow-color);
             --border-radius: 16px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --bg-brightness: 1;
         }
 
         /* Theme variations */
@@ -252,8 +250,7 @@
             background: radial-gradient(circle at 20% 50%, var(--glow-color-light) 0%, transparent 50%),
                         radial-gradient(circle at 80% 20%, var(--glow-color-light) 0%, transparent 50%),
                         radial-gradient(circle at 40% 80%, var(--glow-color-light) 0%, transparent 50%);
-            opacity: var(--bg-brightness);
-            transition: opacity 0.3s ease;
+            /*animation: bgFloat 20s ease-in-out infinite;*/
         }
 
         @keyframes bgFloat {
@@ -562,56 +559,16 @@
             right: -350px;
             width: 350px;
             height: 100vh;
-            background: rgba(26, 26, 26, 0.4);
+            background: var(--card-bg);
             border-left: 1px solid var(--border-color);
             padding: 2rem;
             transition: var(--transition);
             z-index: 1000;
             overflow-y: auto;
-            backdrop-filter: blur(40px) saturate(150%);
-            -webkit-backdrop-filter: blur(40px) saturate(150%);
         }
 
         .settings-panel.open {
             right: 0;
-            box-shadow: 0 0 20px rgba(255, 107, 53, 0.15);
-        }
-
-        body[data-theme="orange"] .settings-panel.open {
-            box-shadow: 0 0 20px rgba(255, 107, 53, 0.15);
-        }
-        body[data-theme="blue"] .settings-panel.open {
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
-        }
-        body[data-theme="purple"] .settings-panel.open {
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
-        }
-        body[data-theme="green"] .settings-panel.open {
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
-        }
-        body[data-theme="red"] .settings-panel.open {
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.15);
-        }
-        body[data-theme="cyan"] .settings-panel.open {
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
-        }
-        body[data-theme="pink"] .settings-panel.open {
-            box-shadow: 0 0 20px rgba(236, 72, 153, 0.15);
-        }
-        body[data-theme="amber"] .settings-panel.open {
-            box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
-        }
-        body[data-theme="emerald"] .settings-panel.open {
-            box-shadow: 0 0 20px rgba(5, 150, 105, 0.15);
-        }
-        body[data-theme="indigo"] .settings-panel.open {
-            box-shadow: 0 0 20px rgba(79, 70, 229, 0.15);
-        }
-        body[data-theme="rose"] .settings-panel.open {
-            box-shadow: 0 0 20px rgba(244, 63, 94, 0.15);
-        }
-        body[data-theme="violet"] .settings-panel.open {
-            box-shadow: 0 0 20px rgba(124, 58, 237, 0.15);
         }
 
         .settings-header {
@@ -890,7 +847,6 @@
             grid-template-columns: repeat(12, 1fr);
             gap: 1rem;
             margin-bottom: 3rem;
-            justify-items: stretch;
         }
 
         .letter-card {
@@ -1021,19 +977,12 @@
                 font-size: 0.7rem;
             }
 
-            .nav-menu, .settings-panel {
-                width: 85vw;
-                max-width: 320px;
+            .nav-toggle {
+                left: 1rem;
+                top: 1rem;
             }
-            
-            .hamburger {
-                top: 0.75rem !important;
-                left: 0.75rem !important;
-            }
-            
-            .settings-btn {
-                top: 0.75rem;
-                right: 0.75rem;
+            .nav-drawer {
+                width: 260px;
             }
         }
 
@@ -1263,7 +1212,7 @@
             <div class="category-header">
                 <h2 class="category-title">
                     உயிர் எழுத்துக்கள் (Uyir Ezhuthu - Vowels)
-                    <span class="help-icon" tabindex="0" onclick="openModal('uyirModal')">
+                    <span class="help-icon" tabindex="0" title="More info" onclick="openModal('uyirModal')">
                         <i class="fas fa-question-circle"></i>
                     </span>
                 </h2>
@@ -1276,7 +1225,7 @@
             <div class="category-header">
                 <h2 class="category-title">
                     ஆயுத எழுத்து (Ayudha Ezhuthu - Aytham)
-                    <span class="help-icon" tabindex="0" onclick="openModal('ayudhaModal')">
+                    <span class="help-icon" tabindex="0" title="More info" onclick="openModal('ayudhaModal')">
                         <i class="fas fa-question-circle"></i>
                     </span>
                 </h2>
@@ -1289,7 +1238,7 @@
             <div class="category-header">
                 <h2 class="category-title">
                     மெய் எழுத்துக்கள் (Mey Ezhuthu - Consonants)
-                    <span class="help-icon" tabindex="0" onclick="openModal('meyModal')">
+                    <span class="help-icon" tabindex="0" title="More info" onclick="openModal('meyModal')">
                         <i class="fas fa-question-circle"></i>
                     </span>
                 </h2>
@@ -1302,7 +1251,7 @@
             <div class="category-header">
                 <h2 class="category-title">
                     உயிர்மெய் எழுத்துக்கள் (Uyir Mey Ezhuthu - Compound Letters)
-                    <span class="help-icon" tabindex="0" onclick="openModal('uyirMeyModal')">
+                    <span class="help-icon" tabindex="0" title="More info" onclick="openModal('uyirMeyModal')">
                         <i class="fas fa-question-circle"></i>
                     </span>
                 </h2>
@@ -1315,7 +1264,7 @@
             <div class="category-header">
                 <h2 class="category-title">
                     வடமொழி எழுத்துக்கள் (Vadamozhi Ezhuthu - Sanskrit Letters)
-                    <span class="help-icon" tabindex="0" onclick="openModal('vadamozhiModal')">
+                    <span class="help-icon" tabindex="0" title="More info" onclick="openModal('vadamozhiModal')">
                         <i class="fas fa-question-circle"></i>
                     </span>
                 </h2>
@@ -1568,7 +1517,6 @@
         // Initialize everything
         document.addEventListener('DOMContentLoaded', () => {
             initTheme();
-            initBrightness();
             createParticles();
             updateParticleColors();
             
@@ -1579,17 +1527,6 @@
             generateLetterCards(uyirMeyEzhuthu, uyirMeyRomanization, 'uyirMeyGrid');
             generateLetterCards(vadamozhiCombinations, vadamozhiCombinationsRoman, 'vadamozhiGrid');
         });
-
-        // Brightness Control (synced from index.html)
-        function getBrightness() {
-            return localStorage.getItem('brightness') || '100';
-        }
-
-        function initBrightness() {
-            const brightness = getBrightness();
-            const opacity = brightness / 100;
-            document.documentElement.style.setProperty('--bg-brightness', opacity);
-        }
 
         // Navigation hamburger logic
         const hamburger = document.getElementById('hamburger');
