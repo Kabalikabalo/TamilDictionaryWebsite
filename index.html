@@ -2513,6 +2513,12 @@
             
             const romanizationMode = getRomanizationSetting();
             
+            // Helper function to italicize text in parentheses
+            function italicizeParentheses(text) {
+                if (typeof text !== 'string') return text;
+                return text.replace(/(\([^)]+\))/g, '<i>$1</i>');
+            }
+            
             return translations.map(translation => {
                 if (Array.isArray(translation)) {
                     return translation.map(word => {
@@ -2522,6 +2528,8 @@
                         const textForRomanization = typeof word === 'string' ? word.replace(/\[([^\]]+)\]\s*/g, '') : word;
                         // Translate category labels for display
                         const displayWord = translateCategoryLabels(word);
+                        // Italicize text in parentheses
+                        const styledDisplayWord = italicizeParentheses(displayWord);
                         let romanText = '';
                         // Romanize only the text without category labels
                         if (romanizationMode !== 'off' && /[\u0B80-\u0BFF]/.test(textForRomanization)) {
@@ -2530,7 +2538,7 @@
                         }
                         return `
                             <div class="translation-bubble" onclick="copyToClipboard('${escapeHTML(textForRomanization)}', this.querySelector('.copy-btn'))">
-                                ${displayWord}${romanText}
+                                ${styledDisplayWord}${romanText}
                                 <button class="copy-btn" title="Copy">⧉</button>
                             </div>
                         `;
@@ -2542,6 +2550,8 @@
                     const textForRomanization = typeof translation === 'string' ? translation.replace(/\[([^\]]+)\]\s*/g, '') : translation;
                     // Translate category labels for display
                     const displayText = translateCategoryLabels(translation);
+                    // Italicize text in parentheses
+                    const styledDisplayText = italicizeParentheses(displayText);
                     let romanText = '';
                     // Romanize only the text without category labels
                     if (romanizationMode !== 'off' && /[\u0B80-\u0BFF]/.test(textForRomanization)) {
@@ -2550,7 +2560,7 @@
                     }
                     return `
                         <div class="translation-bubble" onclick="copyToClipboard('${escapeHTML(textForRomanization)}', this.querySelector('.copy-btn'))">
-                            ${displayText}${romanText}
+                            ${styledDisplayText}${romanText}
                             <button class="copy-btn" title="Copy">⧉</button>
                         </div>
                     `;
@@ -2608,8 +2618,19 @@
                 // Collect all translations (sanitized) so the sentence generator can use them
                 const allTranslations = [];
                 
+                // Get all category keys
+                let categoryKeys = Object.keys(data);
+                
+                // If 'default' exists and there are other categories, move default to the top
+                const hasDefault = categoryKeys.includes('default');
+                
+                if (hasDefault && categoryKeys.length > 1) {
+                    // Reorder: default first, then others
+                    categoryKeys = ['default', ...categoryKeys.filter(k => k !== 'default')];
+                }
+                
                 // Process each category (key) in the response
-                Object.keys(data).forEach(category => {
+                categoryKeys.forEach(category => {
                     let displayCategory = category;
                     if (category === 'பெயர்ச்சொல்') displayCategory = 'Noun';
                     if (category === 'வினைச்சொல்') displayCategory = 'Verb';
