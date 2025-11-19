@@ -1876,6 +1876,13 @@
             // Use the remembered toggle state
             let processedHTML = processConjugationHTML(apiData.p1.html, showTranslitChecked ? translitMode : 'off', verbEnding);
 
+            // Check if the processed HTML contains any Tamil characters
+            const tamilRegex = /[\u0B80-\u0BFF]/; // Tamil Unicode range
+            if (!tamilRegex.test(processedHTML)) {
+                showNoResults(query);
+                return;
+            }
+
             resultsSection.innerHTML = `
                 <div class="results-header">
                     <div class="results-title">Verb Conjugation</div>
@@ -2104,7 +2111,9 @@
                     scale: 2,
                     logging: false,
                     useCORS: true,
-                    allowTaint: true
+                    allowTaint: true,
+                    height: wrapper.scrollHeight,
+                    windowHeight: wrapper.scrollHeight
                 });
 
                 // Remove temporary wrapper
@@ -2113,24 +2122,21 @@
                 // Convert canvas to image data
                 const imgData = canvas.toDataURL('image/png');
 
-                // Create PDF that fills the entire page
+                // Create PDF with custom page size to fit all content on one page
                 const { jsPDF } = window.jspdf;
                 
-                const pdfWidth = 210; // A4 width in mm
-                const pdfHeight = 297; // A4 height in mm
-                
-                // Always fill to width, let height extend as needed
-                const imgWidth = pdfWidth;
-                const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+                const pageWidth = 210; // A4 width in mm
+                const imgAspectRatio = canvas.height / canvas.width;
+                const pageHeight = pageWidth * imgAspectRatio; // Calculate height to fit content
                 
                 const pdf = new jsPDF({
                     orientation: 'portrait',
                     unit: 'mm',
-                    format: 'a4'
+                    format: [pageWidth, pageHeight] // Custom page size
                 });
                 
-                // Fill entire page width, start from top
-                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                // Add the entire image to fill the page
+                pdf.addImage(imgData, 'PNG', 0, 0, pageWidth, pageHeight);
                 pdf.save(`tamil-conjugation-${verbName}.pdf`);
 
             } catch (error) {
