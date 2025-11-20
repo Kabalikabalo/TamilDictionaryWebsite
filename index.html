@@ -336,7 +336,7 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-left: 1px solid var(--border-color);
-            padding: 2rem;
+            padding: 2rem;  
             transition: var(--transition);
             z-index: 1000;
             overflow-y: auto;
@@ -1844,6 +1844,20 @@
             </div>
         </div>
 
+        <div class="theme-section">
+            <label class="theme-label">Click Action on Results</label>
+            <div class="toggle-container">
+                <div class="wotd-button-group">
+                    <button class="wotd-toggle-btn active" data-mode="copy" id="clickModeCopy">
+                        <i class="fas fa-copy"></i><span>Copy to Clipboard</span>
+                    </button>
+                    <button class="wotd-toggle-btn" data-mode="search" id="clickModeSearch">
+                        <i class="fas fa-search"></i><span>Search Word</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <div class="api-key-section">
             <label class="theme-label">Gemini API Key (Optional)</label>
             <div class="api-key-input-group">
@@ -2435,15 +2449,32 @@
         }
 
         function copyToClipboard(text, btn) {
-            navigator.clipboard.writeText(text).then(() => {
+            const clickMode = localStorage.getItem('clickMode') || 'copy';
+            
+            if (clickMode === 'search') {
+                // Search mode: put text in search bar and search
+                input.value = text;
+                doSearch(text);
+                // Visual feedback
                 const originalText = btn.innerHTML;
-                btn.innerHTML = '✓';
-                btn.style.background = '#4ade80';
+                btn.innerHTML = '<i class="fas fa-search"></i>';
+                btn.style.background = '#3b82f6';
                 setTimeout(() => {
                     btn.innerHTML = originalText;
                     btn.style.background = '';
                 }, 1200);
-            });
+            } else {
+                // Copy mode: copy to clipboard
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '✓';
+                    btn.style.background = '#4ade80';
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.style.background = '';
+                    }, 1200);
+                });
+            }
         }
 
         // Category label translations map
@@ -2547,10 +2578,13 @@
                             const romanized = romanizeTamil(textForRomanization, romanizationMode);
                             if (romanized) romanText = ` – ${romanized}`;
                         }
+                        const clickMode = localStorage.getItem('clickMode') || 'copy';
+                        const icon = clickMode === 'search' ? '<i class="fas fa-search"></i>' : '⧉';
+                        const title = clickMode === 'search' ? 'Search' : 'Copy';
                         return `
                             <div class="translation-bubble" onclick="copyToClipboard('${escapeHTML(textForRomanization)}', this.querySelector('.copy-btn'))">
                                 ${styledDisplayWord}${romanText}
-                                <button class="copy-btn" title="Copy">⧉</button>
+                                <button class="copy-btn" title="${title}">${icon}</button>
                             </div>
                         `;
                     }).join('');
@@ -2569,10 +2603,13 @@
                         const romanized = romanizeTamil(textForRomanization, romanizationMode);
                         if (romanized) romanText = ` – ${romanized}`;
                     }
+                    const clickMode = localStorage.getItem('clickMode') || 'copy';
+                    const icon = clickMode === 'search' ? '<i class="fas fa-search"></i>' : '⧉';
+                    const title = clickMode === 'search' ? 'Search' : 'Copy';
                     return `
                         <div class="translation-bubble" onclick="copyToClipboard('${escapeHTML(textForRomanization)}', this.querySelector('.copy-btn'))">
                             ${styledDisplayText}${romanText}
-                            <button class="copy-btn" title="Copy">⧉</button>
+                            <button class="copy-btn" title="${title}">${icon}</button>
                         </div>
                     `;
                 }
@@ -2908,11 +2945,39 @@
         // Word of the Day button
         document.getElementById('wotdBtn')?.addEventListener('click', loadWordOfTheDay);
 
+        // Click mode management
+        function initClickMode() {
+            const savedMode = localStorage.getItem('clickMode') || 'copy';
+            const copyBtn = document.getElementById('clickModeCopy');
+            const searchBtn = document.getElementById('clickModeSearch');
+            
+            if (savedMode === 'copy') {
+                copyBtn.classList.add('active');
+                searchBtn.classList.remove('active');
+            } else {
+                searchBtn.classList.add('active');
+                copyBtn.classList.remove('active');
+            }
+            
+            copyBtn.addEventListener('click', () => {
+                localStorage.setItem('clickMode', 'copy');
+                copyBtn.classList.add('active');
+                searchBtn.classList.remove('active');
+            });
+            
+            searchBtn.addEventListener('click', () => {
+                localStorage.setItem('clickMode', 'search');
+                searchBtn.classList.add('active');
+                copyBtn.classList.remove('active');
+            });
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             initTheme();
             initRomanization();
             initWotdSettings();
+            initClickMode();
             createParticles();
             updateParticleColors();
             
