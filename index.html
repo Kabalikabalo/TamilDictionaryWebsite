@@ -11,10 +11,6 @@
     <style>
     /* Prevent FOUC - hide elements until CSS is fully loaded */
     .settings-btn, .hamburger {
-        opacity: 0;
-        transition: opacity 0.1s ease-in;
-    }
-    .settings-btn.loaded, .hamburger.loaded {
         opacity: 1;
     }
     /* Hide hamburger when nav drawer is open */
@@ -312,7 +308,7 @@
             position: fixed;
             top: 1.5rem;
             right: 1.5rem;
-            z-index: 1100;
+            z-index: 100;
             background: #1a1a1a40;
             border: 1px solid var(--border-color);
             border-radius: 12px;
@@ -320,6 +316,7 @@
             color: var(--text-secondary);
             cursor: pointer;
             transition: var(--transition);
+            animation: none !important;
         }
 
         .settings-btn:hover {
@@ -1925,11 +1922,12 @@
         </div>
     </div>
     
+    <button class="settings-btn" id="settingsBtn">
+        <i class="fas fa-cog"></i>
+    </button>
+    
     <div class="container">
         <header class="header">
-            <button class="settings-btn" id="settingsBtn">
-                <i class="fas fa-cog"></i>
-            </button>
             <h1 class="logo">சொற்குவை</h1>
             <p class="subtitle">Tamil - English Dictionary</p>
         </header>
@@ -2915,10 +2913,6 @@
             initWotdSettings();
             createParticles();
             updateParticleColors();
-            
-            // Show settings button and hamburger after CSS is loaded
-            document.querySelector('.settings-btn')?.classList.add('loaded');
-            document.querySelector('.hamburger')?.classList.add('loaded');
             
             // Load last searched word or default to 'paint'
             const lastWord = localStorage.getItem('lastSearchedWord') || 'paint';
