@@ -3057,12 +3057,24 @@
         async function fetchWiktionary(term) {
             if (!term) return;
             try {
-                const title = encodeURIComponent(term.trim().replace(/\s+/g, '_'));
-                const apiUrl = `https://ta.wiktionary.org/w/api.php?action=query&prop=extracts&explaintext=1&format=json&formatversion=2&titles=${title}&origin=*`;
-                const res = await fetch(apiUrl);
+                // Try lowercase first
+                let title = encodeURIComponent(term.trim().toLowerCase().replace(/\s+/g, '_'));
+                let apiUrl = `https://ta.wiktionary.org/w/api.php?action=query&prop=extracts&explaintext=1&format=json&formatversion=2&titles=${title}&origin=*`;
+                let res = await fetch(apiUrl);
                 if (!res.ok) return;
-                const data = await res.json();
-                const page = data?.query?.pages?.[0];
+                let data = await res.json();
+                let page = data?.query?.pages?.[0];
+                
+                // If lowercase returns no data, try with first letter capitalized
+                if (!page || page.missing === true || page.invalid === true || !page.extract || page.extract.trim().length === 0) {
+                    const capitalizedTerm = term.trim().charAt(0).toUpperCase() + term.trim().slice(1).toLowerCase();
+                    title = encodeURIComponent(capitalizedTerm.replace(/\s+/g, '_'));
+                    apiUrl = `https://ta.wiktionary.org/w/api.php?action=query&prop=extracts&explaintext=1&format=json&formatversion=2&titles=${title}&origin=*`;
+                    res = await fetch(apiUrl);
+                    if (!res.ok) return;
+                    data = await res.json();
+                    page = data?.query?.pages?.[0];
+                }
                 
                 // Skip if page is missing or doesn't exist
                 if (!page || page.missing === true || page.invalid === true) return;
