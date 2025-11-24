@@ -1694,6 +1694,146 @@
         .sentence-item:nth-child(2) { animation-delay: 0.1s; }
         .sentence-item:nth-child(3) { animation-delay: 0.2s; }
         .sentence-item:nth-child(4) { animation-delay: 0.3s; }
+        /* Extra Information (Wiktionary) Section */
+        .extra-info {
+            margin-top: 2.5rem;
+            padding: 1.6rem;
+            background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.01) 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.06);
+            animation: fadeInUp 0.5s ease-out 0.1s both;
+        }
+
+        .extra-info-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .extra-info-header i { color: var(--primary-color); font-size: 1.2rem; }
+
+        .extra-info-title { font-size: 1.05rem; font-weight: 700; margin: 0; color: var(--text-primary); }
+
+        .extra-info-content { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.65; }
+
+        .extra-info-content h3 {
+            color: var(--primary-color);
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.8rem 0;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .extra-info-content h3:first-child {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+        }
+
+        .extra-info-content p {
+            margin: 0.6rem 0;
+            line-height: 1.8;
+        }
+
+        .extra-info-content ul {
+            margin: 0.5rem 0 0.5rem 1.5rem;
+            padding: 0;
+        }
+
+        .extra-info-content li {
+            margin: 0.3rem 0;
+        }
+
+        .scroll-nav-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.9rem;
+            margin-top: 1.5rem;
+            background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-nav-btn:hover {
+            background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        .scroll-nav-btn i {
+            font-size: 0.85rem;
+        }
+
+        /* Fixed Scroll Arrows (Desktop Only) */
+        .fixed-scroll-arrow {
+            position: fixed;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 900;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .fixed-scroll-arrow.visible {
+            opacity: 0.6;
+            visibility: visible;
+        }
+
+        .fixed-scroll-arrow:hover {
+            opacity: 1;
+            background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .fixed-scroll-arrow i {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        .fixed-scroll-arrow:hover i {
+            color: var(--primary-color);
+        }
+
+        .scroll-to-bottom {
+            bottom: 2rem;
+        }
+
+        .scroll-to-top-fixed {
+            bottom: 5rem;
+        }
+
+        /* Hide on mobile */
+        @media (max-width: 768px) {
+            .fixed-scroll-arrow {
+                display: none;
+            }
+        }
         .sentence-item:nth-child(5) { animation-delay: 0.4s; }
 
         .sentence-item:hover {
@@ -1941,6 +2081,14 @@
     <button class="settings-btn" id="settingsBtn">
         <i class="fas fa-cog"></i>
     </button>
+    
+    <!-- Fixed Scroll Arrows (Desktop) -->
+    <div class="fixed-scroll-arrow scroll-to-bottom" id="scrollDownArrow" title="Scroll to bottom">
+        <i class="fas fa-arrow-down"></i>
+    </div>
+    <div class="fixed-scroll-arrow scroll-to-top-fixed" id="scrollUpArrow" title="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
     
     <div class="container">
         <header class="header">
@@ -2490,7 +2638,7 @@
             'நிலவியல்.': 'Geography',
             'தாவரவியல்.': 'Botany',
             'கட்டுமானவியல்.': 'Architecture',
-            'மீன்வளம்.': '=Aquaculture',
+            'மீன்வளம்.': 'Aquaculture',
             'உளவியல்.': 'Psychology',
             'மாழையியல்.': 'Oceanography',
             'மரபியல்.': 'Genetics',
@@ -2566,14 +2714,14 @@
                     return translation.map(word => {
                         // Remove trailing period
                         word = typeof word === 'string' ? word.replace(/\.$/, '') : word;
-                        // Remove category labels from original text for transliteration
-                        const textForRomanization = typeof word === 'string' ? word.replace(/\[([^\]]+)\]\s*/g, '') : word;
+                        // Remove category labels and round brackets from text for transliteration
+                        const textForRomanization = typeof word === 'string' ? word.replace(/\[([^\]]+)\]\s*/g, '').replace(/\s*\([^)]*\)\s*/g, ' ').trim() : word;
                         // Translate category labels for display
                         const displayWord = translateCategoryLabels(word);
                         // Italicize text in parentheses
                         const styledDisplayWord = italicizeParentheses(displayWord);
                         let romanText = '';
-                        // Romanize only the text without category labels
+                        // Romanize only the text without category labels and parentheses
                         if (romanizationMode !== 'off' && /[\u0B80-\u0BFF]/.test(textForRomanization)) {
                             const romanized = romanizeTamil(textForRomanization, romanizationMode);
                             if (romanized) romanText = ` – ${romanized}`;
@@ -2591,14 +2739,14 @@
                 } else {
                     // Remove trailing period
                     translation = typeof translation === 'string' ? translation.replace(/\.$/, '') : translation;
-                    // Remove category labels from original text for transliteration
-                    const textForRomanization = typeof translation === 'string' ? translation.replace(/\[([^\]]+)\]\s*/g, '') : translation;
+                    // Remove category labels and round brackets from text for transliteration
+                    const textForRomanization = typeof translation === 'string' ? translation.replace(/\[([^\]]+)\]\s*/g, '').replace(/\s*\([^)]*\)\s*/g, ' ').trim() : translation;
                     // Translate category labels for display
                     const displayText = translateCategoryLabels(translation);
                     // Italicize text in parentheses
                     const styledDisplayText = italicizeParentheses(displayText);
                     let romanText = '';
-                    // Romanize only the text without category labels
+                    // Romanize only the text without category labels and parentheses
                     if (romanizationMode !== 'off' && /[\u0B80-\u0BFF]/.test(textForRomanization)) {
                         const romanized = romanizeTamil(textForRomanization, romanizationMode);
                         if (romanized) romanText = ` – ${romanized}`;
@@ -2624,6 +2772,9 @@
                 </div>
             `;
             resultDiv.style.display = 'block';
+            // Remove any previous extra-info panel when showing an error
+            const prev = resultDiv.querySelector('.extra-info');
+            if (prev) prev.remove();
         }
 
         function capitalizeEachWord(str) {
@@ -2746,6 +2897,8 @@
                     
                     // Generate example sentences using collected translations
                     generateExampleSentences(input.value, uniqueTranslations);
+                    // Fetch extra information from Tamil Wiktionary (explaintext=1) and render it
+                    fetchWiktionary(input.value);
                 } else {
                     showError("No translations found for this word.");
                 }
@@ -2900,6 +3053,177 @@
             container.querySelector('.examples-loading').outerHTML = sentencesHtml;
         }
 
+        // Fetch extra information from Tamil Wiktionary using extracts & explaintext
+        async function fetchWiktionary(term) {
+            if (!term) return;
+            try {
+                const title = encodeURIComponent(term.trim().replace(/\s+/g, '_'));
+                const apiUrl = `https://ta.wiktionary.org/w/api.php?action=query&prop=extracts&explaintext=1&format=json&formatversion=2&titles=${title}&origin=*`;
+                const res = await fetch(apiUrl);
+                if (!res.ok) return;
+                const data = await res.json();
+                const page = data?.query?.pages?.[0];
+                
+                // Skip if page is missing or doesn't exist
+                if (!page || page.missing === true || page.invalid === true) return;
+                
+                let extract = page?.extract || '';
+                if (!extract || extract.trim().length === 0) return;
+
+                // Filter out sections containing "பலுக்கல்"
+                const lines = extract.split('\n');
+                const filteredLines = [];
+                let skipSection = false;
+                
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i];
+                    // Check if this is a section header containing பலுக்கல்
+                    if (line.includes('===') && line.includes('பலுக்கல்')) {
+                        skipSection = true;
+                        continue;
+                    }
+                    // Check if we hit a new section (reset skip)
+                    if (line.includes('===') && !line.includes('பலுக்கல்')) {
+                        skipSection = false;
+                    }
+                    // Add line if not skipping
+                    if (!skipSection) {
+                        filteredLines.push(line);
+                    }
+                }
+                
+                extract = filteredLines.join('\n');
+                if (!extract.trim()) return;
+
+                // Parse and format content nicely
+                let html = '';
+                const sections = extract.split(/\n(?==)/); // Split on lines starting with =
+                
+                sections.forEach((section, idx) => {
+                    if (!section.trim()) return;
+                    
+                    // Extract section header and content
+                    const lines = section.split('\n');
+                    let header = '';
+                    let contentLines = [];
+                    
+                    for (let i = 0; i < lines.length; i++) {
+                        const line = lines[i].trim();
+                        if (line.startsWith('==') && line.endsWith('==')) {
+                            header = line.replace(/^=+\s*/, '').replace(/\s*=+$/, '').trim();
+                        } else if (line) {
+                            contentLines.push(line);
+                        }
+                    }
+                    
+                    // Skip this section if there's no content (only header or empty)
+                    if (contentLines.length === 0) return;
+                    
+                    // Add header if present (will be styled in orange via CSS)
+                    if (header) {
+                        html += `<h3>${escapeHTML(header)}</h3>`;
+                    }
+                    
+                    // Process content - preserve newlines and structure
+                    // Check if it's a list format (numbered/bulleted)
+                    const isList = contentLines.some(l => /^[\d•\-*]/.test(l));
+                    
+                    // Check if it's semicolon-separated items (like translations)
+                    const fullText = contentLines.join(' ');
+                    const hasSemicolons = fullText.includes(';') && fullText.split(';').length > 3;
+                    
+                    if (isList) {
+                        html += '<ul>';
+                        contentLines.forEach(line => {
+                            if (/^[\d•\-*]/.test(line)) {
+                                const cleaned = line.replace(/^[\d•\-*\.\)]+\s*/, '');
+                                if (cleaned.trim()) {
+                                    html += `<li>${escapeHTML(cleaned)}</li>`;
+                                }
+                            }
+                        });
+                        html += '</ul>';
+                    } else if (hasSemicolons) {
+                        // Split by semicolons and create a list for readability
+                        const items = fullText.split(';').map(item => item.trim()).filter(item => item);
+                        html += '<ul>';
+                        items.forEach(item => {
+                            html += `<li>${escapeHTML(item)}</li>`;
+                        });
+                        html += '</ul>';
+                    } else {
+                        // Preserve original line breaks - each line becomes a paragraph
+                        contentLines.forEach(line => {
+                            if (line.trim()) {
+                                html += `<p>${escapeHTML(line.trim())}</p>`;
+                            }
+                        });
+                    }
+                });
+
+                if (!html.trim()) return;
+
+                // Remove existing extra-info if any
+                const old = resultDiv.querySelector('.extra-info');
+                if (old) old.remove();
+
+                const section = document.createElement('div');
+                section.className = 'extra-info';
+                section.id = 'extraInfoSection';
+                section.innerHTML = `
+                    <div class="extra-info-header">
+                        <i class="fas fa-book"></i>
+                        <h3 class="extra-info-title">Extra Information (Wiktionary)</h3>
+                    </div>
+                    <div class="extra-info-content">${html}</div>
+                `;
+
+                resultDiv.appendChild(section);
+
+                // Add navigation buttons if content is long (check after a short delay for rendering)
+                setTimeout(() => {
+                    const exampleSection = resultDiv.querySelector('.example-sentences');
+                    const extraSection = document.getElementById('extraInfoSection');
+                    
+                    if (exampleSection && extraSection) {
+                        const viewportHeight = window.innerHeight;
+                        const exampleTop = exampleSection.getBoundingClientRect().top + window.scrollY;
+                        const extraTop = extraSection.getBoundingClientRect().top + window.scrollY;
+                        const extraBottom = extraTop + extraSection.offsetHeight;
+                        
+                        // Only add buttons if extra info doesn't fit on one screen with examples
+                        if (extraBottom - exampleTop > viewportHeight * 1.2) {
+                            // Add "Jump to Extra Info" button after examples
+                            const existingDownBtn = exampleSection.querySelector('.scroll-to-extra');
+                            if (!existingDownBtn) {
+                                const downBtn = document.createElement('button');
+                                downBtn.className = 'scroll-nav-btn scroll-to-extra';
+                                downBtn.innerHTML = '<span>View Extra Information</span><i class="fas fa-arrow-down"></i>';
+                                downBtn.onclick = () => {
+                                    extraSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                };
+                                exampleSection.appendChild(downBtn);
+                            }
+                            
+                            // Add "Back to Top" button at bottom of extra info
+                            const existingUpBtn = extraSection.querySelector('.scroll-to-top');
+                            if (!existingUpBtn) {
+                                const upBtn = document.createElement('button');
+                                upBtn.className = 'scroll-nav-btn scroll-to-top';
+                                upBtn.innerHTML = '<i class="fas fa-arrow-up"></i><span>Back to Results</span>';
+                                upBtn.onclick = () => {
+                                    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                };
+                                extraSection.appendChild(upBtn);
+                            }
+                        }
+                    }
+                }, 300);
+            } catch (e) {
+                console.error('Wiktionary fetch error', e);
+            }
+        }
+
         // Word of the Day functionality
         async function loadWordOfTheDay() {
             const wotdBtn = document.getElementById('wotdBtn');
@@ -2985,7 +3309,61 @@
             const lastWord = localStorage.getItem('lastSearchedWord') || 'paint';
             input.value = lastWord;
             doSearch(lastWord);
+            
+            // Initialize fixed scroll arrows
+            initScrollArrows();
         });
+
+        // Fixed Scroll Arrows Management
+        function initScrollArrows() {
+            const scrollDownArrow = document.getElementById('scrollDownArrow');
+            const scrollUpArrow = document.getElementById('scrollUpArrow');
+            
+            // Scroll to bottom
+            scrollDownArrow.addEventListener('click', () => {
+                window.scrollTo({
+                    top: document.documentElement.scrollHeight,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Scroll to top
+            scrollUpArrow.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Show/hide arrows based on scroll position
+            function updateArrowsVisibility() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight;
+                const clientHeight = document.documentElement.clientHeight;
+                const scrolledFromTop = scrollTop;
+                const scrolledFromBottom = scrollHeight - scrollTop - clientHeight;
+                
+                // Show down arrow if not at bottom (more than 100px from bottom)
+                if (scrolledFromBottom > 100) {
+                    scrollDownArrow.classList.add('visible');
+                } else {
+                    scrollDownArrow.classList.remove('visible');
+                }
+                
+                // Show up arrow if scrolled down (more than 300px from top)
+                if (scrolledFromTop > 300) {
+                    scrollUpArrow.classList.add('visible');
+                } else {
+                    scrollUpArrow.classList.remove('visible');
+                }
+            }
+            
+            // Update on scroll
+            window.addEventListener('scroll', updateArrowsVisibility);
+            
+            // Initial check
+            updateArrowsVisibility();
+        }
 
         // Interactive particle effects
         document.addEventListener('mousemove', (e) => {
