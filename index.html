@@ -3137,8 +3137,8 @@
                     }
                     
                     // Process content - preserve newlines and structure
-                    // Check if it's a list format (numbered/bulleted)
-                    const isList = contentLines.some(l => /^[\d•\-*]/.test(l));
+                    // Check if it's a list format (numbered/bulleted with digits, i/ii/iii, or bullets)
+                    const isList = contentLines.some(l => /^[\d•\-*iIvVxX]+[\.\):]/.test(l.trim()));
                     
                     // Check if it's semicolon-separated items (like translations)
                     const fullText = contentLines.join(' ');
@@ -3147,11 +3147,16 @@
                     if (isList) {
                         html += '<ul>';
                         contentLines.forEach(line => {
-                            if (/^[\d•\-*]/.test(line)) {
-                                const cleaned = line.replace(/^[\d•\-*\.\)]+\s*/, '');
+                            const trimmed = line.trim();
+                            // Match lines starting with numbers, roman numerals, or bullets
+                            if (/^[\d•\-*iIvVxX]+[\.\):]/.test(trimmed) || /^[\d•\-*]/.test(trimmed)) {
+                                const cleaned = line.replace(/^[\d•\-*iIvVxX]+[\.\)\:]+\s*/, '');
                                 if (cleaned.trim()) {
                                     html += `<li>${escapeHTML(cleaned)}</li>`;
                                 }
+                            } else if (trimmed && !trimmed.startsWith('==')) {
+                                // Also include non-list lines that aren't headers
+                                html += `<li>${escapeHTML(trimmed)}</li>`;
                             }
                         });
                         html += '</ul>';
